@@ -1,0 +1,54 @@
+version: "3.9"
+
+services:
+  # FastAPI REST API
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - AGENTSFACTORY_ENV=production
+      - AGENTSFACTORY_LOG_LEVEL=INFO
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Streamlit Dev Dashboard
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - AGENTSFACTORY_ENV=production
+    command: ["streamlit", "run", "src/agentkit/observability/dashboard.py", "--server.port=8501", "--server.address=0.0.0.0"]
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    depends_on:
+      - api
+
+  # Optional: Postgres (for production metrics storage)
+  # postgres:
+  #   image: postgres:16-alpine
+  #   environment:
+  #     POSTGRES_USER: agentsfactory
+  #     POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
+  #     POSTGRES_DB: agentsfactory
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+
+# volumes:
+#   postgres_data:

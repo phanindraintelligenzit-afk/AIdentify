@@ -1,8 +1,11 @@
-# AgentsFactory
+# 🔬 AgentsFactory
 
-> Production Multi-Agent Orchestration Framework
+> **Production Multi-Agent Orchestration Framework**
 
 Build, deploy, and observe multi-agent AI pipelines with confidence. AgentsFactory provides the production patterns that raw LLM frameworks are missing: circuit breakers, context budget management, fallback chains, structured observability, eval-driven deployment gates, and human-in-the-loop escalation.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 
 ## Why AgentsFactory?
 
@@ -21,7 +24,8 @@ Building multi-agent systems with raw LangGraph/LangChain gets you 60% of the wa
 
 ```
 ┌─────────────────────────────────────────────────┐
-│                  API Layer (FastAPI)              │
+│                  REST API (FastAPI)               │
+│   POST /pipelines/run  │  GET /agents  │  POST /evals/run  │
 ├─────────────────────────────────────────────────┤
 │              Orchestrator Engine                  │
 │  ┌──────────┐ ┌──────────┐ ┌──────────────┐    │
@@ -35,29 +39,174 @@ Building multi-agent systems with raw LangGraph/LangChain gets you 60% of the wa
 ├─────────────────────────────────────────────────┤
 │           LangGraph Integration Layer            │
 ├─────────────────────────────────────────────────┤
-│  Observability  │  Eval Framework  │  LLM SDKs  │
+│  LLM Client (OpenRouter)  │  Eval Framework     │
+│  Observability (Tracer + Metrics + Dashboard)   │
 └─────────────────────────────────────────────────┘
 ```
 
 ## Quick Start
 
+### 1. Install
+
 ```bash
-# Install
+git clone https://github.com/phanindraintelligenzit-afk/AgentsFactory.git
+cd AgentsFactory
+
+# Using uv (recommended)
 uv pip install -e ".[dev]"
 
-# Run the dev API
+# Or using pip
+pip install -e ".[dev]"
+```
+
+### 2. Configure
+
+```bash
+cp .env.example .env
+# Edit .env and add your OpenRouter API key
+# Get a free key at: https://openrouter.ai/keys
+```
+
+### 3. Run a Pipeline
+
+**Via Python:**
+```python
+import asyncio
+from agentkit.agents.roles import ResearcherAgent, AnalyzerAgent, WriterAgent
+from agentkit.models.topology import AgentConfig, TopologyConfig, TopologyType
+from agentkit.orchestrator.engine import Orchestrator
+
+async def main():
+    agents = [
+        ResearcherAgent(config=AgentConfig(agent_id="researcher", role="researcher")),
+        AnalyzerAgent(config=AgentConfig(agent_id="analyzer", role="analyzer")),
+        WriterAgent(config=AgentConfig(agent_id="writer", role="writer")),
+    ]
+    topology = TopologyConfig(
+        name="research",
+        topology_type=TopologyType.SEQUENTIAL,
+        agents=[a.config for a in agents],
+    )
+    orchestrator = Orchestrator(config=topology, agents=agents)
+    state = await orchestrator.execute("Explain circuit breakers in distributed systems")
+    print(f"Status: {state.status}, Tokens: {state.total_tokens}, Cost: ${state.total_cost_usd:.6f}")
+
+asyncio.run(main())
+```
+
+**Via REST API:**
+```bash
+# Start the server
 uv run uvicorn agentkit.api.app:app --reload
 
-# Run tests
-uv run pytest
+# Run a pipeline
+curl -X POST http://localhost:8000/pipelines/run \
+  -H "Content-Type: application/json" \
+  -d '{
+    "input": "Explain circuit breakers in distributed systems",
+    "topology": "sequential",
+    "agents": [
+      {"id": "researcher", "role": "researcher"},
+      {"id": "analyzer", "role": "analyzer"},
+      {"id": "writer", "role": "writer"}
+    ]
+  }'
+```
+
+**Via YAML:**
+```bash
+uv run python -c "
+from agentkit.orchestrator.yaml_loader import load_pipeline_config
+config = load_pipeline_config('examples/research_pipeline.yaml')
+print(f'Loaded: {config.name} with {len(config.agents)} agents')
+"
+```
+
+### 4. View the Dashboard
+
+```bash
+uv run streamlit run src/agentkit/observability/dashboard.py
+```
+
+Open http://localhost:8501 in your browser.
+
+### 5. Run Evals
+
+```bash
+uv run python examples/eval_pipeline.py
 ```
 
 ## Topology Patterns
 
-- **Sequential Chain** — A→B→C for linear workflows
-- **Parallel Fan-Out/In** — Router→[A,B,C]→Synthesizer for concurrent subtasks
-- **Hierarchical** — Orchestrator→Subagents for dynamic decomposition
-- **Evaluator-Optimizer** — Generator→Eval→loop for iterative refinement
+| Pattern | Structure | Best For |
+|---------|-----------|----------|
+| **Sequential** | A→B→C | Linear workflows (research→draft→review) |
+| **Parallel** | Router→[A,B,C]→Synthesizer | Independent subtasks, low latency |
+| **Hierarchical** | Orchestrator→Subagents | Dynamic task decomposition |
+| **Evaluator-Optimizer** | Gen→Eval→loop | Iterative quality refinement |
+
+## API Reference
+
+### Pipelines
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/pipelines/run` | Create and run a pipeline |
+| GET | `/pipelines/{id}` | Get pipeline status |
+| GET | `/pipelines/{id}/trace` | Get execution trace |
+| GET | `/pipelines` | List recent runs |
+
+### Agents
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/agents/register` | Register an agent |
+| GET | `/agents` | List registered agents |
+| GET | `/agents/{id}` | Get agent details |
+| POST | `/agents/{id}/run` | Run a single agent |
+| DELETE | `/agents/{id}` | Unregister an agent |
+
+### Evals
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/evals/run` | Run an eval suite |
+| POST | `/evals/suites` | Create an eval suite |
+| GET | `/evals/suites` | List eval suites |
+| POST | `/evals/suites/{name}/cases` | Add test case |
+| GET | `/evals/metrics` | Get metrics summary |
+| GET | `/evals/alerts` | Get budget alerts |
+
+## Docker Deployment
+
+```bash
+# Build and run with docker-compose
+docker-compose up --build
+
+# API: http://localhost:8000
+# Dashboard: http://localhost:8501
+# Docs: http://localhost:8000/docs
+```
+
+## Configuration
+
+All configuration via environment variables (`.env` file):
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `OPENROUTER_API_KEY` | — | OpenRouter API key (required) |
+| `AGENTSFACTORY_ENV` | `development` | Environment name |
+| `AGENTSFACTORY_LOG_LEVEL` | `INFO` | Logging level |
+| `AGENTSFACTORY_DATABASE_URL` | `sqlite+aiosqlite:///./agentsfactory.db` | Database URL |
+
+## Safety Features
+
+- **Circuit Breakers**: Per-agent failure tracking with CLOSED→OPEN→HALF-OPEN state machine
+- **Context Budgets**: Token budget enforcement per agent with automatic compression
+- **Fallback Chains**: Primary → Fallback → Degraded → Human escalation
+- **HITL Gates**: Configurable human-in-the-loop escalation points
+- **Permission Matrix**: Least-privilege tool access per agent role
+- **Budget Alerts**: Cost/token/latency threshold monitoring
 
 ## License
 
