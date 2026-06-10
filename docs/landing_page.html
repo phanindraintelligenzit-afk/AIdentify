@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentsFactory — AI Automation Agency</title>
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --surface2: #1a1a2e;
+            --primary: #6c63ff;
+            --primary-glow: #6c63ff40;
+            --accent: #00d4aa;
+            --text: #e4e4e7;
+            --text-muted: #8b8b9e;
+            --border: #2a2a3e;
+            --gradient: linear-gradient(135deg, #6c63ff 0%, #00d4aa 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ── Nav ── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .logo { font-size: 1.4rem; font-weight: 700; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--text); }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.6rem 1.4rem; border-radius: 8px; font-size: 0.9rem;
+            font-weight: 600; text-decoration: none; cursor: pointer;
+            border: none; transition: all 0.2s;
+        }
+        .btn-primary { background: var(--gradient); color: #fff; }
+        .btn-primary:hover { box-shadow: 0 0 30px var(--primary-glow); transform: translateY(-1px); }
+        .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+        .btn-outline:hover { border-color: var(--primary); }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: 6rem 2rem 4rem;
+            position: relative;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
+            width: 800px; height: 800px; border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-content { position: relative; z-index: 1; max-width: 800px; }
+        .badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.8rem;
+            background: var(--surface2); border: 1px solid var(--border);
+            color: var(--accent); margin-bottom: 2rem;
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800;
+            line-height: 1.1; margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #a0a0c0 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero h1 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 2.5rem; }
+        .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+        /* ── Stats ── */
+        .stats {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem; padding: 3rem 2rem; max-width: 1000px; margin: 0 auto;
+        }
+        .stat-card {
+            text-align: center; padding: 2rem; border-radius: 16px;
+            background: var(--surface); border: 1px solid var(--border);
+        }
+        .stat-number { font-size: 2.5rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat-label { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem; }
+
+        /* ── Section ── */
+        section { padding: 6rem 2rem; }
+        .section-header { text-align: center; max-width: 600px; margin: 0 auto 4rem; }
+        .section-header h2 { font-size: 2.2rem; font-weight: 700; margin-bottom: 1rem; }
+        .section-header p { color: var(--text-muted); font-size: 1.1rem; }
+
+        /* ── How It Works ── */
+        .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto; }
+        .step {
+            padding: 2rem; border-radius: 16px;
+            background: var(--surface); border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .step:hover { border-color: var(--primary); transform: translateY(-4px); box-shadow: 0 10px 40px rgba(108, 99, 255, 0.1); }
+        .step-number { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; background: var(--gradient); margin-bottom: 1.2rem; }
+        .step h3 { font-size: 1.2rem; margin-bottom: 0.6rem; }
+        .step p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* ── Pipelines ── */
+        .pipelines { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+        .pipeline-card {
+            padding: 1.8rem; border-radius: 16px;
+            background: var(--surface); border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .pipeline-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+        .pipeline-icon { font-size: 2rem; margin-bottom: 1rem; }
+        .pipeline-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .pipeline-card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; }
+        .pipeline-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .tag { padding: 0.2rem 0.7rem; border-radius: 50px; font-size: 0.75rem; background: var(--surface2); color: var(--accent); border: 1px solid var(--border); }
+
+        /* ── Demo ── */
+        .demo-section { background: var(--surface); }
+        .demo-box {
+            max-width: 800px; margin: 0 auto; border-radius: 16px;
+            background: var(--bg); border: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .demo-header { display: flex; align-items: center; gap: 0.5rem; padding: 1rem 1.5rem; background: var(--surface2); border-bottom: 1px solid var(--border); }
+        .demo-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .demo-dot.red { background: #ff5f56; }
+        .demo-dot.yellow { background: #ffbd2e; }
+        .demo-dot.green { background: #27c93f; }
+        .demo-body { padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.8; color: var(--text-muted); max-height: 400px; overflow-y: auto; }
+        .demo-body .prompt { color: var(--accent); }
+        .demo-body .output { color: var(--text); }
+        .demo-body .comment { color: #555; }
+
+        /* ── CTA ── */
+        .cta-section { text-align: center; padding: 8rem 2rem; position: relative; }
+        .cta-section::before {
+            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 600px; height: 600px; border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .cta-content { position: relative; z-index: 1; }
+        .cta-section h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
+        .cta-section p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+        /* ── Footer ── */
+        footer { padding: 3rem 2rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.85rem; }
+        footer a { color: var(--primary); text-decoration: none; }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.2rem; }
+            .stats { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* ── Animations ── */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate { animation: fadeInUp 0.6s ease-out forwards; }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+    <div class="logo">⚡ AgentsFactory</div>
+    <div class="nav-links">
+        <a href="#how">How It Works</a>
+        <a href="#pipelines">Pipelines</a>
+        <a href="#demo">Demo</a>
+        <a href="https://github.com/phanindraintelligenzit-afk/AgentsFactory" target="_blank">GitHub</a>
+        <a href="#cta" class="btn btn-primary">Get Started</a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="badge">🚀 AI Automation Agency Platform</div>
+        <h1>Build AI Agent Workflows<br>That <span>Actually Do Work</span></h1>
+        <p>Stop building LLM plumbing from scratch. AgentsFactory gives you production-ready agent pipelines — sequential, parallel, routing, loop — in minutes. Focus on your client's problem, not the infrastructure.</p>
+        <div class="hero-buttons">
+            <a href="#demo" class="btn btn-primary">See Live Demo →</a>
+            <a href="https://github.com/phanindraintelligenzit-afk/AgentsFactory" target="_blank" class="btn btn-outline">⭐ Star on GitHub</a>
+        </div>
+    </div>
+</section>
+
+<!-- Stats -->
+<div class="stats">
+    <div class="stat-card animate delay-1">
+        <div class="stat-number">5</div>
+        <div class="stat-label">Pipeline Templates</div>
+    </div>
+    <div class="stat-card animate delay-2">
+        <div class="stat-number">4</div>
+        <div class="stat-label">Agents Per Pipeline</div>
+    </div>
+    <div class="stat-card animate delay-3">
+        <div class="stat-number">70</div>
+        <div class="stat-label">Tests Passing</div>
+    </div>
+    <div class="stat-card animate delay-4">
+        <div class="stat-number">$0</div>
+        <div class="stat-label">To Start (Free Models)</div>
+    </div>
+</div>
+
+<!-- How It Works -->
+<section id="how">
+    <div class="section-header">
+        <h2>How It Works</h2>
+        <p>From raw client input to complete deliverable in 4 steps</p>
+    </div>
+    <div class="steps">
+        <div class="step animate delay-1">
+            <div class="step-number">1</div>
+            <h3>📥 Client Input</h3>
+            <p>Drop in raw client information — an email, a form, a call transcript. The intake agent extracts and structures everything automatically.</p>
+        </div>
+        <div class="step animate delay-2">
+            <div class="step-number">2</div>
+            <h3>🔍 Research & Analyze</h3>
+            <p>The research agent analyzes the industry, competitors, and opportunities. Know your client's business before the first meeting.</p>
+        </div>
+        <div class="step animate delay-3">
+            <div class="step-number">3</div>
+            <h3>📝 Generate Deliverables</h3>
+            <p>The writer agent produces project briefs, proposals, scope documents, and pricing — tailored to the client's specific needs.</p>
+        </div>
+        <div class="step animate delay-4">
+            <div class="step-number">4</div>
+            <h3>📬 Outreach & Kickoff</h3>
+            <p>The outreach agent drafts welcome emails, meeting agendas, and internal checklists. Your client is onboarded before you finish your coffee.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Pipelines -->
+<section id="pipelines">
+    <div class="section-header">
+        <h2>Pipeline Templates</h2>
+        <p>Pre-built for the industries that need AI automation most</p>
+    </div>
+    <div class="pipelines">
+        <div class="pipeline-card animate delay-1">
+            <div class="pipeline-icon">🏥</div>
+            <h3>Healthcare Prior Auth</h3>
+            <p>Automate prior authorization workflows — extract patient data, check insurer requirements, flag denial risks, generate submission packages.</p>
+            <div class="pipeline-tags">
+                <span class="tag">4 Agents</span>
+                <span class="tag">HIPAA Ready</span>
+                <span class="tag">EHR Integration</span>
+            </div>
+        </div>
+        <div class="pipeline-card animate delay-2">
+            <div class="pipeline-icon">🏠</div>
+            <h3>Real Estate Lead Gen</h3>
+            <p>Scout markets, qualify leads from expired listings and pre-foreclosures, score prospects, generate outreach campaigns.</p>
+            <div class="pipeline-tags">
+                <span class="tag">4 Agents</span>
+                <span class="tag">Market Analysis</span>
+                <span class="tag">Lead Scoring</span>
+            </div>
+        </div>
+        <div class="pipeline-card animate delay-3">
+            <div class="pipeline-icon">🛒</div>
+            <h3>E-Commerce Operations</h3>
+            <p>Product analysis, competitive research, listing optimization, review management, pricing recommendations.</p>
+            <div class="pipeline-tags">
+                <span class="tag">4 Agents</span>
+                <span class="tag">SEO</span>
+                <span class="tag">Conversion</span>
+            </div>
+        </div>
+        <div class="pipeline-card animate delay-4">
+            <div class="pipeline-icon">⚖️</div>
+            <h3>Legal Contract Review</h3>
+            <p>Parse contracts, identify redlines, assess risk, generate negotiation summaries, ensure compliance.</p>
+            <div class="pipeline-tags">
+                <span class="tag">4 Agents</span>
+                <span class="tag">Risk Matrix</span>
+                <span class="tag">GDPR/SOC2</span>
+            </div>
+        </div>
+        <div class="pipeline-card animate delay-4">
+            <div class="pipeline-icon">👥</div>
+            <h3>HR Operations</h3>
+            <p>Resume screening, candidate scoring, personalized outreach, onboarding package generation, compliance tracking.</p>
+            <div class="pipeline-tags">
+                <span class="tag">4 Agents</span>
+                <span class="tag">Screening</span>
+                <span class="tag">Onboarding</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Demo -->
+<section id="demo" class="demo-section">
+    <div class="section-header">
+        <h2>Live Demo</h2>
+        <p>Here's what the Healthcare Prior Auth pipeline produces from a single patient input</p>
+    </div>
+    <div class="demo-box">
+        <div class="demo-header">
+            <div class="demo-dot red"></div>
+            <div class="demo-dot yellow"></div>
+            <div class="demo-dot green"></div>
+            <span style="margin-left: auto; font-size: 0.8rem; color: var(--text-muted);">client_onboarding.py — Healthcare Pipeline</span>
+        </div>
+        <div class="demo-body">
+            <span class="comment">#!/usr/bin/env python3</span><br>
+            <span class="comment"># Healthcare Prior Auth Pipeline — Demo Output</span><br><br>
+            <span class="prompt">▶ Agent 1/4: auth_intake...</span><br>
+            <span class="output">{</span><br>
+            <span class="output">  "patient_id": "PT-2026-8847",</span><br>
+            <span class="output">  "procedure_code": "70553",</span><br>
+            <span class="output">  "insurer": "Aetna Better Health",</span><br>
+            <span class="output">  "urgency": "urgent",</span><br>
+            <span class="output">  "required_documents": ["Neurologist referral", "Prior CT results"],</span><br>
+            <span class="output">  "estimated_turnaround_days": 3</span><br>
+            <span class="output">}</span><br><br>
+            <span class="prompt">▶ Agent 2/4: requirement_checker...</span><br>
+            <span class="output">## Aetna Prior Auth Requirements — MRI Brain w/Contrast</span><br>
+            <span class="output">1. Required: Neurologist referral + CT results + clinical notes</span><br>
+            <span class="output">2. Common denials: "Conservative treatment not attempted"</span><br>
+            <span class="output">3. Tip: Use "rule out MS" language for medical necessity</span><br>
+            <span class="output">4. Timeline: Urgent = 3-5 business days</span><br><br>
+            <span class="prompt">▶ Agent 3/4: documentation_generator...</span><br>
+            <span class="output">✅ Prior Auth Package Generated</span><br>
+            <span class="output">  - Completed CMS-1500 form</span><br>
+            <span class="output">  - Clinical justification letter (neurologist)</span><br>
+            <span class="output">  - Supporting documentation checklist</span><br>
+            <span class="output">  - Submission-ready package (HIPAA compliant)</span><br><br>
+            <span class="prompt">▶ Agent 4/4: tracker_setup...</span><br>
+            <span class="output">📋 Tracking: Auth submitted. Follow-up scheduled Day 3.</span><br>
+            <span class="output">   SLA alert: If no response by Day 5, escalate to supervisor.</span><br><br>
+            <span class="comment">══════════════════════════════════════════</span><br>
+            <span class="comment">  PIPELINE COMPLETE — 4/4 agents, 1.2s</span><br>
+            <span class="comment">  Replaces ~4 hours of manual processing</span><br>
+            <span class="comment">══════════════════════════════════════════</span>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section id="cta" class="cta-section">
+    <div class="cta-content">
+        <h2>Ready to Automate?</h2>
+        <p>Start with a free onboarding audit. We'll run your client's data through a pipeline and show you exactly what's possible.</p>
+        <div class="hero-buttons">
+            <a href="https://github.com/phanindraintelligenzit-afk/AgentsFactory" target="_blank" class="btn btn-primary">🚀 Get Started Free</a>
+            <a href="mailto:srinivas.workspoter@gmail.com" class="btn btn-outline">📧 Book a Call</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>Built with ❤️ by <a href="#">AgentsFactory</a> · MIT License · <a href="https://github.com/phanindraintelligenzit-afk/AgentsFactory" target="_blank">GitHub</a></p>
+</footer>
+
+</body>
+</html>

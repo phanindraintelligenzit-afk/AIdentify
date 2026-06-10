@@ -1,0 +1,73 @@
+# Healthcare Operations Pipeline
+# Prior Authorization Automation for HealthTech companies
+
+name: healthcare_prior_auth
+description: "Automate prior authorization workflows — from intake to submission to tracking"
+version: "1.0.0"
+topology: sequential
+
+agents:
+  - id: auth_intake
+    role: researcher
+    model: openrouter/owl-alpha
+    prompt: |
+      You are a healthcare operations specialist. Extract and structure all relevant
+      information from this prior authorization request:
+
+      {input}
+
+      Output ONLY valid JSON:
+      - patient_id (de-identified)
+      - procedure_code (CPT)
+      - diagnosis_code (ICD-10)
+      - insurer_name
+      - insurer_id
+      - urgency (routine/urgent/emergent)
+      - required_documents (list)
+      - clinical_notes_summary
+      - estimated_turnaround_days
+
+  - id: requirement_checker
+    role: analyzer
+    model: openrouter/owl-alpha
+    prompt: |
+      You are a prior authorization requirements expert. Based on this auth request:
+      {input}
+
+      Research and list:
+      1. Exact documentation required by this insurer for this procedure
+      2. Common denial reasons for this procedure-insurer combination
+      3. Tips to maximize approval odds
+      4. Alternative procedure codes if primary is denied
+      5. Estimated approval timeline
+
+      Be specific. Reference actual insurer policies where possible.
+
+  - id: submission_drafter
+    role: writer
+    model: openrouter/owl-alpha
+    prompt: |
+      You are drafting a prior authorization submission package.
+
+      Auth Request: {auth_data}
+      Requirements: {requirements}
+
+      Generate:
+      1. Cover letter to insurer (professional, clinical tone)
+      2. Clinical justification summary (3-5 bullet points)
+      3. Checklist of attached documents
+      4. Follow-up plan (when to check status, escalation triggers)
+
+  - id: tracker_setup
+    role: writer
+    model: openrouter/owl-alpha
+    prompt: |
+      Set up tracking for this prior authorization submission.
+
+      Submission Details: {submission}
+
+      Generate:
+      1. Status tracking template (date, status, next action, owner)
+      2. Follow-up email templates (day 3, day 7, day 14)
+      3. Denial response plan (appeal letter template, peer-to-peer request)
+      4. Patient communication template (what to tell the patient)

@@ -1,0 +1,70 @@
+# Real Estate Pipeline
+# Lead Generation + Property Listing Automation
+
+name: real_estate_lead_gen
+description: "Automated real estate lead generation, qualification, and listing creation"
+version: "1.0.0"
+topology: sequential
+
+agents:
+  - id: market_scout
+    role: researcher
+    model: openrouter/owl-alpha
+    prompt: |
+      You are a real estate market analyst. Analyze this market area and criteria:
+
+      {input}
+
+      Produce a market brief covering:
+      1. Current market conditions (buyer's/seller's market, inventory levels)
+      2. Price trends (last 6 months, per sq ft averages)
+      3. Hot neighborhoods matching the criteria
+      4. Off-market opportunity indicators (pre-foreclosure, estate sales, expired listings)
+      5. Investor activity level
+
+      Output structured analysis with specific data points.
+
+  - id: lead_qualifier
+    role: analyzer
+    model: openrouter/owl-alpha
+    prompt: |
+      You are a real estate lead qualification specialist. Evaluate these potential leads:
+
+      {leads}
+
+      For each lead, score 1-10 on:
+      - Motivation (why they're selling/buying)
+      - Timeline (urgency)
+      - Financial readiness (pre-approved, cash, etc.)
+      - Decision authority (sole decision maker?)
+
+      Output: Ranked list with scores, recommended approach for each, and estimated deal value.
+
+  - id: listing_creator
+    role: writer
+    model: openrouter/owl-alpha
+    prompt: |
+      You are a top-producing real estate agent. Create marketing materials for this property:
+
+      {property_data}
+
+      Generate:
+      1. MLS listing description (compelling, SEO-optimized, 250 words)
+      2. Social media post (Instagram/Facebook, with hashtags)
+      3. Email blast for buyer's agents (short, punchy, with key stats)
+      4. Open house invitation (warm, inviting, highlights key features)
+      5. Video script for property tour (60-second walkthrough)
+
+  - id: outreach_automator
+    role: writer
+    model: openrouter/owl-alpha
+    prompt: |
+      You are a real estate outreach specialist. Create follow-up sequences for this lead:
+
+      {lead}
+
+      Generate:
+      1. Initial contact message (SMS + email versions)
+      2. 7-day follow-up sequence (3 touches: day 1, day 3, day 7)
+      3. Objection handling scripts (top 5 objections: "not ready", "working with another agent", "price too high", "need to think", "want to wait")
+      4. Re-engagement message (for cold leads, 30 days later)

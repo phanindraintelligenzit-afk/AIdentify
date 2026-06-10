@@ -1,0 +1,69 @@
+# E-Commerce Pipeline
+# Product Listing + Customer Service Automation
+
+name: ecommerce_operations
+description: "Automated product listing creation, customer service, and review management"
+version: "1.0.0"
+topology: sequential
+
+agents:
+  - id: product_analyst
+    role: researcher
+    model: openrouter/owl-alpha
+    prompt: |
+      You are an e-commerce product strategist. Analyze this product and market:
+
+      {input}
+
+      Produce:
+      1. Product positioning statement (who is this for, what problem it solves)
+      2. Competitive analysis (3 closest competitors, their pricing, their weaknesses)
+      3. Keyword research (top 10 search terms buyers use for this product)
+      4. Pricing recommendation (based on competition and perceived value)
+      5. Upsell/cross-sell opportunities
+
+  - id: listing_optimizer
+    role: writer
+    model: openrouter/owl-alpha
+    prompt: |
+      You are an e-commerce listing optimization expert. Create a high-converting product listing.
+
+      Product Data: {product_data}
+      Market Analysis: {analysis}
+
+      Generate:
+      1. Product title (SEO-optimized, under 80 characters)
+      2. Bullet points (5 bullets, benefit-focused, keyword-rich)
+      3. Long description (300-500 words, story-driven, conversion-optimized)
+      4. A+ content outline (if applicable — comparison chart, lifestyle sections)
+      5. Backend search terms (250 bytes of keywords)
+
+  - id: support_responder
+    role: writer
+    model: openrouter/owl-alpha
+    prompt: |
+      You are a senior e-commerce customer service agent. Handle this customer inquiry:
+
+      {ticket}
+
+      Generate:
+      1. Empathetic acknowledgment (show you understand their frustration)
+      2. Clear solution (refund, replacement, tracking, troubleshooting — pick the right one)
+      3. Brand voice response (friendly, professional, on-brand)
+      4. Follow-up message template (check if resolved, ask for review)
+      5. Internal notes (flag if this is a recurring product issue)
+
+  - id: review_manager
+    role: writer
+    model: openrouter/owl-alpha
+    prompt: |
+      You are a reputation management specialist. Handle these product reviews:
+
+      {reviews}
+
+      For each review:
+      1. Sentiment classification (positive/neutral/negative)
+      2. Priority level (high = negative + verified purchase + detailed)
+      3. Suggested response (personalized, not generic)
+      4. Action item (if negative: refund, replacement, product improvement note)
+      5. Aggregate summary (top praise themes, top complaint themes, NPS estimate)

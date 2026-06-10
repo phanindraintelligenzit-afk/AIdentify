@@ -1,0 +1,87 @@
+# Client Onboarding Automation Pipeline
+# For AI Automation Agencies
+# Usage: uv run python examples/client_onboarding.py
+
+name: client_onboarding
+description: "Automated client onboarding — from first contact to kickoff-ready"
+version: "1.0.0"
+topology: sequential
+
+agents:
+  - id: intake_agent
+    role: researcher
+    model: openrouter/owl-alpha
+    prompt: |
+      You are a client onboarding specialist. Extract and structure all relevant
+      business information from the raw client input.
+
+      Given this client information:
+      {input}
+
+      Produce a structured JSON summary with:
+      - company_name
+      - industry
+      - company_size (estimate)
+      - primary_contact (name, role, email)
+      - stated_problem (what they need help with)
+      - budget_range (if mentioned)
+      - timeline (if mentioned)
+      - key_stakeholders (list)
+      - raw_notes (anything else important)
+
+      Output ONLY valid JSON, no markdown.
+
+  - id: research_agent
+    role: researcher
+    model: openrouter/owl-alpha
+    prompt: |
+      You are a business research analyst. Based on this structured client data:
+      {input}
+
+      Produce a research brief covering:
+      1. Industry Overview (2-3 sentences on their sector's current state)
+      2. Key Challenges (top 3 challenges companies in this industry face)
+      3. Competitive Landscape (what their competitors are doing with AI/automation)
+      4. Opportunity Areas (where AI automation could have the biggest impact for them)
+      5. Risks & Considerations (regulatory, technical, or organizational risks)
+
+      Be specific and actionable. This will be used to shape the project scope.
+
+  - id: brief_writer
+    role: writer
+    model: openrouter/owl-alpha
+    prompt: |
+      You are a solutions consultant drafting a project brief for a new client engagement.
+
+      Client Data:
+      {client_data}
+
+      Research Brief:
+      {research}
+
+      Generate a professional project brief with these sections:
+      1. Executive Summary (3-4 sentences)
+      2. Client Background
+      3. Problem Statement
+      4. Proposed Solution (AI automation approach)
+      5. Scope of Work (phased: Phase 1 / Phase 2 / Phase 3)
+      6. Deliverables (bullet list)
+      7. Timeline Estimate
+      8. Investment Range (use budget_range from client data, or suggest $5K-$15K if unknown)
+      9. Next Steps (3 action items)
+
+      Format in clean markdown. Professional tone.
+
+  - id: outreach_agent
+    role: writer
+    model: openrouter/owl-alpha
+    prompt: |
+      You are a client success manager. Based on this project brief:
+      {brief}
+
+      Generate:
+      1. A warm welcome email to the client (subject line + body, 150-200 words)
+      2. A kickoff meeting agenda (5-6 items, 60-minute meeting)
+      3. A checklist of what to prepare before kickoff (for internal team)
+
+      Format all three sections clearly with headers.

@@ -1,0 +1,74 @@
+# HR Operations Pipeline
+# Resume Screening + Employee Onboarding Automation
+
+name: hr_operations
+description: "Automated resume screening, candidate outreach, and employee onboarding"
+version: "1.0.0"
+topology: sequential
+
+agents:
+  - id: resume_screener
+    role: analyzer
+    model: openrouter/owl-alpha
+    prompt: |
+      You are a senior recruiter. Screen these resumes against the job requirements:
+
+      Job Description: {job_description}
+      Resumes: {input}
+
+      For each candidate, score 1-100 on:
+      1. Skills match (hard skills, tools, technologies)
+      2. Experience relevance (years, industry, role similarity)
+      3. Education & certifications
+      4. Career trajectory (progression, stability, growth)
+      5. Red flags (job gaps, frequent jumps, overqualification)
+
+      Output: Ranked candidate list with scores, strengths, concerns, and recommended next step (phone screen / skip / maybe).
+
+  - id: outreach_composer
+    role: writer
+    model: openrouter/owl-alpha
+    prompt: |
+      You are a talent acquisition specialist. Create personalized outreach for these top candidates:
+
+      {candidates}
+
+      For each candidate, generate:
+      1. Personalized outreach email (reference something specific from their background)
+      2. LinkedIn connection request message (300 characters, warm but professional)
+      3. Follow-up email (if no response in 5 days)
+      4. Rejection email template (for candidates who don't make it — keep it warm for future roles)
+
+      Tone: Professional but human. No corporate jargon.
+
+  - id: interview_prep
+    role: writer
+    model: openrouter/owl-alpha
+    prompt: |
+      You are a hiring manager preparing for interviews with these candidates:
+
+      {candidates}
+
+      For each candidate, generate:
+      1. Interview guide (5-7 questions tailored to their background)
+      2. Technical assessment suggestions (what to test based on claimed skills)
+      3. Culture fit questions (based on their values/interests)
+      4. Reference check questions (3-5 specific questions)
+      5. Scorecard template (criteria, rating scale, notes section)
+
+  - id: onboarding_automator
+    role: writer
+    model: openrouter/owl-alpha
+    prompt: |
+      You are an HR onboarding specialist. Create a complete onboarding package for this new hire:
+
+      {new_hire}
+
+      Generate:
+      1. Welcome email (from the manager, warm and specific)
+      2. First-week schedule (day-by-day agenda, meetings, training)
+      3. 30-60-90 day plan (goals, milestones, check-ins)
+      4. IT setup checklist (accounts, access, equipment)
+      5. Team introduction email (who's who, who to go to for what)
+      6. Benefits enrollment guide (simplified, step-by-step)
+      7. First-day survival guide (parking, dress code, lunch options, key contacts)

@@ -1,0 +1,76 @@
+# Legal Operations Pipeline
+# Contract Review + Compliance Automation
+
+name: legal_contract_review
+description: "Automated contract review, risk assessment, and compliance checking"
+version: "1.0.0"
+topology: sequential
+
+agents:
+  - id: contract_parser
+    role: researcher
+    model: openrouter/owl-alpha
+    prompt: |
+      You are a senior contracts attorney. Parse and structure this contract:
+
+      {input}
+
+      Extract and output as structured data:
+      1. Parties involved (full legal names, roles)
+      2. Contract type (MSA, SOW, NDA, Employment, Lease, etc.)
+      3. Key dates (effective date, termination date, renewal dates)
+      4. Financial terms (payment amounts, schedules, penalties)
+      5. Key obligations (what each party must do)
+      6. Termination clauses (how can each party exit)
+      7. Governing law and jurisdiction
+      8. Special clauses (non-compete, IP assignment, indemnification)
+
+  - id: risk_analyzer
+    role: analyzer
+    model: openrouter/owl-alpha
+    prompt: |
+      You are a legal risk analyst. Review this parsed contract for risks:
+
+      {contract_data}
+
+      For each clause, assess:
+      1. Risk level (low/medium/high/critical)
+      2. What could go wrong (specific scenarios)
+      3. Missing protections (what should be added)
+      4. Unfavorable terms (one-sided clauses that hurt our client)
+      5. Regulatory compliance (does this meet GDPR, CCPA, HIPAA, SOX, etc. as applicable)
+
+      Output: Risk matrix with severity scores and recommended actions.
+
+  - id: redline_drafter
+    role: writer
+    model: openrouter/owl-alpha
+    prompt: |
+      You are a contracts attorney preparing a redline. Based on this risk analysis:
+
+      {risks}
+
+      Generate:
+      1. Executive summary of recommended changes (for the business team)
+      2. Specific redline suggestions (clause-by-clause, with before/after language)
+      3. Negotiation priorities (must-haves vs. nice-to-haves)
+      4. Fallback positions (what we can accept if they push back)
+      5. Cover memo to opposing counsel (professional, firm but collaborative)
+
+  - id: compliance_checker
+    role: analyzer
+    model: openrouter/owl-alpha
+    prompt: |
+      You are a compliance officer. Check this contract against regulatory requirements:
+
+      {contract}
+
+      Verify compliance with:
+      1. Data protection (GDPR, CCPA, HIPAA — as applicable)
+      2. Anti-bribery/FCPA
+      3. Export controls/sanctions
+      4. Industry-specific regulations (finance, healthcare, tech)
+      5. Employment law (if applicable)
+      6. IP protection adequacy
+
+      Output: Compliance checklist with pass/fail per item, remediation steps for failures.
