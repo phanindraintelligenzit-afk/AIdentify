@@ -17,8 +17,8 @@ class EvalCase:
     input_text: str
     expected_output: dict[str, Any] = field(default_factory=dict)
     expected_behavior: str = ""
-    constraints: list[str] = Field(default_factory=list)
-    tags: list[str] = Field(default_factory=list)  # happy_path | edge_case | failure
+    constraints: list[str] = field(default_factory=list)
+    tags: list[str] = field(default_factory=list)  # happy_path | edge_case | failure
 
 
 @dataclass
@@ -29,7 +29,7 @@ class EvalResult:
     passed: bool = False
     score: float = 0.0
     actual_output: dict[str, Any] = field(default_factory=dict)
-    expected_output: dict[str, Any] = Field(default_factory=dict)
+    expected_output: dict[str, Any] = field(default_factory=dict)
     feedback: str = ""
     pipeline_state: Optional[PipelineState] = None
 
@@ -39,7 +39,7 @@ class EvalSuite:
     """A collection of eval cases for an agent or pipeline."""
 
     name: str
-    cases: list[EvalCase] = Field(default_factory=list)
+    cases: list[EvalCase] = field(default_factory=list)
     baseline_score: float = 0.0
     pass_threshold: float = 0.8
 
