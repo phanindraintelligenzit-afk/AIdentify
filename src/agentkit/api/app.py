@@ -11,6 +11,9 @@ from agentkit.api.models import HealthResponse
 from agentkit.api.routes.agents import router as agents_router
 from agentkit.api.routes.evals import router as evals_router
 from agentkit.api.routes.pipelines import router as pipelines_router
+from agentkit.observability.metrics import MetricsCollector
+
+_metrics = MetricsCollector()
 
 app = FastAPI(
     title="AgentsFactory",
@@ -61,7 +64,18 @@ async def root():
             "pipelines": "/pipelines",
             "agents": "/agents",
             "evals": "/evals",
+            "metrics": "/metrics",
         },
+    }
+
+
+@app.get("/metrics", tags=["observability"])
+async def metrics():
+    """Get observability metrics."""
+    recent = _metrics.get_recent_runs(limit=20)
+    return {
+        "recent_runs": recent,
+        "total_recorded": len(recent),
     }
 
 

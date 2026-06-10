@@ -13,6 +13,9 @@ from agentkit.api.models import (
     PipelineResponse,
     PipelineStatusResponse,
 )
+from agentkit.observability.metrics import MetricsCollector
+
+_metrics = MetricsCollector()
 from agentkit.agents.roles import ResearcherAgent, AnalyzerAgent, WriterAgent, EvaluatorAgent
 from agentkit.config import settings
 from agentkit.core.context import ContextManager
@@ -168,3 +171,13 @@ async def list_pipelines(limit: int = Query(default=20, le=100)) -> dict:
     """List recent pipeline runs."""
     runs = _collector.get_recent_runs(limit=limit)
     return {"pipelines": runs, "count": len(runs)}
+
+
+@router.get("/metrics/summary")
+async def metrics_summary() -> dict:
+    """Get aggregate metrics summary."""
+    recent = _metrics.get_recent_runs(limit=10)
+    return {
+        "recent_runs": recent,
+        "total_runs": len(recent),
+    }
