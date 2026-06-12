@@ -4,7 +4,7 @@ Run with:
     uv run streamlit run src/agentkit/observability/command_center.py
 
 This is the OPERATIONAL dashboard (not the dev observability one).
-It tracks: projects, revenue, leads, content calendar, automation health, key metrics.
+It tracks: projects, revenue, leads, content calendar, automation health, agent activity.
 """
 
 from __future__ import annotations
@@ -77,6 +77,24 @@ def init_business_db() -> None:
         "metric_value REAL NOT NULL, metric_unit TEXT DEFAULT '', "
         "period TEXT DEFAULT 'daily', "
         "recorded_at TEXT DEFAULT (datetime('now')));"
+        ""
+        "CREATE TABLE IF NOT EXISTS agent_activity ("
+        "id INTEGER PRIMARY KEY AUTOINCREMENT, agent_name TEXT NOT NULL, "
+        "action TEXT NOT NULL, target TEXT DEFAULT '', "
+        "status TEXT DEFAULT 'completed', details TEXT DEFAULT '', "
+        "created_at TEXT DEFAULT (datetime('now')));"
+    )
+    conn.commit()
+    conn.close()
+
+
+def log_agent_activity(agent_name: str, action: str, target: str = "",
+                       status: str = "completed", details: str = "") -> None:
+    conn = get_db()
+    conn.execute(
+        "INSERT INTO agent_activity (agent_name, action, target, status, details) "
+        "VALUES (?, ?, ?, ?, ?)",
+        (agent_name, action, target, status, details),
     )
     conn.commit()
     conn.close()
@@ -84,7 +102,7 @@ def init_business_db() -> None:
 
 def render_header():
     st.title("AgentsFactory Command Center")
-    st.markdown("**AI Automation Agency - Business Operations Dashboard**")
+    st.markdown("**AI Automation Agency — Business Operations Dashboard**")
     st.markdown(f"*Last refreshed: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*")
     st.divider()
 
@@ -111,16 +129,82 @@ def render_kpi_overview():
     healthy_automations = conn.execute(
         "SELECT COUNT(*) FROM automation_health WHERE status='running' AND uptime_pct >= 95"
     ).fetchone()[0]
+    today_activity = conn.execute(
+        "SELECT COUNT(*) FROM agent_activity WHERE date(created_at) = date('now')"
+    ).fetchone()[0]
     conn.close()
 
-    c1, c2, c3, c4, c5, c6 = st.columns(6)
+    c1, c2, c3, c4, c5, c6, c7 = st.columns(7)
     c1.metric("Clients", total_clients)
     c2.metric("Active Projects", active_projects)
-    c3.metric("Revenue (Confirmed)", f"${total_revenue:,.0f}")
+    c3.metric("Revenue", f"${total_revenue:,.0f}")
     c4.metric("Projected", f"${projected_revenue:,.0f}")
-    c5.metric("Leads", f"{hot_leads}/{total_leads}")
+    c5.metric("Hot Leads", f"{hot_leads}/{total_leads}")
     c6.metric("Automations", f"{healthy_automations}/{total_automations}")
+    c7.metric("Agent Actions", today_activity)
     st.divider()
+
+
+def render_quick_add():
+    st.sidebar.divider()
+    st.sidebar.subheader("⚡ Quick Add")
+
+    with st.sidebar.expander("➕ Add Lead"):
+        with st.form("quick_add_lead"):
+            l_name = st.text_input("Name", key="qa_name")
+            l_company = st.text_input("Company", key="qa_company")
+            l_email = st.text_input("Email", key="qa_email")
+            l_source = st.selectbox("Source", ["inbound", "outbound", "referral", "website", "social"], key="qa_source")
+            l_score = st.slider("Score", 0, 100, 50, key="qa_score")
+            if st.form_submit_button("Add Lead"):
+                conn = get_db()
+                lid = f"lead_{datetime.now().strftime('%Y%m%d%H%M%S')}"
+                conn.execute(
+                    "INSERT INTO leads (id, name, company, email, source, stage, score) "
+                    "VALUES (?, ?, ?, ?, ?, 'new', ?)",
+                    (lid, l_name, l_company, l_email, l_source, l_score),
+                )
+                conn.commit()
+                conn.close()
+                log_agent_activity("Phani", "add_lead", l_name, "completed", f"Source: {l_source}, Score: {l_score}")
+                st.success(f"Lead '{l_name}' added!")
+                st.rerun()
+
+    with st.sidebar.expander("➕ Add Content"):
+        with st.form("quick_add_content"):
+            c_title = st.text_input("Title", key="qa_ctitle")
+            c_platform = st.selectbox("Platform", ["linkedin", "twitter", "newsletter", "youtube", "blog"], key="qa_cplatform")
+            c_status = st.selectbox("Status", ["draft", "scheduled", "published"], key="qa_cstatus")
+            if st.form_submit_button("Add Content"):
+                conn = get_db()
+                cid = f"content_{datetime.now().strftime('%Y%m%d%H%M%S')}"
+                conn.execute(
+                    "INSERT INTO content_calendar (id, title, platform, status) "
+                    "VALUES (?, ?, ?, ?)",
+                    (cid, c_title, c_platform, c_status),
+                )
+                conn.commit()
+                conn.close()
+                log_agent_activity("Phani", "add_content", c_title, "completed", f"Platform: {c_platform}")
+                st.success(f"Content '{c_title}' added!")
+                st.rerun()
+
+    with st.sidebar.expander("➕ Add Revenue"):
+        with st.form("quick_add_revenue"):
+            r_desc = st.text_input("Description", key="qa_rdesc")
+            r_amount = st.number_input("Amount (USD)", min_value=0.0, value=500.0, key="qa_ramount")
+            r_status = st.selectbox("Status", ["projected", "confirmed", "pending"], key="qa_rstatus")
+            if st.form_submit_button("Add Revenue"):
+                conn = get_db()
+                conn.execute(
+                    "INSERT INTO revenue (amount, status, description) VALUES (?, ?, ?)",
+                    (r_amount, r_status, r_desc),
+                )
+                conn.commit()
+                conn.close()
+                log_agent_activity("Phani", "add_revenue", r_desc, "completed", f"${r_amount:,.0f} ({r_status})")
+                st.success(f"Revenue '${r_amount:,.0f}' added!")
+                st.rerun()
 
 
 def render_client_projects():
@@ -134,7 +218,7 @@ def render_client_projects():
     conn.close()
 
     if not projects:
-        st.info("No projects yet. Add your first client project to start tracking.")
+        st.info("📋 No projects yet. Your first client project will appear here. Use Quick Add in the sidebar or wait for agent activity to populate this.")
         return
 
     df = pd.DataFrame([dict(p) for p in projects])
@@ -174,6 +258,10 @@ def render_revenue_dashboard():
         "WHERE r.status='confirmed' GROUP BY c.id ORDER BY total DESC LIMIT 5"
     ).fetchall()
     conn.close()
+
+    if not rev_by_status or all(r['total'] == 0 for r in rev_by_status):
+        st.info("💰 No revenue tracked yet. Add your first revenue entry using Quick Add in the sidebar.")
+        return
 
     c1, c2 = st.columns(2)
     with c1:
@@ -220,34 +308,7 @@ def render_lead_pipeline():
     conn.close()
 
     if not leads:
-        st.info("No leads yet. Add leads from your outreach, website, or referrals.")
-        with st.expander("Add New Lead"):
-            with st.form("add_lead"):
-                c1, c2 = st.columns(2)
-                with c1:
-                    lead_name = st.text_input("Name")
-                    lead_company = st.text_input("Company")
-                    lead_email = st.text_input("Email")
-                with c2:
-                    lead_phone = st.text_input("Phone")
-                    lead_source = st.selectbox(
-                        "Source", ["inbound", "outbound", "referral", "website", "social"]
-                    )
-                    lead_score = st.slider("Score", 0, 100, 50)
-                lead_notes = st.text_area("Notes")
-                if st.form_submit_button("Add Lead"):
-                    conn = get_db()
-                    lid = f"lead_{datetime.now().strftime('%Y%m%d%H%M%S')}"
-                    conn.execute(
-                        "INSERT INTO leads (id, name, company, email, phone, source, stage, score, notes) "
-                        "VALUES (?, ?, ?, ?, ?, ?, 'new', ?, ?)",
-                        (lid, lead_name, lead_company, lead_email, lead_phone,
-                         lead_source, lead_score, lead_notes),
-                    )
-                    conn.commit()
-                    conn.close()
-                    st.success(f"Lead '{lead_name}' added!")
-                    st.rerun()
+        st.info("🎯 No leads yet. The Lead Finder agent will populate this. Or add leads manually via Quick Add.")
         return
 
     df = pd.DataFrame([dict(l) for l in leads])
@@ -274,32 +335,7 @@ def render_content_calendar():
     conn.close()
 
     if not content:
-        st.info("No content scheduled. Plan your content to stay consistent.")
-        with st.expander("Schedule Content"):
-            with st.form("add_content"):
-                c1, c2 = st.columns(2)
-                with c1:
-                    title = st.text_input("Title")
-                    platform = st.selectbox(
-                        "Platform",
-                        ["linkedin", "twitter", "newsletter", "youtube", "blog"],
-                    )
-                with c2:
-                    status = st.selectbox("Status", ["draft", "scheduled", "published"])
-                    scheduled = st.date_input("Scheduled Date")
-                notes = st.text_area("Notes")
-                if st.form_submit_button("Schedule"):
-                    conn = get_db()
-                    cid = f"content_{datetime.now().strftime('%Y%m%d%H%M%S')}"
-                    conn.execute(
-                        "INSERT INTO content_calendar (id, title, platform, status, scheduled_at, notes) "
-                        "VALUES (?, ?, ?, ?, ?, ?)",
-                        (cid, title, platform, status, scheduled.isoformat(), notes),
-                    )
-                    conn.commit()
-                    conn.close()
-                    st.success(f"Content '{title}' scheduled!")
-                    st.rerun()
+        st.info("📝 No content scheduled. The Content Writer agent will populate this. Or add content via Quick Add.")
         return
 
     df = pd.DataFrame([dict(c) for c in content])
@@ -333,31 +369,7 @@ def render_automation_health():
     conn.close()
 
     if not automations:
-        st.info("No automations tracked yet. Add your client automations to monitor health.")
-        with st.expander("Add Automation"):
-            with st.form("add_automation"):
-                c1, c2 = st.columns(2)
-                with c1:
-                    name = st.text_input("Automation Name")
-                    status = st.selectbox("Status", ["running", "paused", "error"])
-                with c2:
-                    success_count = st.number_input("Success Count", min_value=0, value=0)
-                    failure_count = st.number_input("Failure Count", min_value=0, value=0)
-                    uptime = st.slider("Uptime %", 0.0, 100.0, 100.0)
-                notes = st.text_area("Notes")
-                if st.form_submit_button("Add"):
-                    conn = get_db()
-                    aid = f"auto_{datetime.now().strftime('%Y%m%d%H%M%S')}"
-                    conn.execute(
-                        "INSERT INTO automation_health "
-                        "(id, name, status, success_count, failure_count, uptime_pct, notes) "
-                        "VALUES (?, ?, ?, ?, ?, ?, ?)",
-                        (aid, name, status, success_count, failure_count, uptime, notes),
-                    )
-                    conn.commit()
-                    conn.close()
-                    st.success(f"Automation '{name}' added!")
-                    st.rerun()
+        st.info("🤖 No automations tracked yet. Once you have client automations running, they'll appear here.")
         return
 
     df = pd.DataFrame([dict(a) for a in automations])
@@ -384,6 +396,46 @@ def render_automation_health():
         cols = [c for c in ['name', 'client_name', 'status', 'uptime_pct',
                             'success_count', 'failure_count'] if c in df.columns]
         st.dataframe(df[cols], use_container_width=True, height=250)
+    st.divider()
+
+
+def render_agent_activity():
+    st.header("🤖 Agent Activity Log")
+    conn = get_db()
+    activity = conn.execute(
+        "SELECT * FROM agent_activity ORDER BY created_at DESC LIMIT 100"
+    ).fetchall()
+    conn.close()
+
+    if not activity:
+        st.info("No agent activity yet. As Hermes subagents work on your behalf, their actions will be logged here.")
+        return
+
+    df = pd.DataFrame([dict(a) for a in activity])
+    df['created_at'] = pd.to_datetime(df['created_at']).dt.strftime('%Y-%m-%d %H:%M')
+
+    # Summary stats
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Total Actions", len(df))
+    c2.metric("Active Agents", df['agent_name'].nunique())
+    c3.metric("Today's Actions", len(df[df['created_at'].str.startswith(datetime.now().strftime('%Y-%m-%d'))]))
+
+    # Activity by agent
+    st.subheader("Actions by Agent")
+    agent_counts = df['agent_name'].value_counts()
+    fig = px.bar(
+        x=agent_counts.index, y=agent_counts.values,
+        labels={"x": "Agent", "y": "Actions"},
+        title="Actions per Agent",
+        color=agent_counts.index,
+    )
+    fig.update_layout(height=250)
+    st.plotly_chart(fig, use_container_width=True)
+
+    # Activity log table
+    st.subheader("Recent Activity")
+    cols = [c for c in ['created_at', 'agent_name', 'action', 'target', 'status', 'details'] if c in df.columns]
+    st.dataframe(df[cols], use_container_width=True, height=400)
     st.divider()
 
 
@@ -471,13 +523,13 @@ def render_ai_recommendations():
 def main():
     st.set_page_config(
         page_title="AgentsFactory Command Center",
-        page_icon=":office:",
+        page_icon="🏭",
         layout="wide",
     )
 
     init_business_db()
 
-    st.sidebar.title("AgentsFactory")
+    st.sidebar.title("🏭 AgentsFactory")
     st.sidebar.markdown("**Command Center v1.0**")
     st.sidebar.divider()
 
@@ -490,12 +542,15 @@ def main():
             "Leads",
             "Content",
             "Automations",
+            "Agents",
             "AI Advice",
         ],
     )
 
     st.sidebar.divider()
     st.sidebar.markdown(f"*{datetime.now().strftime('%Y-%m-%d %H:%M')}*")
+
+    render_quick_add()
 
     if page == "Overview":
         render_header()
@@ -521,6 +576,9 @@ def main():
     elif page == "Automations":
         render_header()
         render_automation_health()
+    elif page == "Agents":
+        render_header()
+        render_agent_activity()
     elif page == "AI Advice":
         render_header()
         render_ai_recommendations()
