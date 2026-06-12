@@ -1,0 +1,329 @@
+{
+  "ok": true,
+  "generated_at": "2026-06-12T23:00:58.856899+05:30",
+  "agents": [
+    {
+      "name": "Lead Finder",
+      "total": 3312,
+      "completed": 121,
+      "failed": 0,
+      "last_task": "Scanned 3312 leads",
+      "last_status": "completed",
+      "model": "owl-alpha",
+      "last_seen": "2026-06-12T23:00:58.856899+05:30"
+    },
+    {
+      "name": "Content Writer",
+      "total": 24,
+      "completed": 0,
+      "failed": 0,
+      "last_task": "0 content pieces",
+      "last_status": "completed",
+      "model": "owl-alpha",
+      "last_seen": "2026-06-12T23:00:58.856899+05:30"
+    },
+    {
+      "name": "LinkedIn Agent",
+      "total": 15,
+      "completed": 12,
+      "failed": 3,
+      "last_task": "Multi-platform posting",
+      "last_status": "completed",
+      "model": "owl-alpha",
+      "last_seen": "2026-06-12T23:00:58.856899+05:30"
+    },
+    {
+      "name": "Outreach Agent",
+      "total": 3274,
+      "completed": 0,
+      "failed": 0,
+      "last_task": "3274 emails ready",
+      "last_status": "idle",
+      "model": "owl-alpha",
+      "last_seen": "2026-06-12T23:00:58.856899+05:30"
+    },
+    {
+      "name": "Builder",
+      "total": 8,
+      "completed": 8,
+      "failed": 0,
+      "last_task": "Dashboard + automation build",
+      "last_status": "completed",
+      "model": "owl-alpha",
+      "last_seen": "2026-06-12T23:00:58.856899+05:30"
+    }
+  ],
+  "stats": {
+    "total": 5,
+    "completed": 2,
+    "failed": 3
+  },
+  "sessions": {
+    "count": 4,
+    "totals": {
+      "messages": 15,
+      "input_tokens": 7500,
+      "cache_read_tokens": 4000
+    }
+  },
+  "vps": {
+    "cpu_pct": 12,
+    "mem_pct": 34,
+    "mem_used_mb": 2750,
+    "mem_total_mb": 8192,
+    "disk_pct": 45,
+    "disk_used_gb": 45,
+    "disk_total_gb": 100,
+    "db_size_mb": 2.4
+  },
+  "gateway": {
+    "ok": true,
+    "state": "running",
+    "uptime_seconds": 259200,
+    "platforms": {
+      "telegram": {
+        "state": "connected"
+      },
+      "slack": {
+        "state": "connected"
+      }
+    }
+  },
+  "cron": {
+    "jobs": [
+      {
+        "name": "Daily Briefing",
+        "schedule": "0 8 * * 1-5",
+        "category": "hermes",
+        "detail": "8 AM IST daily business briefing"
+      },
+      {
+        "name": "LinkedIn Post",
+        "schedule": "0 9 * * 1-5",
+        "category": "hermes",
+        "detail": "9 AM IST LinkedIn content post"
+      },
+      {
+        "name": "LinkedIn Engagement",
+        "schedule": "0 12 * * 1-5",
+        "category": "hermes",
+        "detail": "12 PM IST engagement cycle"
+      },
+      {
+        "name": "Lead Outreach",
+        "schedule": "0 10 * * 1-5",
+        "category": "hermes",
+        "detail": "10 AM IST lead outreach"
+      },
+      {
+        "name": "Weekly Review",
+        "schedule": "0 9 * * 1",
+        "category": "hermes",
+        "detail": "Monday 9 AM weekly review"
+      },
+      {
+        "name": "Weekly Content Queue",
+        "schedule": "0 8 * * 0",
+        "category": "hermes",
+        "detail": "Sunday 8 AM content scheduling"
+      },
+      {
+        "name": "Cost Monitor",
+        "schedule": "0 * * * *",
+        "category": "system",
+        "detail": "Hourly cost monitoring"
+      },
+      {
+        "name": "Attendance Scanner",
+        "schedule": "5 10 * * 1-5",
+        "category": "system",
+        "detail": "10:05 AM attendance check"
+      },
+      {
+        "name": "EOD Summary",
+        "schedule": "35 18 * * 1-5",
+        "category": "system",
+        "detail": "6:35 PM attendance summary"
+      }
+    ]
+  },
+  "crons": [
+    {
+      "name": "Daily Briefing",
+      "schedule": "0 8 * * 1-5",
+      "category": "hermes",
+      "detail": "8 AM IST daily business briefing"
+    },
+    {
+      "name": "LinkedIn Post",
+      "schedule": "0 9 * * 1-5",
+      "category": "hermes",
+      "detail": "9 AM IST LinkedIn content post"
+    },
+    {
+      "name": "LinkedIn Engagement",
+      "schedule": "0 12 * * 1-5",
+      "category": "hermes",
+      "detail": "12 PM IST engagement cycle"
+    },
+    {
+      "name": "Lead Outreach",
+      "schedule": "0 10 * * 1-5",
+      "category": "hermes",
+      "detail": "10 AM IST lead outreach"
+    },
+    {
+      "name": "Weekly Review",
+      "schedule": "0 9 * * 1",
+      "category": "hermes",
+      "detail": "Monday 9 AM weekly review"
+    },
+    {
+      "name": "Weekly Content Queue",
+      "schedule": "0 8 * * 0",
+      "category": "hermes",
+      "detail": "Sunday 8 AM content scheduling"
+    },
+    {
+      "name": "Cost Monitor",
+      "schedule": "0 * * * *",
+      "category": "system",
+      "detail": "Hourly cost monitoring"
+    },
+    {
+      "name": "Attendance Scanner",
+      "schedule": "5 10 * * 1-5",
+      "category": "system",
+      "detail": "10:05 AM attendance check"
+    },
+    {
+      "name": "EOD Summary",
+      "schedule": "35 18 * * 1-5",
+      "category": "system",
+      "detail": "6:35 PM attendance summary"
+    }
+  ],
+  "kanban": {
+    "total": 6
+  },
+  "activity_by_day": [
+    {
+      "day": "2026-06-12",
+      "total": 5
+    }
+  ],
+  "activity": [
+    {
+      "agent_name": "content_writer",
+      "task_description": "content_writer_invocation",
+      "status": "completed",
+      "model_used": "owl-alpha",
+      "created_at": "2026-06-12 10:47:31"
+    },
+    {
+      "agent_name": "content_writer",
+      "task_description": "content_batch_complete",
+      "status": "completed",
+      "model_used": "owl-alpha",
+      "created_at": "2026-06-12 10:47:30"
+    },
+    {
+      "agent_name": "content_writer",
+      "task_description": "content_batch_complete",
+      "status": "completed",
+      "model_used": "owl-alpha",
+      "created_at": "2026-06-12 10:13:40"
+    },
+    {
+      "agent_name": "content_writer",
+      "task_description": "content_writer_invocation",
+      "status": "completed",
+      "model_used": "owl-alpha",
+      "created_at": "2026-06-12 10:13:40"
+    },
+    {
+      "agent_name": "lead_finder",
+      "task_description": "lead_search_dry_run",
+      "status": "completed",
+      "model_used": "owl-alpha",
+      "created_at": "2026-06-12 10:11:41"
+    }
+  ],
+  "leads": {
+    "total": 3312,
+    "hot": 121,
+    "great": 51,
+    "good": 25,
+    "with_email": 3274,
+    "categories": [
+      {
+        "name": "Marketing agency",
+        "count": 116
+      },
+      {
+        "name": "380009",
+        "count": 79
+      },
+      {
+        "name": "Internet marketing service",
+        "count": 63
+      },
+      {
+        "name": "395007",
+        "count": 53
+      },
+      {
+        "name": "110001",
+        "count": 50
+      },
+      {
+        "name": "390007",
+        "count": 48
+      },
+      {
+        "name": "380015",
+        "count": 47
+      },
+      {
+        "name": "380006",
+        "count": 40
+      },
+      {
+        "name": "Advertising agency",
+        "count": 39
+      },
+      {
+        "name": "395009",
+        "count": 38
+      }
+    ],
+    "score_dist": [
+      {
+        "score": "HOT",
+        "count": 121
+      },
+      {
+        "score": "Great",
+        "count": 51
+      },
+      {
+        "score": "Good",
+        "count": 25
+      },
+      {
+        "score": "Poor",
+        "count": 1
+      }
+    ]
+  },
+  "business": {
+    "clients": 0,
+    "active_projects": 0,
+    "confirmed_revenue": 0,
+    "projected_revenue": 0,
+    "total_content": 0,
+    "published_content": 0,
+    "total_automations": 0,
+    "running_automations": 0
+  }
+}
