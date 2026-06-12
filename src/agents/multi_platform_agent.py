@@ -123,13 +123,28 @@ def post_to_all_platforms(post_set: dict = None, schedule_hours: float = 0.25) -
     except Exception as e:
         results["twitter"] = {"error": str(e)}
 
+    # Instagram (requires media URL — rotate through branded images)
+    INSTAGRAM_MEDIA_URLS = [
+        "https://phanindraintelligenzit-afk.github.io/AgentsFactory/landing/social-assets/01_brand_welcome.png",
+        "https://phanindraintelligenzit-afk.github.io/AgentsFactory/landing/social-assets/02_day_progress.png",
+        "https://phanindraintelligenzit-afk.github.io/AgentsFactory/landing/social-assets/03_ai_agent_explainer.png",
+        "https://phanindraintelligenzit-afk.github.io/AgentsFactory/landing/social-assets/04_services_overview.png",
+        "https://phanindraintelligenzit-afk.github.io/AgentsFactory/landing/social-assets/05_what_are_agents.png",
+        "https://phanindraintelligenzit-afk.github.io/AgentsFactory/landing/social-assets/06_behind_scenes.png",
+        "https://phanindraintelligenzit-afk.github.io/AgentsFactory/landing/social-assets/07_testimonial.png",
+        "https://phanindraintelligenzit-afk.github.io/AgentsFactory/landing/social-assets/08_five_things_learned.png",
+        "https://phanindraintelligenzit-afk.github.io/AgentsFactory/landing/social-assets/09_workflow_diagram.png",
+        "https://phanindraintelligenzit-afk.github.io/AgentsFactory/landing/social-assets/10_cta_dm.png",
+    ]
+
     # Instagram (requires media URL — use branded image)
     try:
+        media_url = random.choice(INSTAGRAM_MEDIA_URLS)
         results["instagram"] = create_post(
             caption=adapt_for_platform(post_set["instagram"], "instagram"),
             social_profile_ids=[INSTAGRAM_PROFILE_ID],
             scheduled_at=scheduled_at,
-            media_urls=["https://phanindraintelligenzit-afk.github.io/AgentsFactory/landing/instagram-post.png"],
+            media_urls=[media_url],
         )
     except Exception as e:
         results["instagram"] = {"error": str(e)}
