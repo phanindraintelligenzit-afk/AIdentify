@@ -108,12 +108,11 @@ def schedule_post(
 
 
 def list_posts(status: str = None, limit: int = 20) -> list:
-    """List posts. Optional status filter: draft, scheduled, published, failed."""
-    params = {"workspaceId": WORKSPACE_ID}
+    """List posts. Optional status filter: DRAFT, SCHEDULED, POSTED, ERROR."""
+    params = {"workspaceId": WORKSPACE_ID, "page": "0", "perPage": str(limit)}
     if status:
-        params["status"] = status
-    params["limit"] = str(limit)
-    return _request("GET", "/posts", params=params)
+        params["statuses"] = status
+    return _request("GET", "/post", params=params)
 
 
 def delete_post(post_group_id: str) -> dict:
