@@ -144,7 +144,7 @@ def render_client_projects():
         fig = px.pie(
             values=sc.values, names=sc.index, title="Project Status",
             color=sc.index,
-            color_map={"active": "#22c55e", "completed": "#3b82f6",
+            color_discrete_map={"active": "#22c55e", "completed": "#3b82f6",
                        "paused": "#f59e0b", "cancelled": "#ef4444"},
         )
         fig.update_layout(height=250)
@@ -183,7 +183,7 @@ def render_revenue_dashboard():
                 rdf, x='status', y='total', color='status',
                 title="Revenue by Status",
                 labels={"total": "Amount (USD)", "status": "Status"},
-                color_map={"confirmed": "#22c55e", "projected": "#3b82f6", "pending": "#f59e0b"},
+                color_discrete_map={"confirmed": "#22c55e", "projected": "#3b82f6", "pending": "#f59e0b"},
             )
             fig.update_layout(height=300)
             st.plotly_chart(fig, use_container_width=True)
@@ -309,7 +309,7 @@ def render_content_calendar():
         fig = px.pie(
             values=sc.values, names=sc.index, title="Content Status",
             color=sc.index,
-            color_map={"published": "#22c55e", "scheduled": "#3b82f6", "draft": "#f59e0b"},
+            color_discrete_map={"published": "#22c55e", "scheduled": "#3b82f6", "draft": "#f59e0b"},
         )
         fig.update_layout(height=250)
         st.plotly_chart(fig, use_container_width=True)
@@ -375,7 +375,7 @@ def render_automation_health():
         fig = px.pie(
             values=sc.values, names=sc.index, title="Automation Status",
             color=sc.index,
-            color_map={"running": "#22c55e", "paused": "#f59e0b", "error": "#ef4444"},
+            color_discrete_map={"running": "#22c55e", "paused": "#f59e0b", "error": "#ef4444"},
         )
         fig.update_layout(height=250)
         st.plotly_chart(fig, use_container_width=True)
