@@ -1,0 +1,169 @@
+urgency:
+  critical:
+    keywords:
+      - urgent
+      - emergency
+      - down
+      - broken
+      - can't access
+      - refund
+      - chargeback
+      - fraud
+      - illegal
+      - lawsuit
+    sla_hours: 1
+    auto_escalate: true
+  high:
+    keywords:
+      - issue
+      - problem
+      - not working
+      - error
+      - complaint
+      - cancel
+      - wrong
+      - missing
+      - damaged
+      - late
+    sla_hours: 4
+  medium:
+    keywords:
+      - question
+      - help
+      - how to
+      - when
+      - status
+      - tracking
+      - update
+      - change
+      - modify
+    sla_hours: 24
+  low:
+    keywords:
+      - feedback
+      - suggestion
+      - feature request
+      - thanks
+      - appreciate
+      - nice
+      - great
+    sla_hours: 72
+
+categories:
+  order_issue:
+    keywords:
+      - order
+      - shipping
+      - delivery
+      - package
+      - tracking
+      - arrived
+      - ship
+  billing:
+    keywords:
+      - charge
+      - refund
+      - invoice
+      - payment
+      - billing
+      - subscription
+      - price
+      - cost
+      - credit card
+  technical:
+    keywords:
+      - bug
+      - error
+      - crash
+      - not working
+      - broken
+      - api
+      - integration
+      - sync
+      - timeout
+  account:
+    keywords:
+      - login
+      - password
+      - account
+      - access
+      - settings
+      - profile
+      - verify
+      - authentication
+
+response_templates:
+  order_issue: |
+    Hi {name},
+
+    Thank you for reaching out about your order #{order_id}.
+    I've looked into this and here's the current status:
+
+    {resolution}
+
+    If you have any other questions, please don't hesitate to ask.
+
+    Best regards,
+    Support Team
+
+  billing: |
+    Hi {name},
+
+    Thank you for contacting us about your billing inquiry.
+    I've reviewed your account and here's what I found:
+
+    {resolution}
+
+    We'll process this within 2-3 business days.
+
+    Best regards,
+    Billing Team
+
+  technical: |
+    Hi {name},
+
+    Thank you for reporting this technical issue.
+    Our engineering team has been notified and is investigating.
+
+    {resolution}
+
+    We'll update you as soon as we have more information.
+
+    Best regards,
+    Technical Support
+
+  account: |
+    Hi {name},
+
+    Thank you for contacting us about your account.
+    Here's what we've found:
+
+    {resolution}
+
+    If you need further assistance, please let us know.
+
+    Best regards,
+    Account Support
+
+  general: |
+    Hi {name},
+
+    Thank you for reaching out!
+    Here's a response to your inquiry:
+
+    {resolution}
+
+    Best regards,
+    Support Team
+
+notifications:
+  slack_webhook: ""
+  slack_channel: "#support-alerts"
+  email: ""
+  alert_on_critical: true
+
+output:
+  save_queue: true
+  queue_path: "data/support_queue.json"
+  save_report: true
+  report_path: "data/support_triage_report.md"

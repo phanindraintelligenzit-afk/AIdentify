@@ -1,0 +1,10 @@
+report_output_dir: "data/reports"
+
+email_recipients:
+  - "you@example.com"
+
+data_sources:
+  orders: true
+  revenue: true
+  customers: true
+  content: true

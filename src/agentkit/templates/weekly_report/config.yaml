@@ -1,0 +1,49 @@
+report:
+  title: "Weekly Business Report"
+  brand_name: "Your Company"
+  currency: "USD"
+  sections:
+    executive_summary: true
+    orders_summary: true
+    revenue: true
+    top_products: true
+    customer_insights: true
+    recommendations: true
+
+  # Week-over-week comparison
+  comparison:
+    enabled: true
+    periods: 4  # Compare last 4 weeks
+
+notifications:
+  email: ""
+  email_from: "reports@agentsfactory.ai"
+  email_subject: "Weekly Report — {date}"
+  slack_webhook: ""
+  slack_channel: "#reports"
+
+output:
+  save_report: true
+  save_path: "data/reports/weekly_report_{date}.md"
+  save_json: true
+  json_path: "data/reports/weekly_report_{date}.json"
+
+# Simulated data sources (replace with real API calls in production)
+data_sources:
+  shopify:
+    enabled: true
+    metrics:
+      - orders
+      - revenue
+      - top_products
+  stripe:
+    enabled: true
+    metrics:
+      - mrr
+      - churn
+      - arpu
+  google_analytics:
+    enabled: false
+    metrics:
+      - sessions
+      - conversion_rate

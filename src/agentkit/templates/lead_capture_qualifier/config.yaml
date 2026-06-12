@@ -1,0 +1,5 @@
+slack_webhook: ""  # Slack incoming webhook URL (leave empty to skip)
+
+hot_leader_threshold: 70  # Score at or above which a lead is considered "hot"
+
+crm_db_path: "data/leads.db"  # Path to SQLite CRM database

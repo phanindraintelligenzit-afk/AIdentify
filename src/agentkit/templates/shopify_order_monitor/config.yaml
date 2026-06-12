@@ -1,0 +1,15 @@
+shopify_store_url: "your-store.myshopify.com"
+
+slack_webhook: ""  # Slack incoming webhook URL (leave empty to skip)
+
+email_recipients:
+  - "you@example.com"
+
+anomaly_thresholds:
+  high_value_order: 5000.0   # Flag orders above this total value (USD)
+  bulk_quantity: 10          # Flag line items with quantity >= this
+  risk_countries:            # ISO country codes flagged for manual review
+    - NG                     # Nigeria
+    - PK                     # Pakistan
+    - BD                     # Bangladesh
+    - VN                     # Vietnam

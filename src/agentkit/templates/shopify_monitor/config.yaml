@@ -1,0 +1,35 @@
+shopify:
+  store_url: "your-store.myshopify.com"
+  api_key: "YOUR_SHOPIFY_API_KEY"
+  api_secret: "YOUR_SHOPIFY_API_SECRET"
+  api_version: "2024-01"
+
+thresholds:
+  max_order_value: 5000.0        # Flag orders above this total value
+  min_order_value: 0.5           # Flag suspiciously low orders (test orders)
+  bulk_quantity: 10              # Flag line items with qty >= this
+  high_risk_countries:           # Country codes flagged for review
+    - NG                         # Nigeria
+    - PK                         # Pakistan
+    - BD                         # Bangladesh
+    - VN                         # Vietnam
+    - ID                         # Indonesia
+  max_orders_per_hour: 50        # Flag if hourly rate exceeds this
+
+notifications:
+  slack_webhook: ""              # Slack incoming webhook URL (leave empty to skip)
+  slack_channel: "#order-alerts"
+  email: ""                      # Email for daily summaries (leave empty to skip)
+  email_from: "alerts@agentsfactory.ai"
+  daily_summary_hour: 9          # Hour of day (0-23) to send summary
+  daily_summary_timezone: "UTC"
+
+monitoring:
+  check_interval_seconds: 300    # How often to poll Shopify
+  lookback_hours: 24             # How far back to check for new orders
+  retry_attempts: 3
+  retry_delay_seconds: 30
+
+output:
+  save_report: true
+  report_path: "data/shopify_daily_report.md"

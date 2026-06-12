@@ -1,0 +1,9 @@
+platforms:
+  - linkedin
+  - twitter
+
+max_posts_per_day: 3
+
+content_calendar_db_path: "agentsfactory_metrics.db"
+
+reshare_threshold_days: 7

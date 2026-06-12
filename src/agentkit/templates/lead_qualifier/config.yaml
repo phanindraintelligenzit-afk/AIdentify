@@ -1,0 +1,50 @@
+scoring:
+  hot_threshold: 70          # Score >= this triggers a hot lead alert
+  budget:
+    tier1_min: 5000          # USD — score 30 if budget >= this
+    tier2_min: 1000          # USD — score 15 if budget >= this
+    tier3_min: 0             # USD — score 5 if below tier2
+  timeline:
+    immediate_months: 1      # <= 1 month = score 25
+    short_months: 3          # 1-3 months = score 15
+    long_months: 999         # > 3 months = score 5
+  company_size:
+    enterprise_min: 50       # 50+ employees = score 20
+    mid_min: 10              # 10-49 employees = score 12
+    small_min: 1             # < 10 employees = score 5
+  industry_fit:
+    perfect: 15              # Exact match to target industries
+    partial: 8               # Related industry
+    poor: 0                  # No match
+  engagement:
+    referred: 10
+    inbound: 7
+    cold: 3
+
+notifications:
+  slack_webhook: ""          # Slack incoming webhook URL
+  slack_channel: "#leads"
+  email: ""                  # Email for daily digest
+  alert_on_hot: true         # Send Slack alert immediately for hot leads
+  daily_digest_hour: 10      # Hour (0-23) for daily digest
+
+crm:
+  table_name: "leads"
+
+target_industries:
+  - ecommerce
+  - saas
+  - local_business
+  - healthcare
+  - education
+
+sources:
+  - web_form
+  - email
+  - linkedin
+  - referral
+  - inbound_call
+
+output:
+  save_reports: true
+  report_path: "data/lead_qualifier_report.md"

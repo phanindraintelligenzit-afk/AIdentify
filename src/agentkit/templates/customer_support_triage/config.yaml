@@ -1,0 +1,38 @@
+email_check_interval_minutes: 15
+
+urgency_keywords:
+  critical:
+    - down
+    - outage
+    - data loss
+    - security breach
+    - hacked
+    - unauthorized
+    - production down
+  high:
+    - refund
+    - cancel
+    - broken
+    - urgent
+    - not working
+    - charge
+    - billing error
+  medium:
+    - question
+    - help
+    - issue
+    - bug
+    - problem
+    - confused
+    - how do i
+  low:
+    - feedback
+    - suggestion
+    - feature request
+    - thank you
+    - nice
+    - love the
+
+response_templates_dir: "data/support_templates"
+
+human_review_queue_path: "data/human_review_queue.json"
