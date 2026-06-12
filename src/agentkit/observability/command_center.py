@@ -520,6 +520,79 @@ def render_ai_recommendations():
     st.divider()
 
 
+def render_agent_kanban():
+    st.header("🤖 Agent Kanban Board")
+    st.markdown("Track what each subagent is working on, their current status, and progress.")
+
+    conn = get_db()
+
+    # Get all agents and their latest activity
+    agents = conn.execute(
+        "SELECT agent_name, action, target, status, details, created_at "
+        "FROM agent_activity ORDER BY created_at DESC LIMIT 200"
+    ).fetchall()
+
+    # Define the agent roster and their current tasks
+    agent_roster = [
+        {"name": "Lead Finder", "icon": "🎯", "role": "Scans LinkedIn, Twitter, Reddit, Google Maps for prospects", "color": "#3b82f6"},
+        {"name": "Content Writer", "icon": "📝", "role": "Drafts LinkedIn posts, tweets, newsletters, blogs", "color": "#22c55e"},
+        {"name": "LinkedIn Agent", "icon": "💼", "role": "Posts content, engages with targets, sends connection requests", "color": "#0ea5e9"},
+        {"name": "Outreach Agent", "icon": "📨", "role": "Sends personalized DMs and emails to leads", "color": "#f59e0b"},
+        {"name": "Builder", "icon": "🔧", "role": "Builds client automations from templates", "color": "#8b5cf6"},
+        {"name": "Monitor", "icon": "👁️", "role": "Watches all client automations, alerts on failures", "color": "#ef4444"},
+        {"name": "Reporter", "icon": "📊", "role": "Generates daily briefings and weekly reviews", "color": "#14b8a6"},
+        {"name": "Form Sync", "icon": "📋", "role": "Syncs Google Form leads to dashboard + Notion", "color": "#ec4899"},
+    ]
+
+    # Count actions per agent
+    agent_stats = {}
+    for a in agents:
+        name = a["agent_name"]
+        if name not in agent_stats:
+            agent_stats[name] = {"total": 0, "completed": 0, "failed": 0, "last_action": None, "last_time": None}
+        agent_stats[name]["total"] += 1
+        if a["status"] == "completed":
+            agent_stats[name]["completed"] += 1
+        elif a["status"] == "failed":
+            agent_stats[name]["failed"] += 1
+        if agent_stats[name]["last_time"] is None or a["created_at"] > agent_stats[name]["last_time"]:
+            agent_stats[name]["last_action"] = a["action"]
+            agent_stats[name]["last_time"] = a["created_at"]
+
+    # Display as Kanban columns
+    cols = st.columns(4)
+    for i, agent in enumerate(agent_roster):
+        col = cols[i % 4]
+        with col:
+            stats = agent_stats.get(agent["name"], {"total": 0, "completed": 0, "failed": 0, "last_action": "No activity yet", "last_time": None})
+            status_color = "#22c55e" if stats["total"] > 0 else "#6b7280"
+            status_dot = "🟢" if stats["total"] > 0 else "⚪"
+
+            st.markdown(f"""
+            <div style="border-left: 4px solid {agent['color']}; padding: 12px; background: #1a1a2e; border-radius: 8px; margin-bottom: 12px;">
+                <h4 style="margin: 0;">{agent['icon']} {agent['name']}</h4>
+                <p style="font-size: 0.8em; color: #9ca3af; margin: 4px 0;">{agent['role']}</p>
+                <p style="font-size: 0.75em; color: {status_color}; margin: 4px 0;">{status_dot} {stats['last_action']}</p>
+                <p style="font-size: 0.7em; color: #6b7280; margin: 0;">Actions: {stats['total']} | ✅ {stats['completed']} | ❌ {stats['failed']}</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+    st.divider()
+
+    # Recent activity timeline
+    st.subheader("Recent Activity Timeline")
+    if agents:
+        for a in agents[:15]:
+            status_emoji = {"completed": "✅", "failed": "❌", "in_progress": "🔄", "pending_review": "⏳"}.get(a["status"], "⚪")
+            time_str = a["created_at"][:16] if a["created_at"] else "Unknown"
+            st.markdown(f"{status_emoji} **{a['agent_name']}** → {a['action']} | {a['target']} | *{time_str}*")
+    else:
+        st.info("No agent activity yet. Run a subagent to see activity here.")
+
+    conn.close()
+    st.divider()
+
+
 def main():
     st.set_page_config(
         page_title="AgentsFactory Command Center",
@@ -543,6 +616,7 @@ def main():
             "Content",
             "Automations",
             "Agents",
+            "Kanban",
             "AI Advice",
         ],
     )
@@ -579,6 +653,9 @@ def main():
     elif page == "Agents":
         render_header()
         render_agent_activity()
+    elif page == "Kanban":
+        render_header()
+        render_agent_kanban()
     elif page == "AI Advice":
         render_header()
         render_ai_recommendations()
