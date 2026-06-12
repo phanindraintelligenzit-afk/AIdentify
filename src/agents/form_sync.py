@@ -96,7 +96,32 @@ def sync_to_database(rows: list[dict]) -> int:
     return inserted
 
 
-def sync_to_notion(rows: list[dict]) -> int:
+FORMSPREE_ENDPOINT = "https://formspree.io/f/xlgkpzeo"
+
+def sync_to_formspree(name, email, business_type, pain_point):
+    """Send lead data to Formspree as a backup/submission log."""
+    import urllib.request
+    import json
+
+    payload = json.dumps({
+        "name": name,
+        "email": email,
+        "business_type": business_type,
+        "pain_point": pain_point,
+        "source": "landing_page",
+    }).encode("utf-8")
+
+    req = urllib.request.Request(
+        FORMSPREE_ENDPOINT,
+        data=payload,
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req) as resp:
+            return resp.status == 200
+    except Exception:
+        return False
     """Sync form responses to Notion Leads database."""
     import subprocess
 
