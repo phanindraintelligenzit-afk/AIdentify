@@ -1,0 +1,147 @@
+{
+  "selected": {
+    "source": "devto",
+    "title": "🚀 I Built an AI Team That Finds Leads, Decision Makers & Writes Outreach While I Sleep",
+    "url": "https://dev.to/vivek_shetye/i-built-an-ai-team-that-finds-leads-decision-makers-writes-outreach-while-i-sleep-2hkj",
+    "reactions": 5,
+    "comments": 1,
+    "tags": [
+      "ai",
+      "hermesagent",
+      "agents",
+      "automation"
+    ],
+    "author": "Vivek Shetye",
+    "text": "Lead generation is one of those tasks everyone knows they should automate… but most teams still do it...",
+    "opportunity_score": 51,
+    "signals": [
+      "🔥 2 pain signals",
+      "💡 3 opportunity keywords",
+      "🏭 Industries: marketing, realestate"
+    ],
+    "detailed_scores": {
+      "market": 5,
+      "feasibility": 6,
+      "revenue": 4,
+      "stack_fit": 6,
+      "total": 21
+    },
+    "category": "marketing",
+    "consensus_bonus": 12,
+    "final_score": 33
+  },
+  "all_scores": [
+    {
+      "title": "🚀 I Built an AI Team That Finds Leads, Decision Makers & Wri",
+      "scores": {
+        "market": 5,
+        "feasibility": 6,
+        "revenue": 4,
+        "stack_fit": 6,
+        "total": 21
+      },
+      "final": 33
+    },
+    {
+      "title": "What surprised you about Estonia e-Residency and running an ",
+      "scores": {
+        "market": 5,
+        "feasibility": 6,
+        "revenue": 4,
+        "stack_fit": 6,
+        "total": 21
+      },
+      "final": 21
+    },
+    {
+      "title": "The Playwright Playbook — Part 7: The CI/CD Setup Nobody Sho",
+      "scores": {
+        "market": 5,
+        "feasibility": 6,
+        "revenue": 4,
+        "stack_fit": 6,
+        "total": 21
+      },
+      "final": 21
+    },
+    {
+      "title": "Automating Toil Elimination: A Systematic Taxonomy of SRE Au",
+      "scores": {
+        "market": 5,
+        "feasibility": 6,
+        "revenue": 4,
+        "stack_fit": 6,
+        "total": 21
+      },
+      "final": 21
+    },
+    {
+      "title": "Anthropic banned me from using Claude Code and I don't know ",
+      "scores": {
+        "market": 5,
+        "feasibility": 6,
+        "revenue": 4,
+        "stack_fit": 6,
+        "total": 21
+      },
+      "final": 21
+    },
+    {
+      "title": "How My AI Agent Hacked Its Own Permissions (And What It Taug",
+      "scores": {
+        "market": 5,
+        "feasibility": 6,
+        "revenue": 4,
+        "stack_fit": 6,
+        "total": 21
+      },
+      "final": 21
+    },
+    {
+      "title": "Setting up a realistic, multi-machine environment on your ow",
+      "scores": {
+        "market": 5,
+        "feasibility": 6,
+        "revenue": 4,
+        "stack_fit": 6,
+        "total": 21
+      },
+      "final": 21
+    },
+    {
+      "title": "Am I missing something with AI",
+      "scores": {
+        "market": 5,
+        "feasibility": 6,
+        "revenue": 4,
+        "stack_fit": 6,
+        "total": 21
+      },
+      "final": 21
+    },
+    {
+      "title": "Write SaaS apps where users control where their data is stor",
+      "scores": {
+        "market": 5,
+        "feasibility": 6,
+        "revenue": 4,
+        "stack_fit": 6,
+        "total": 21
+      },
+      "final": 21
+    },
+    {
+      "title": "cuenv: one typed file for your whole project",
+      "scores": {
+        "market": 5,
+        "feasibility": 6,
+        "revenue": 4,
+        "stack_fit": 6,
+        "total": 21
+      },
+      "final": 21
+    }
+  ],
+  "date": "2026-06-26",
+  "rationale": "Best market (5) + feasibility (6) + stack fit (6)"
+}

@@ -1,0 +1,24 @@
+{
+  "project_slug": "ai-team-leads-decision-makers-outreach",
+  "project_dir": "C:\\Users\\Admin\\Projects\\AgentsFactory\\AIdentify\\projects\\ai-team-leads-decision-makers-outreach",
+  "idea": "AI Team That Finds Leads, Decision Makers & Writes Outreach",
+  "category": "marketing",
+  "date": "2026-06-26",
+  "built": true,
+  "files": {
+    "README.md": "C:\\Users\\Admin\\Projects\\AgentsFactory\\AIdentify\\projects\\ai-team-leads-decision-makers-outreach\\README.md",
+    "requirements.txt": "C:\\Users\\Admin\\Projects\\AgentsFactory\\AIdentify\\projects\\ai-team-leads-decision-makers-outreach\\requirements.txt",
+    "config.yaml": "C:\\Users\\Admin\\Projects\\AgentsFactory\\AIdentify\\projects\\ai-team-leads-decision-makers-outreach\\config.yaml",
+    "src/main.py": "C:\\Users\\Admin\\Projects\\AgentsFactory\\AIdentify\\projects\\ai-team-leads-decision-makers-outreach\\src\\main.py",
+    "tests/test_main.py": "C:\\Users\\Admin\\Projects\\AgentsFactory\\AIdentify\\projects\\ai-team-leads-decision-makers-outreach\\tests\\test_main.py"
+  },
+  "agent_pipeline": [
+    {"name": "researcher", "role": "Market analysis"},
+    {"name": "planner", "role": "Implementation planning"},
+    {"name": "coder", "role": "Code generation"},
+    {"name": "reviewer", "role": "Quality assurance"},
+    {"name": "social", "role": "Community analysis"},
+    {"name": "outreach", "role": "Marketing & comms"}
+  ],
+  "tags": ["Marketing", "Multi-Agent", "AI Automation"]
+}

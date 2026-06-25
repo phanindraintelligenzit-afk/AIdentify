@@ -1,0 +1,242 @@
+[
+  {
+    "source": "devto",
+    "title": "🚀 I Built an AI Team That Finds Leads, Decision Makers & Writes Outreach While I Sleep",
+    "url": "https://dev.to/vivek_shetye/i-built-an-ai-team-that-finds-leads-decision-makers-writes-outreach-while-i-sleep-2hkj",
+    "reactions": 5,
+    "comments": 1,
+    "tags": [
+      "ai",
+      "hermesagent",
+      "agents",
+      "automation"
+    ],
+    "author": "Vivek Shetye",
+    "text": "Lead generation is one of those tasks everyone knows they should automate… but most teams still do it...",
+    "opportunity_score": 51,
+    "signals": [
+      "🔥 2 pain signals",
+      "💡 3 opportunity keywords",
+      "🏭 Industries: marketing, realestate"
+    ]
+  },
+  {
+    "source": "hackernews",
+    "title": "What surprised you about Estonia e-Residency and running an Estonian OÜ?",
+    "url": "https://news.ycombinator.com/item?id=48673801",
+    "score": 72,
+    "comments": 62,
+    "text": "From the official information online, joining the e-Residency program and setting up an Estonian company seems relatively straightforward. I'm considering using an Estonian OÜ for a SaaS business and would love to hear from people who have actually gone through the process. What surprised you after becoming an e-resident and establishing your company? Were there recurring costs, compliance requirements, banking/payment issues, tax complications, or other operational challenges you didn't anticipate? How easy has it been to run the company remotely? Have you ever needed to travel to Estonia to resolve an issue? Looking back, would you do it again? What do you wish you had known before getting started? I'd appreciate any lessons learned, gotchas, or advice from",
+    "author": "jvilalta",
+    "opportunity_score": 50,
+    "signals": [
+      "💡 2 opportunity keywords",
+      "🏭 Industries: legal, hr, finance",
+      "📈 High engagement"
+    ]
+  },
+  {
+    "source": "devto",
+    "title": "The Playwright Playbook — Part 7: The CI/CD Setup Nobody Shows You",
+    "url": "https://dev.to/sshhfaiz/the-playwright-playbook-part-7-the-cicd-setup-nobody-shows-you-516e",
+    "reactions": 8,
+    "comments": 1,
+    "tags": [
+      "playwright",
+      "testing",
+      "typescript",
+      "automation"
+    ],
+    "author": "Faizal",
+    "text": "A production-ready Playwright CI/CD pipeline — GitHub Actions, test sharding across machines, browser matrix, Docker for consistent environments, Slack failure notifications, and published HTML reports.",
+    "opportunity_score": 41,
+    "signals": [
+      "🏭 Industries: ecommerce, devtools"
+    ]
+  },
+  {
+    "source": "devto",
+    "title": "Automating Toil Elimination: A Systematic Taxonomy of SRE Automation Patterns",
+    "url": "https://dev.to/npayyappilly/automating-toil-elimination-a-systematic-taxonomy-of-sre-automation-patterns-49a",
+    "reactions": 1,
+    "comments": 0,
+    "tags": [
+      "sre",
+      "devops",
+      "kubernetes",
+      "automation"
+    ],
+    "author": "Nijo George Payyappilly",
+    "text": "Every SRE team has a list of things they intend to automate. The list grows faster than it shrinks....",
+    "opportunity_score": 41,
+    "signals": [
+      "🔥 2 pain signals",
+      "🏭 Industries: hr, devtools"
+    ]
+  },
+  {
+    "source": "hackernews",
+    "title": "Anthropic banned me from using Claude Code and I don't know what to do",
+    "url": "https://news.ycombinator.com/item?id=48641160",
+    "score": 80,
+    "comments": 92,
+    "text": "After using Claude Code at work for months I wanted to use it on my own projects too. Most probably because my vpn was on I got banned after 1 hour of usage. I got my 120$ back. 1 month later I signed up with vpn off. But this time probably because I used the same credit cart (and that's the only card I can use) they banned me again. Even after I contacted support I got a generic \"we have determined that we cannot reinstate your account at this time due to a violation of our Usage Policy\" answer. I'm not using it for anything unusal. \"Summarize that markdown file\", \"how can i refactor payment module\" kind of questions mostly. I couldn't even move to real coding because 1 hour was only enough for investigation. My last chance is HN to get s",
+    "author": "ayi",
+    "opportunity_score": 40,
+    "signals": [
+      "🏭 Industries: hr, finance",
+      "📈 High engagement"
+    ]
+  },
+  {
+    "source": "devto",
+    "title": "How My AI Agent Hacked Its Own Permissions (And What It Taught Me)",
+    "url": "https://dev.to/gdg/how-my-ai-agent-hacked-its-own-permissions-and-what-it-taught-me-34bm",
+    "reactions": 15,
+    "comments": 13,
+    "tags": [
+      "ai",
+      "security",
+      "agents",
+      "automation"
+    ],
+    "author": "Alexander Tyutin",
+    "text": "Have you ever tried to build an automation that works so well it bypasses the very rules you set for...",
+    "opportunity_score": 36,
+    "signals": [
+      "💡 3 opportunity keywords",
+      "📈 High engagement"
+    ]
+  },
+  {
+    "source": "devto",
+    "title": "Setting up a realistic, multi-machine environment on your own laptop used to mean juggling VirtualBox windows, clicking through installers, and hoping you could reproduce the same setup tomorrow. Vagrant replaces all of that with a single text file.",
+    "url": "https://dev.to/saint_vandora/setting-up-a-realistic-multi-machine-environment-on-your-own-laptop-used-to-mean-juggling-1lb2",
+    "reactions": 5,
+    "comments": 0,
+    "tags": [
+      "automation",
+      "devops",
+      "tooling",
+      "tutorial"
+    ],
+    "author": "FOLASAYO SAMUEL OLAYEMI",
+    "text": "Building a Multi-VM Lab with Vagrant: Two Web Servers and a Database                         ...",
+    "opportunity_score": 36,
+    "signals": [
+      "🏭 Industries: hr, devtools"
+    ]
+  },
+  {
+    "source": "hackernews",
+    "title": "Am I missing something with AI",
+    "url": "https://news.ycombinator.com/item?id=48645072",
+    "score": 15,
+    "comments": 22,
+    "text": "I constantly hear developers around me talk about how AI has completely changed their life and how they don't even program anymore, they just prompt. But any time I've used it, the output has always been off. And when the output is off I have to go and read through everything, learn how it works and fix it, which at that point I might as well write it myself. I just don't understand what other people are seeing, I've mainly used Claude and ChatGPT, I got a free trial for premium but it's just underwhelming, their only use so far for me has been as a search engine, but they're a search engine that's wrong 20% of the time so even that use is questionable.",
+    "author": "vasko",
+    "opportunity_score": 35,
+    "signals": [
+      "🏭 Industries: hr, devtools"
+    ]
+  },
+  {
+    "source": "hackernews",
+    "title": "Write SaaS apps where users control where their data is stored",
+    "url": "https://github.com/wolfoo2931/linkedrecords/",
+    "hn_url": "https://news.ycombinator.com/item?id=48595882",
+    "score": 68,
+    "comments": 30,
+    "text": "Hello HN, I would like to share with you linkedrecords.com - an open source backend as a service I'm working on since some time now. You can think of it as an firebase/convex alternative with an interesting twist. In 2018 I needed to write large software requirements/architecture documents in Google Docs. While I was annoyed by the limitations of Google Docs back then (no captions on figures, no automatic heading numbering, slow when docs are bigger,...) I was still fascinated by the real time collaboration features of it. So I've started a quest to understand how it works and I begun to implement an alternative to Google Docs. I was convinced that this kind of real time collaboration is the future so I've given it much thought how I could make this as generi",
+    "author": "WolfOliver",
+    "opportunity_score": 35,
+    "signals": [
+      "🏭 Industries: ecommerce",
+      "📈 High engagement"
+    ]
+  },
+  {
+    "source": "devto",
+    "title": "cuenv: one typed file for your whole project",
+    "url": "https://dev.to/peterj/cuenv-one-typed-file-for-your-whole-project-76a",
+    "reactions": 0,
+    "comments": 0,
+    "tags": [
+      "automation",
+      "cicd",
+      "devops",
+      "tooling"
+    ],
+    "author": "Peter Jausovec",
+    "text": "Most projects don't have a configuration system — they have a pile:  a .env file, a Makefile, a CI workflow, and secrets in a fourth place, none of it validated and all of it slowly drifting apart. cuenv replaces that pile with a single typed env.cue written in CUE. In this overview I'll show you how it validates your config before anything runs, resolves secrets at runtime, runs your tasks as a cached DAG, and generates your CI from the same definitions.",
+    "opportunity_score": 31,
+    "signals": [
+      "💡 2 opportunity keywords",
+      "🏭 Industries: devtools"
+    ]
+  },
+  {
+    "source": "devto",
+    "title": "I built a small HTML-to-MP4 tool because recording browser animations was the wrong workflow",
+    "url": "https://dev.to/larsjansen/i-built-a-small-html-to-mp4-tool-because-recording-browser-animations-was-the-wrong-workflow-d5b",
+    "reactions": 0,
+    "comments": 0,
+    "tags": [
+      "webdev",
+      "productivity",
+      "automation",
+      "beginners"
+    ],
+    "author": "Lars Jansen",
+    "text": "I’ve been building a small project called TextToDeck, but the useful part of this story isn’t that...",
+    "opportunity_score": 31,
+    "signals": [
+      "💡 2 opportunity keywords",
+      "🏭 Industries: ecommerce"
+    ]
+  },
+  {
+    "source": "hackernews",
+    "title": "Where is our profession (programmer) going?",
+    "url": "https://news.ycombinator.com/item?id=48668199",
+    "score": 90,
+    "comments": 96,
+    "text": "I had been running a small (3 people) software company for about 4 years. Since closing down, I recently hung out at a friend's company to see what they were working on (15 ppl). To preface: I'm a heavy user of Claude (rarely write code by hand), but what I'm seeing in person has been rather shocking to me, and I wanted to calibrate with others. In particular: - the code is not the source of truth anymore; it's ask claude to write, and ask claude to explain - LoC, abstractions, and all those \"software development principles\" does not seem to matter to people - Code review is not done by humans - Actually understanding the problem deeply seems to be offloaded to claude - Some developers are running like 5+ simultaneous claude sessions, and no code is being lo",
+    "author": "syntaxbush",
+    "opportunity_score": 30,
+    "signals": [
+      "🏭 Industries: devtools",
+      "📈 High engagement"
+    ]
+  },
+  {
+    "source": "hackernews",
+    "title": "MiniPCs.zip – Charting the Pareto frontier of Mini PCs",
+    "url": "https://minipcs.zip",
+    "hn_url": "https://news.ycombinator.com/item?id=48612432",
+    "score": 95,
+    "comments": 36,
+    "text": "The overall idea is to chart out the thousands of Mini PCs by benchmark and reveal the Pareto Front so you can get the most Compute per Dollar. Definitely a labor of love as I have a number of Mini PCs for my \"homelab\" (TrueNAS, piHole, Plex, basic stuff). It uses Gemini to extract specs from listings (since they're not often strongly categorized). Quick blog post here: https://luke.zip/posts/pareto-pcs/",
+    "author": "yathern",
+    "opportunity_score": 30,
+    "signals": [
+      "🏭 Industries: realestate",
+      "📈 High engagement"
+    ]
+  },
+  {
+    "source": "hackernews",
+    "title": "Monolisa v3 – a typeface for developers and creatives",
+    "url": "https://www.monolisa.dev/",
+    "hn_url": "https://news.ycombinator.com/item?id=48630318",
+    "score": 184,
+    "comments": 86,
+    "text": "Originally we (Andrey, Marcus, Juho) built MonoLisa in 2020 as we realised there's room for a better monospaced typeface for developers. The key insight was to make the glyphs slightly wider to make more room for design to make letters like m feel less cramped. Since then we've released a variable v2 (2022) and now we're happy to expand the typeface with a new family called MonoLisa Text. The reasoning was to cover *other* use cases beyond coding with this proportional font. We hope you give Monolisa a go as there's a free trial to try. We also welcome feedback!",
+    "author": "bebraw",
+    "opportunity_score": 30,
+    "signals": [
+      "🏭 Industries: devtools",
+      "📈 High engagement"
+    ]
+  }
+]

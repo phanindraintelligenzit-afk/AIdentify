@@ -1,0 +1,112 @@
+{
+  "agent": "planner",
+  "date": "2026-06-26",
+  "opportunities_discussed": 8,
+  "rankings": [
+    {
+      "title": "🚀 I Built an AI Team That Finds Leads, Decision Makers & Writes Outreach While I Sleep",
+      "source": "devto",
+      "opportunity_score": 51,
+      "scores": {
+        "market": 5,
+        "feasibility": 6,
+        "revenue": 4,
+        "stack_fit": 6,
+        "total": 21
+      },
+      "analysis": "Plan: Build agent pipeline for '🚀 I Built an AI Team That Finds Leads, D' with modular stages"
+    },
+    {
+      "title": "What surprised you about Estonia e-Residency and running an Estonian OÜ?",
+      "source": "hackernews",
+      "opportunity_score": 50,
+      "scores": {
+        "market": 5,
+        "feasibility": 6,
+        "revenue": 4,
+        "stack_fit": 6,
+        "total": 21
+      },
+      "analysis": "Plan: Build agent pipeline for 'What surprised you about Estonia e-Resid' with modular stages"
+    },
+    {
+      "title": "The Playwright Playbook — Part 7: The CI/CD Setup Nobody Shows You",
+      "source": "devto",
+      "opportunity_score": 41,
+      "scores": {
+        "market": 5,
+        "feasibility": 6,
+        "revenue": 4,
+        "stack_fit": 6,
+        "total": 21
+      },
+      "analysis": "Plan: Build agent pipeline for 'The Playwright Playbook — Part 7: The CI' with modular stages"
+    },
+    {
+      "title": "Automating Toil Elimination: A Systematic Taxonomy of SRE Automation Patterns",
+      "source": "devto",
+      "opportunity_score": 41,
+      "scores": {
+        "market": 5,
+        "feasibility": 6,
+        "revenue": 4,
+        "stack_fit": 6,
+        "total": 21
+      },
+      "analysis": "Plan: Build agent pipeline for 'Automating Toil Elimination: A Systemati' with modular stages"
+    },
+    {
+      "title": "Anthropic banned me from using Claude Code and I don't know what to do",
+      "source": "hackernews",
+      "opportunity_score": 40,
+      "scores": {
+        "market": 5,
+        "feasibility": 6,
+        "revenue": 4,
+        "stack_fit": 6,
+        "total": 21
+      },
+      "analysis": "Plan: Build agent pipeline for 'Anthropic banned me from using Claude Co' with modular stages"
+    },
+    {
+      "title": "How My AI Agent Hacked Its Own Permissions (And What It Taught Me)",
+      "source": "devto",
+      "opportunity_score": 36,
+      "scores": {
+        "market": 5,
+        "feasibility": 6,
+        "revenue": 4,
+        "stack_fit": 6,
+        "total": 21
+      },
+      "analysis": "Plan: Build agent pipeline for 'How My AI Agent Hacked Its Own Permissio' with modular stages"
+    },
+    {
+      "title": "Setting up a realistic, multi-machine environment on your own laptop used to mean juggling VirtualBox windows, clicking through installers, and hoping you could reproduce the same setup tomorrow. Vagrant replaces all of that with a single text file.",
+      "source": "devto",
+      "opportunity_score": 36,
+      "scores": {
+        "market": 5,
+        "feasibility": 6,
+        "revenue": 4,
+        "stack_fit": 6,
+        "total": 21
+      },
+      "analysis": "Plan: Build agent pipeline for 'Setting up a realistic, multi-machine en' with modular stages"
+    },
+    {
+      "title": "Am I missing something with AI",
+      "source": "hackernews",
+      "opportunity_score": 35,
+      "scores": {
+        "market": 5,
+        "feasibility": 6,
+        "revenue": 4,
+        "stack_fit": 6,
+        "total": 21
+      },
+      "analysis": "Plan: Build agent pipeline for 'Am I missing something with AI' with modular stages"
+    }
+  ],
+  "top_pick": "🚀 I Built an AI Team That Finds Leads, Decision Makers & Writes Outreach While I Sleep"
+}
