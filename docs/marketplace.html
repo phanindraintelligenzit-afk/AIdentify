@@ -1148,7 +1148,29 @@
           </div>
         </div>
 
-        <!-- Card 6: Coming Soon / CTA -->
+                <!-- Card: Automate Legal Contract Review and Risk Assessment -->
+        <div class="project-card" data-category="legal" style="cursor:pointer;">
+          <div class="project-card__header">
+            <div class="project-card__icon">⚖️</div>
+            <span class="project-card__badge project-card__badge--free">Free Repo</span>
+          </div>
+          <h3 class="project-card__name">Automate Legal Contract Review and Risk Assessment</h3>
+          <p class="project-card__desc">Automate legal contract review and risk assessment for law firms</p>
+          <div class="project-card__tags">
+            <span class="project-card__tag">Risk Matrix</span> <span class="project-card__tag">GDPR / SOC2</span>
+          </div>
+          <div class="project-card__meta">
+            <span class="project-card__meta-item">🐍 Python</span>
+            <span class="project-card__meta-item">📝 MIT</span>
+            <span class="project-card__meta-item">👤 AIdentify</span>
+          </div>
+          <div class="project-card__actions">
+            <a href="https://github.com/phanindraintelligenzit-afk/automate-legal-contract-review-and-risk-assessment" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
+            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
+          </div>
+        </div>
+
+<!-- Card 6: Coming Soon / CTA -->
         <div class="project-card" data-category="cta" style="border-style: dashed; border-color: var(--purple-light); background: var(--bg-subtle);">
           <div class="project-card__header">
             <div class="project-card__icon" style="background: rgba(83,58,253,0.08); border-color: var(--purple-light);">+</div>
@@ -1454,8 +1476,17 @@
         tags:["Screening","Onboarding","Compliance","4 Agents"],
         github_url:"https://github.com/phanindraintelligenzit-afk/hr-operations"
       }
+,
+      "automate-legal-contract-review-and-risk-assessment": {
+        name:"Automate Legal Contract Review and Risk Assessment",icon:"⚖️",category:"Legal",
+        description:"Automate legal contract review and risk assessment for law firms",
+        agents:["contract_parser \u2014 Parse contracts, extract key clauses, dates, parties", "redline_detector \u2014 Identify non-standard terms, risky clauses, deviations from template", "risk_assessor \u2014 Score contract risk, generate negotiation recommendations", "compliance_checker \u2014 Check GDPR, SOC2, and regulatory compliance requirements"],
+        tags:["Risk Matrix", "GDPR / SOC2"],
+        github_url:"https://github.com/phanindraintelligenzit-afk/automate-legal-contract-review-and-risk-assessment"
+      }
     };
-    const REPO_MAP = {"healthcare":"healthcare-prior-auth","realestate":"real-estate-lead-gen","ecommerce":"ecommerce-product-optimizer","legal":"legal-contract-review","hr":"hr-operations"};
+    const REPO_MAP = {
+        "legal":"automate-legal-contract-review-and-risk-assessment","healthcare":"healthcare-prior-auth","realestate":"real-estate-lead-gen","ecommerce":"ecommerce-product-optimizer","legal":"legal-contract-review","hr":"hr-operations"};
     document.querySelectorAll('.project-card[data-category]').forEach(function(card){
       var cat = card.dataset.category;
       var key = REPO_MAP[cat];
