@@ -40,3 +40,6 @@ logs/
 *.sqlite3
 *.db-shm
 *.db-wal
+docs/gh_docs/marketing-dashboard/.next/
+node_modules/
+*.log
