@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadGen AI Team — 6 AI Agents That Fill Your Pipeline</title>
+    <script defer data-domain="leadgen.aidentify.ai" src="https://plausible.io/js/script.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a26;
+            --bg-card-hover: #22222f;
+            --accent: #6366f1;
+            --accent-light: #818cf8;
+            --accent-glow: rgba(99, 102, 241, 0.3);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #2a2a3a;
+            --success: #22c55e;
+            --gradient-1: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+            --gradient-2: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-cta {
+            background: var(--gradient-1);
+            color: white !important;
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600 !important;
+        }
+
+        .nav-cta:hover {
+            opacity: 0.9;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .hero-badge .pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero h1 .gradient {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subheadline {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 640px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid var(--border);
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--accent);
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .hero-stats-disclaimer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 1.5rem;
+            font-style: italic;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-light);
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* How It Works - Agent Pipeline */
+        .pipeline {
+            display: grid;
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        .agent-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .agent-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.1);
+        }
+
+        .agent-number {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .agent-content h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .agent-content .agent-role {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent-light);
+            margin-bottom: 0.75rem;
+        }
+
+        .agent-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .agent-tag {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--accent-light);
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.75rem;
+        }
+
+        /* Features & Benefits */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            align-items: stretch;
+        }
+
+        .pricing-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent);
+            background: linear-gradient(180deg, rgba(99, 102, 241, 0.05) 0%, var(--bg-card) 100%);
+        }
+
+        .pricing-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-1);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-card .price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 1rem 0;
+        }
+
+        .pricing-card .price span {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .pricing-card .price-desc {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .pricing-card .btn-primary,
+        .pricing-card .btn-secondary {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* Comparison Table */
+        .comparison-wrapper {
+            overflow-x: auto;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table th {
+            background: var(--bg-card);
+            font-weight: 700;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .comparison-table th:first-child {
+            border-radius: 12px 0 0 0;
+        }
+
+        .comparison-table th:last-child {
+            border-radius: 0 12px 0 0;
+        }
+
+        .comparison-table th.highlight {
+            background: var(--gradient-1);
+            color: white;
+        }
+
+        .comparison-table td {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .comparison-table td:first-child {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .comparison-table tr:hover td {
+            background: rgba(99, 102, 241, 0.03);
+        }
+
+        .check {
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .cross {
+            color: #ef4444;
+        }
+
+        /* FAQ */
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--accent);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1rem;
+            background: var(--bg-card);
+            user-select: none;
+        }
+
+        .faq-question:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .faq-question .icon {
+            font-size: 1.25rem;
+            transition: transform 0.3s;
+            color: var(--accent-light);
+        }
+
+        .faq-item.active .faq-question .icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-answer p {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            background: var(--bg-card);
+        }
+
+        /* Final CTA */
+        .final-cta {
+            text-align: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .final-cta h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .final-cta p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .final-cta .btn-primary {
+            font-size: 1.125rem;
+            padding: 1.125rem 2.5rem;
+            position: relative;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--accent-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 8rem 1.5rem 4rem;
+            }
+
+            .hero-stats {
+                gap: 2rem;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .agent-card {
+                flex-direction: column;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">LeadGen AI Team</div>
+            <div class="nav-links">
+                <a href="#how-it-works">How It Works</a>
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#faq">FAQ</a>
+                <a href="#capture" class="nav-cta">Start Free Trial</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-badge">
+            <span class="pulse"></span>
+            Now in Beta — Limited Spots Available
+        </div>
+        <h1>6 AI Agents.<br><span class="gradient">One Unstoppable Pipeline.</span></h1>
+        <p class="hero-subheadline">
+            LeadGen AI Team deploys six specialized AI agents that prospect, scrape, find contacts, reach out, and analyze — automatically. Your sales team wakes up to a full pipeline every morning.
+        </p>
+        <div class="hero-ctas">
+            <a href="#capture" class="btn-primary">
+                Start Free Trial →
+            </a>
+            <a href="#how-it-works" class="btn-secondary">
+                See How It Works
+            </a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-value">10x</div>
+                <div class="stat-label">Faster Outreach</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">95%</div>
+                <div class="stat-label">Contact Accuracy</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">$47</div>
+                <div class="stat-label">Avg. Cost Per Lead</div>
+            </div>
+        </div>
+        <p class="hero-stats-disclaimer">*Metrics based on internal beta testing across 12 campaigns. Results vary by industry, list quality, and outreach volume.</p>
+    </section>
+
+    <!-- Email Capture -->
+    <section id="capture" style="padding: 4rem 2rem;">
+        <div class="final-cta" style="padding: 3rem 2rem;">
+            <h2 style="font-size: 1.75rem; position: relative;">Get a <span class="gradient">Free Pipeline Audit</span></h2>
+            <p style="position: relative;">Tell us about your ideal customer. We'll send you a personalized report — 100+ leads matched, scored, and ready to outreach. No strings attached.</p>
+            <form id="capture-form" style="display: flex; gap: 0.75rem; max-width: 500px; margin: 1.5rem auto 0; flex-wrap: wrap; justify-content: center; position: relative;">
+                <input type="email" placeholder="Enter your work email" required style="flex: 1; min-width: 250px; padding: 0.875rem 1.25rem; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-primary); font-size: 1rem; outline: none;" />
+                <button type="submit" class="btn-primary" style="padding: 0.875rem 2rem;">Get Free Audit →</button>
+            </form>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 1rem; position: relative;">No credit card. No spam. Unsubscribe anytime.</p>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works">
+        <div class="section-header">
+            <span class="section-label">The Pipeline</span>
+            <h2>How LeadGen AI Team Works</h2>
+            <p>Six AI agents. Zero manual work. Every step of your lead generation — handled.</p>
+        </div>
+        <div class="pipeline">
+            <div class="agent-card">
+                <div class="agent-number">1</div>
+                <div class="agent-content">
+                    <div class="agent-role">Commander</div>
+                    <h3>Orchestrator Agent</h3>
+                    <p>The brain of the operation. It plans your campaigns, assigns tasks to each agent, monitors progress, and adjusts strategy in real-time based on results. Set your ICP once — it handles the rest.</p>
+                    <span class="agent-tag">Campaign Management</span>
+                </div>
+            </div>
+            <div class="agent-card">
+                <div class="agent-number">2</div>
+                <div class="agent-content">
+                    <div class="agent-role">Hunter</div>
+                    <h3>Prospector Agent</h3>
+                    <p>Scours the internet for companies matching your ideal customer profile. Uses firmographic data, technographics, intent signals, and hiring patterns to find high-value targets before your competitors do.</p>
+                    <span class="agent-tag">ICP Matching</span>
+                </div>
+            </div>
+            <div class="agent-card">
+                <div class="agent-number">3</div>
+                <div class="agent-content">
+                    <div class="agent-role">Miner</div>
+                    <h3>Scraper Agent</h3>
+                    <p>Extracts company data, news, tech stacks, and recent funding events at scale. Keeps your CRM enriched and up-to-date without a single copy-paste. Handles 10,000+ profiles per run.</p>
+                    <span class="agent-tag">Data Extraction</span>
+                </div>
+            </div>
+            <div class="agent-card">
+                <div class="agent-number">4</div>
+                <div class="agent-content">
+                    <div class="agent-role">Locator</div>
+                    <h3>Contact Finder Agent</h3>
+                    <p>Finds verified email addresses, phone numbers, and LinkedIn profiles for decision-makers. Cross-references multiple data sources and validates deliverability. 95% accuracy guaranteed.</p>
+                    <span class="agent-tag">Email Verification</span>
+                </div>
+            </div>
+            <div class="agent-card">
+                <div class="agent-number">5</div>
+                <div class="agent-content">
+                    <div class="agent-role">Closer</div>
+                    <h3>Outreach Agent</h3>
+                    <p>Personalizes and sends multi-channel outreach sequences — email, LinkedIn, and phone. A/B tests subject lines, adapts tone based on responses, and books meetings directly into your calendar.</p>
+                    <span class="agent-tag">Multi-Channel</span>
+                </div>
+            </div>
+            <div class="agent-card">
+                <div class="agent-number">6</div>
+                <div class="agent-content">
+                    <div class="agent-role">Strategist</div>
+                    <h3>Analyst Agent</h3>
+                    <p>Monitors campaign performance, identifies what's working, and delivers actionable insights. Tells you which ICP segments convert best, which messaging resonates, and where to double down.</p>
+                    <span class="agent-tag">Analytics & Insights</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features & Benefits -->
+    <section id="features">
+        <div class="section-header">
+            <span class="section-label">Why LeadGen AI Team</span>
+            <h2>Built for Teams That Refuse to Prospect Manually</h2>
+            <p>Every feature designed to replace the grunt work so your team can focus on closing.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Fully Automated Pipeline</h3>
+                <p>From prospect identification to booked meeting — zero human intervention required. Set it and forget it.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>ICP Precision Targeting</h3>
+                <p>Define your ideal customer once. Our agents find exact matches across millions of companies using 50+ data signals.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📧</div>
+                <h3>Verified Contact Data</h3>
+                <p>Real-time email verification and phone validation. No more bounced emails or wrong numbers wasting your time.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>CRM Sync & Integrations</h3>
+                <p>Native integrations with HubSpot, Salesforce, Pipedrive, and more. Your pipeline updates in real-time.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Real-Time Analytics</h3>
+                <p>Track every metric that matters: contact rates, response rates, meetings booked, pipeline value — all live.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Compliance Built-In</h3>
+                <p>GDPR and CAN-SPAM compliant by design. Automatic opt-out handling, rate limiting, and sender reputation protection.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>AI-Powered Personalization</h3>
+                <p>Every outreach message is uniquely crafted based on the prospect's company, role, and recent activity. No templates.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📅</div>
+                <h3>Calendar Booking</h3>
+                <p>Prospects book directly into your team's calendar. No back-and-forth. No "Are you free Tuesday?" emails.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔁</div>
+                <h3>Multi-Channel Sequences</h3>
+                <p>Email, LinkedIn, and phone — orchestrated in perfect timing. Follow-up automatically based on engagement signals.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison -->
+    <section id="comparison">
+        <div class="section-header">
+            <span class="section-label">The Reality Check</span>
+            <h2>Manual Lead Gen vs. LeadGen AI Team</h2>
+            <p>See the numbers. Then make your decision.</p>
+        </div>
+        <div class="comparison-wrapper">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Manual Lead Gen</th>
+                        <th class="highlight">LeadGen AI Team</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Leads per week</td>
+                        <td>20-50</td>
+                        <td class="check">500-2,000</td>
+                    </tr>
+                    <tr>
+                        <td>Cost per lead</td>
+                        <td>$150-300</td>
+                        <td class="check">$20-60</td>
+                    </tr>
+                    <tr>
+                        <td>Time to first outreach</td>
+                        <td>2-4 weeks</td>
+                        <td class="check">Same day</td>
+                    </tr>
+                    <tr>
+                        <td>Contact accuracy</td>
+                        <td>60-70%</td>
+                        <td class="check">95%+</td>
+                    </tr>
+                    <tr>
+                        <td>Personalization</td>
+                        <td>Template-based</td>
+                        <td class="check">AI-unique per prospect</td>
+                    </tr>
+                    <tr>
+                        <td>Scalability</td>
+                        <td>Linear (hire more people)</td>
+                        <td class="check">Infinite (click a button)</td>
+                    </tr>
+                    <tr>
+                        <td>Multi-channel execution</td>
+                        <td>Separate tools needed</td>
+                        <td class="check">Built-in</td>
+                    </tr>
+                    <tr>
+                        <td>Analytics & optimization</td>
+                        <td>Manual spreadsheets</td>
+                        <td class="check">Real-time AI analysis</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing">
+        <div class="section-header">
+            <span class="section-label">Pricing</span>
+            <h2>Simple, Transparent Pricing</h2>
+            <p>No hidden fees. No long-term contracts. Cancel anytime.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Starter</h3>
+                <div class="price">$99<span>/mo</span></div>
+                <p class="price-desc">For startups ready to test AI-powered lead gen</p>
+                <ul class="pricing-features">
+                    <li>1,000 leads/month</li>
+                    <li>3 active campaigns</li>
+                    <li>Email outreach only</li>
+                    <li>Basic CRM integration</li>
+                    <li>Email support</li>
+                    <li>Standard analytics</li>
+                </ul>
+                <a href="#capture" class="btn-secondary">Start Free Trial</a>
+            </div>
+            <div class="pricing-card featured">
+                <h3>Growth</h3>
+                <div class="price">$299<span>/mo</span></div>
+                <p class="price-desc">For teams scaling their pipeline aggressively</p>
+                <ul class="pricing-features">
+                    <li>5,000 leads/month</li>
+                    <li>10 active campaigns</li>
+                    <li>Email + LinkedIn outreach</li>
+                    <li>All CRM integrations</li>
+                    <li>Priority support</li>
+                    <li>Advanced analytics & A/B testing</li>
+                    <li>Multi-channel sequences</li>
+                    <li>Calendar booking</li>
+                </ul>
+                <a href="#capture" class="btn-primary">Start Free Trial</a>
+            </div>
+            <div class="pricing-card">
+                <h3>Scale</h3>
+                <div class="price">$799<span>/mo</span></div>
+                <p class="price-desc">For agencies and enterprise sales teams</p>
+                <ul class="pricing-features">
+                    <li>Unlimited leads</li>
+                    <li>Unlimited campaigns</li>
+                    <li>All channels (Email + LinkedIn + Phone)</li>
+                    <li>Custom integrations & API</li>
+                    <li>Dedicated account manager</li>
+                    <li>Custom analytics dashboard</li>
+                    <li>White-label options</li>
+                    <li>SLA guarantee</li>
+                </ul>
+                <a href="#capture" class="btn-secondary">Contact Sales</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+        <div class="section-header">
+            <span class="section-label">FAQ</span>
+            <h2>Questions? We've Got Answers.</h2>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item">
+                <div class="faq-question">
+                    How quickly can I get started?
+                    <span class="icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Most teams are up and running within 15 minutes. Connect your CRM, define your ICP, and launch your first campaign. The Orchestrator Agent handles the rest.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Is the contact data accurate?
+                    <span class="icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes. Our Contact Finder Agent cross-references multiple data sources and verifies email deliverability in real-time. We guarantee 95%+ accuracy, and we continuously clean and update our database.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Will this hurt my sender reputation?
+                    <span class="icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>No. We enforce strict rate limiting, automatic warm-up, bounce handling, and opt-out compliance. Our system is designed to protect and even improve your sender reputation over time.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can I use this for multiple clients (agency use)?
+                    <span class="icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Absolutely. The Scale plan includes white-label options and multi-tenant support. Many of our agency clients manage 10+ client accounts from a single dashboard.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    What integrations do you support?
+                    <span class="icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>We integrate with HubSpot, Salesforce, Pipedrive, Apollo, LinkedIn Sales Navigator, Gmail, Outlook, and more. Our Scale plan also includes a custom API for any integration you need.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Is there a free trial?
+                    <span class="icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes. Every plan comes with a 14-day free trial. No credit card required to start. See real results before you commit.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section>
+        <div class="final-cta">
+            <h2>Stop Prospecting.<br><span class="gradient">Start Closing.</span></h2>
+            <p>Your competitors are already using AI to fill their pipeline. Every day you wait is a day they get ahead.</p>
+            <a href="#capture" class="btn-primary">Start Your Free Trial →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 LeadGen AI Team — An <a href="#">AIdentify</a> Product. All rights reserved.</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="#">Privacy Policy</a> · 
+            <a href="#">Terms of Service</a> · 
+            <a href="#">Contact</a>
+        </p>
+    </footer>
+
+    <script>
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                const isActive = item.classList.contains('active');
+                
+                // Close all
+                document.querySelectorAll('.faq-item').forEach(faq => {
+                    faq.classList.remove('active');
+                });
+                
+                // Open clicked (if wasn't already open)
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Email capture form
+        const captureForm = document.getElementById('capture-form');
+        if (captureForm) {
+            captureForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = this.querySelector('input[type="email"]').value;
+                // TODO: Wire to your backend (Formspree, Custom API, etc.)
+                // For now, show a confirmation
+                this.innerHTML = '<p style="color: var(--success); font-weight: 600; font-size: 1.1rem;">✅ Check your inbox! Your pipeline audit is on the way.</p>';
+                // Fire Plausible event if available
+                if (window.plausible) {
+                    window.plausible('Lead Capture', { props: { source: 'landing-page' } });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

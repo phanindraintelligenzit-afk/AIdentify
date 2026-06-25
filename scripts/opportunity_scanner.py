@@ -1,0 +1,523 @@
+#!/usr/bin/env python3
+"""AIdentify Business Opportunity Scanner — Daily Morning Edition.
+
+Fetches opportunities from multiple sources, scores them, and outputs
+a clean morning briefing for Phani.
+
+Usage:
+    python opportunity_scanner.py           # Full scan + briefing
+    python opportunity_scanner.py --json    # Raw JSON output
+    python opportunity_scanner.py --quick   # Quick summary only
+
+Sources:
+    - Hacker News (Ask HN)
+    - dev.to (automation/business tags)
+    - GitHub Trending (Python)
+    - Lobste.rs (via 0x3d API fallback)
+"""
+
+from __future__ import annotations
+
+import json
+import re
+import sys
+import urllib.request
+from datetime import datetime, timezone, timedelta
+from html.parser import HTMLParser
+from pathlib import Path
+from typing import Optional
+from urllib.parse import quote_plus
+
+# ---------------------------------------------------------------------------
+# Config
+# ---------------------------------------------------------------------------
+
+IST = timezone(timedelta(hours=5, minutes=30))
+NOW = datetime.now(IST)
+
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/125.0.0.0 Safari/537.36"
+    ),
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.5",
+}
+
+# Pain keywords that signal business opportunity
+PAIN_KEYWORDS = [
+    "manual", "struggling", "overwhelmed", "hiring", "help needed",
+    "automate", "automation", "too much work", "can't keep up",
+    "bottleneck", "time-consuming", "repetitive", "tedious",
+    "need help", "looking for solution", "frustrated",
+    "waste of time", "inefficient", "streamline", "optimize",
+    "no tool", "no solution", "expensive", "affordable",
+    "scaling", "growth", "revenue", "profit", "ROI",
+]
+
+# High-value business opportunity keywords
+OPPORTUNITY_KEYWORDS = [
+    "AI agent", "LLM", "automation", "workflow", "SaaS",
+    "no-code", "low-code", "API", "integration", "bot",
+    "scraping", "monitoring", "analytics", "dashboard",
+    "lead gen", "outreach", "CRM", "email marketing",
+    "compliance", "audit", "security", "observability",
+]
+
+# Target industries
+INDUSTRIES = {
+    "healthcare": ["healthcare", "medical", "pharma", "clinical", "HIPAA", "EHR", "patient"],
+    "ecommerce": ["ecommerce", "e-commerce", "shopify", "store", "product", "dropshipping"],
+    "legal": ["legal", "law", "contract", "compliance", "GDPR", "SOC2"],
+    "hr": ["HR", "hiring", "recruiting", "onboarding", "resume", "candidate"],
+    "finance": ["finance", "accounting", "reconciliation", "invoice", "payment", "SOX"],
+    "marketing": ["marketing", "content", "SEO", "social media", "analytics", "outreach"],
+    "devtools": ["developer", "CI/CD", "deployment", "monitoring", "observability", "DevOps"],
+    "realestate": ["real estate", "property", "listing", "brokerage", "lead"],
+}
+
+
+# ---------------------------------------------------------------------------
+# HTML stripping helper
+# ---------------------------------------------------------------------------
+
+class _Stripper(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.result: list[str] = []
+
+    def handle_data(self, data: str) -> None:
+        self.result.append(data)
+
+    def get_text(self) -> str:
+        return " ".join(self.result).strip()
+
+
+def strip_html(html: str) -> str:
+    s = _Stripper()
+    try:
+        s.feed(html)
+        return re.sub(r"\s+", " ", s.get_text()).strip()
+    except Exception:
+        return re.sub(r"<[^>]+>", "", html).strip()
+
+
+# ---------------------------------------------------------------------------
+# HTTP helper
+# ---------------------------------------------------------------------------
+
+def fetch_url(url: str, timeout: int = 15) -> str:
+    req = urllib.request.Request(url, headers=HEADERS)
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        return resp.read().decode("utf-8", errors="ignore")
+
+
+# ---------------------------------------------------------------------------
+# Source: Hacker News (Ask HN)
+# ---------------------------------------------------------------------------
+
+def fetch_hn_ask(limit: int = 25) -> list[dict]:
+    """Fetch top Ask HN stories — goldmine for pain points."""
+    url = "https://hacker-news.firebaseio.com/v0/askstories.json"
+    try:
+        raw = fetch_url(url)
+        ids = json.loads(raw)
+    except Exception:
+        return []
+
+    results = []
+    for story_id in ids[:limit]:
+        try:
+            item_url = f"https://hacker-news.firebaseio.com/v0/item/{story_id}.json"
+            raw_item = fetch_url(item_url)
+            item = json.loads(raw_item)
+            if not item or item.get("type") != "story" or not item.get("title"):
+                continue
+            title = item["title"]
+            # Only Ask HN posts (start with "Ask HN:")
+            if not title.startswith("Ask HN:"):
+                continue
+            text = item.get("text", "")[:800]
+            results.append({
+                "source": "hackernews",
+                "title": title.replace("Ask HN: ", ""),
+                "url": f"https://news.ycombinator.com/item?id={story_id}",
+                "score": item.get("score", 0),
+                "comments": item.get("descendants", 0),
+                "text": strip_html(text),
+                "author": item.get("by", ""),
+            })
+        except Exception:
+            continue
+    return results
+
+
+def fetch_hn_show(limit: int = 15) -> list[dict]:
+    """Fetch top Show HN stories — product launches & ideas."""
+    url = "https://hacker-news.firebaseio.com/v0/showstories.json"
+    try:
+        raw = fetch_url(url)
+        ids = json.loads(raw)
+    except Exception:
+        return []
+
+    results = []
+    for story_id in ids[:limit]:
+        try:
+            item_url = f"https://hacker-news.firebaseio.com/v0/item/{story_id}.json"
+            raw_item = fetch_url(item_url)
+            item = json.loads(raw_item)
+            if not item or item.get("type") != "story" or not item.get("title"):
+                continue
+            title = item["title"]
+            if not title.startswith("Show HN:"):
+                continue
+            text = item.get("text", "")[:800]
+            results.append({
+                "source": "hackernews",
+                "title": title.replace("Show HN: ", ""),
+                "url": item.get("url", f"https://news.ycombinator.com/item?id={story_id}"),
+                "hn_url": f"https://news.ycombinator.com/item?id={story_id}",
+                "score": item.get("score", 0),
+                "comments": item.get("descendants", 0),
+                "text": strip_html(text),
+                "author": item.get("by", ""),
+            })
+        except Exception:
+            continue
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Source: dev.to
+# ---------------------------------------------------------------------------
+
+def fetch_devto(tag: str = "automation", per_page: int = 15) -> list[dict]:
+    """Fetch recent dev.to articles for automation/business trends."""
+    url = f"https://dev.to/api/articles?tag={tag}&per_page={per_page}&top=7"
+    try:
+        raw = fetch_url(url)
+        data = json.loads(raw)
+    except Exception:
+        return []
+
+    if not isinstance(data, list):
+        return []
+
+    results = []
+    for item in data:
+        if not isinstance(item, dict):
+            continue
+        results.append({
+            "source": "devto",
+            "title": item.get("title", ""),
+            "url": item.get("url", ""),
+            "reactions": item.get("positive_reactions_count", 0),
+            "comments": item.get("comments_count", 0),
+            "tags": item.get("tag_list", []),
+            "author": item.get("user", {}).get("name", ""),
+            "text": item.get("description", "")[:500],
+        })
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Source: GitHub Trending (Python)
+# ---------------------------------------------------------------------------
+
+def fetch_github_trending(limit: int = 15) -> list[dict]:
+    """Scrape GitHub trending Python repos for product ideas."""
+    url = "https://github.com/trending/python?since=daily"
+    try:
+        html = fetch_url(url)
+    except Exception:
+        return []
+
+    results = []
+    # Parse repo cards
+    repo_blocks = re.findall(
+        r'<h2 class="h3 lh-condensed">.*?<a href="(/[^"]+)"[^>]*>\s*([^<]*?)\s*/\s*([^<]*?)\s*</a>',
+        html,
+        re.DOTALL,
+    )
+
+    for match in repo_blocks[:limit]:
+        path, owner, name = match
+        repo_name = f"{owner.strip()}/{name.strip()}"
+        results.append({
+            "source": "github",
+            "title": repo_name,
+            "url": f"https://github.com{path}",
+            "stars": 0,  # Would need more parsing
+            "text": f"Trending Python repo: {repo_name}",
+        })
+
+    # Fallback: simpler regex if the above doesn't match
+    if not results:
+        links = re.findall(r'href="(/[^"]+/[^"]+)"[^>]*class="[^"]*Link[^"]*"', html)
+        seen = set()
+        for link in links[:limit]:
+            parts = link.strip("/").split("/")
+            if len(parts) == 2 and link not in seen:
+                seen.add(link)
+                results.append({
+                    "source": "github",
+                    "title": f"{parts[0]}/{parts[1]}",
+                    "url": f"https://github.com{link}",
+                    "stars": 0,
+                    "text": f"Trending Python repo: {parts[0]}/{parts[1]}",
+                })
+
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Source: DuckDuckGo HTML search for "AI automation business ideas"
+# ---------------------------------------------------------------------------
+
+def search_ddg(query: str, limit: int = 10) -> list[dict]:
+    """Search DuckDuckGo HTML for business opportunities."""
+    url = f"https://html.duckduckgo.com/html/?q={quote_plus(query)}"
+    try:
+        html = fetch_url(url)
+    except Exception:
+        return []
+
+    results = []
+    titles = re.findall(
+        r'<a rel="nofollow" class="result__a" href="[^"]+">(.*?)</a>',
+        html, re.DOTALL,
+    )
+    snippets = re.findall(
+        r'<a rel="nofollow" class="result__snippet"[^>]*>(.*?)</a>',
+        html, re.DOTALL,
+    )
+
+    for i, raw_title in enumerate(titles[:limit]):
+        title = strip_html(raw_title)
+        snippet = strip_html(snippets[i]) if i < len(snippets) else ""
+        results.append({
+            "source": "search",
+            "title": title,
+            "url": "",
+            "text": snippet[:500],
+        })
+
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Scoring Engine
+# ---------------------------------------------------------------------------
+
+def score_opportunity(item: dict) -> dict:
+    """Score an opportunity from 0-100 based on multiple signals."""
+    text = " ".join(str(item.get(k, "")) for k in ("title", "text", "tags" if "tags" in item else "")).lower()
+    score = 0
+    signals = []
+
+    # Pain signal detection (0-30 points)
+    pain_count = sum(1 for kw in PAIN_KEYWORDS if kw.lower() in text)
+    pain_score = min(pain_count * 5, 30)
+    score += pain_score
+    if pain_count >= 2:
+        signals.append(f"🔥 {pain_count} pain signals")
+
+    # Opportunity keyword match (0-25 points)
+    opp_count = sum(1 for kw in OPPORTUNITY_KEYWORDS if kw.lower() in text)
+    opp_score = min(opp_count * 5, 25)
+    score += opp_score
+    if opp_count >= 2:
+        signals.append(f"💡 {opp_count} opportunity keywords")
+
+    # Industry match (0-20 points)
+    matched_industries = []
+    for industry, keywords in INDUSTRIES.items():
+        if any(kw.lower() in text for kw in keywords):
+            matched_industries.append(industry)
+    industry_score = min(len(matched_industries) * 10, 20)
+    score += industry_score
+    if matched_industries:
+        signals.append(f"🏭 Industries: {', '.join(matched_industries[:3])}")
+
+    # Engagement signals (0-15 points)
+    engagement = 0
+    if item.get("score", 0) > 20:
+        engagement += 5
+    if item.get("comments", 0) > 10:
+        engagement += 5
+    if item.get("reactions", 0) > 5:
+        engagement += 5
+    score += engagement
+    if engagement >= 10:
+        signals.append("📈 High engagement")
+
+    # Source quality (0-10 points)
+    source_quality = {
+        "hackernews": 10,
+        "github": 8,
+        "devto": 6,
+        "search": 4,
+    }
+    score += source_quality.get(item.get("source", ""), 3)
+
+    item["opportunity_score"] = min(score, 100)
+    item["signals"] = signals
+    return item
+
+
+# ---------------------------------------------------------------------------
+# Briefing Generator
+# ---------------------------------------------------------------------------
+
+def generate_briefing(opportunities: list[dict]) -> str:
+    """Generate a clean morning briefing from scored opportunities."""
+    # Sort by score descending
+    opportunities.sort(key=lambda x: x.get("opportunity_score", 0), reverse=True)
+
+    # Filter to meaningful opportunities (score >= 20)
+    top_opps = [o for o in opportunities if o.get("opportunity_score", 0) >= 20]
+    if not top_opps:
+        top_opps = opportunities[:5]  # Show top 5 even if low score
+
+    # Limit to top 10
+    top_opps = top_opps[:10]
+
+    date_str = NOW.strftime("%A, %B %d, %Y")
+    time_str = NOW.strftime("%I:%M %p IST")
+
+    lines = [
+        "🔭 **AIdentify — Business Opportunity Scanner**",
+        f"📅 {date_str} — {time_str}",
+        "",
+        f"Scanned {len(opportunities)} signals → **{len(top_opps)} opportunities** found",
+        "",
+        "---",
+        "",
+    ]
+
+    for i, opp in enumerate(top_opps, 1):
+        score = opp.get("opportunity_score", 0)
+        # Score emoji
+        if score >= 60:
+            score_icon = "🟢"
+        elif score >= 40:
+            score_icon = "🟡"
+        else:
+            score_icon = "🟠"
+
+        title = opp.get("title", "Untitled")
+        url = opp.get("url", "")
+        source = opp.get("source", "unknown")
+        source_icon = {
+            "hackernews": "📰 HN",
+            "github": "🐙 GitHub",
+            "devto": "💻 dev.to",
+            "search": "🔍 Web",
+        }.get(source, f"📌 {source}")
+
+        lines.append(f"**{i}. {score_icon} [{score}/100] {title}**")
+        lines.append(f"   {source_icon}")
+
+        if url:
+            lines.append(f"   🔗 {url}")
+
+        # Signals
+        signals = opp.get("signals", [])
+        if signals:
+            lines.append(f"   {' | '.join(signals)}")
+
+        # Snippet
+        text = opp.get("text", "").strip()
+        if text:
+            # Truncate to ~150 chars
+            snippet = text[:150] + "..." if len(text) > 150 else text
+            lines.append(f"   > {snippet}")
+
+        lines.append("")
+
+    # Footer
+    lines += [
+        "---",
+        "",
+        "💡 **Next step:** Pick an opportunity and say `build [number]` to start the full pipeline.",
+        "   Pipeline: SCOUT → DISCUSS → SELECT → BUILD → PUBLISH",
+    ]
+
+    return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+def run_scan() -> tuple[list[dict], str]:
+    """Run the full scan and return (opportunities, briefing_text)."""
+    all_items: list[dict] = []
+
+    # 1. Hacker News — Ask HN
+    print("📰 Scanning Hacker News (Ask HN)...", file=sys.stderr)
+    ask_items = fetch_hn_ask(limit=25)
+    print(f"   Found {len(ask_items)} Ask HN posts", file=sys.stderr)
+    all_items.extend(ask_items)
+
+    # 2. Hacker News — Show HN
+    print("📰 Scanning Hacker News (Show HN)...", file=sys.stderr)
+    show_items = fetch_hn_show(limit=15)
+    print(f"   Found {len(show_items)} Show HN posts", file=sys.stderr)
+    all_items.extend(show_items)
+
+    # 3. dev.to
+    print("💻 Scanning dev.to...", file=sys.stderr)
+    devto_items = fetch_devto("automation", per_page=15)
+    print(f"   Found {len(devto_items)} dev.to articles", file=sys.stderr)
+    all_items.extend(devto_items)
+
+    # 4. GitHub Trending
+    print("🐙 Scanning GitHub Trending...", file=sys.stderr)
+    gh_items = fetch_github_trending(limit=15)
+    print(f"   Found {len(gh_items)} trending repos", file=sys.stderr)
+    all_items.extend(gh_items)
+
+    # 5. DuckDuckGo search
+    print("🔍 Searching for AI automation opportunities...", file=sys.stderr)
+    ddg_items = search_ddg("AI automation business ideas 2026", limit=10)
+    print(f"   Found {len(ddg_items)} search results", file=sys.stderr)
+    all_items.extend(ddg_items)
+
+    # Score everything
+    print(f"\n🎯 Scoring {len(all_items)} items...", file=sys.stderr)
+    for item in all_items:
+        score_opportunity(item)
+
+    # Generate briefing
+    briefing = generate_briefing(all_items)
+
+    return all_items, briefing
+
+
+def main():
+    args = sys.argv[1:]
+
+    if "--json" in args:
+        # Raw JSON output
+        opportunities, _ = run_scan()
+        print(json.dumps(opportunities, indent=2, ensure_ascii=False))
+    elif "--quick" in args:
+        # Quick summary only
+        opportunities, briefing = run_scan()
+        # Just print the top 3
+        opportunities.sort(key=lambda x: x.get("opportunity_score", 0), reverse=True)
+        for i, opp in enumerate(opportunities[:3], 1):
+            score = opp.get("opportunity_score", 0)
+            title = opp.get("title", "Untitled")
+            print(f"{i}. [{score}/100] {title}")
+    else:
+        # Full briefing
+        _, briefing = run_scan()
+        print(briefing)
+
+
+if __name__ == "__main__":
+    main()
