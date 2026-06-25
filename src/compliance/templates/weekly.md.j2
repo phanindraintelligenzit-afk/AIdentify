@@ -1,0 +1,77 @@
+# Weekly Compliance Digest — {{ week_start }} to {{ week_end }}
+
+## Week at a Glance
+| Metric | This Week | Last Week | Δ | Status |
+|--------|-----------|-----------|---|--------|
+| Total decisions | {{ this_week.total }} | {{ last_week.total }} | {{ deltas.total }} | {{ status.total }} |
+| Violation rate | {{ this_week.violation_rate }}% | {{ last_week.violation_rate }}% | {{ deltas.violation_rate }} | {{ status.violation_rate }} |
+| Critical incidents | {{ this_week.critical }} | {{ last_week.critical }} | {{ deltas.critical }} | {{ status.critical }} |
+| Avg compliance score | {{ this_week.compliance_score }} | {{ last_week.compliance_score }} | {{ deltas.compliance_score }} | {{ status.compliance_score }} |
+| New agents detected | {{ this_week.new_agents }} | — | — | {{ status.new_agents }} |
+
+## Trend Analysis
+- **Decision volume**: {{ trends.decision_volume }}
+- **Risk distribution**: {{ trends.risk_distribution }}
+- **Model performance**: {{ trends.model_performance }}
+
+## Violation Breakdown
+
+### By Rule
+| Rule | Mon | Tue | Wed | Thu | Fri | Sat | Sun | Total |
+|------|-----|-----|-----|-----|-----|-----|-----|-------|
+{% for v in violations_by_rule %}| {{ v.rule_name }} | {{ v.mon }} | {{ v.tue }} | {{ v.wed }} | {{ v.thu }} | {{ v.fri }} | {{ v.sat }} | {{ v.sun }} | {{ v.total }}
+{% endfor %}
+
+### By Agent
+| Agent | Violations | Most Common Rule | Risk Level |
+|-------|-----------|------------------|------------|
+{% for a in violations_by_agent %}| {{ a.agent }} | {{ a.count }} | {{ a.most_common_rule }} | {{ a.risk_level }}
+{% endfor %}
+
+## EU AI Act Compliance Status
+| Article | Requirement | Status | Notes |
+|---------|-------------|--------|-------|
+| Art. 12 | Record-keeping | {{ eu_ai_act.art_12.status }} | {{ eu_ai_act.art_12.notes }} |
+| Art. 13 | Transparency | {{ eu_ai_act.art_13.status }} | {{ eu_ai_act.art_13.notes }} |
+| Art. 14 | Human oversight | {{ eu_ai_act.art_14.status }} | {{ eu_ai_act.art_14.notes }} |
+| Art. 15 | Accuracy & robustness | {{ eu_ai_act.art_15.status }} | {{ eu_ai_act.art_15.notes }} |
+| Art. 16 | Technical documentation | {{ eu_ai_act.art_16.status }} | {{ eu_ai_act.art_16.notes }} |
+| Art. 17 | Record-keeping (providers) | {{ eu_ai_act.art_17.status }} | {{ eu_ai_act.art_17.notes }} |
+
+## Model Version Report
+| Model | Version | Deployed | Decisions | Avg Confidence | Status |
+|-------|---------|----------|-----------|----------------|--------|
+{% for m in model_report %}| {{ m.model }} | {{ m.version }} | {{ m.deployed }} | {{ m.decisions }} | {{ m.avg_confidence }} | {{ m.status }}
+{% endfor %}
+
+## Data Retention Compliance
+- Events in active phase: {{ retention.active_count }}
+- Events pending anonymization: {{ retention.pending_anon }}
+- Events purged this week: {{ retention.purged }}
+- Storage utilization: {{ retention.storage_gb }} GB ({{ retention.storage_pct }}%)
+
+## New Violations This Week
+{% for nv in new_violations %}
+### {{ nv.rule_id }} — {{ nv.rule_name }}
+- **Severity**: {{ nv.severity }}
+- **First seen**: {{ nv.first_seen }}
+- **Count**: {{ nv.count }}
+- **Description**: {{ nv.description }}
+{% endfor %}
+
+## Resolved Issues
+{% for ri in resolved_issues %}
+- ✅ **{{ ri.rule_id }}** — {{ ri.rule_name }} (resolved {{ ri.resolved_at }})
+{% endfor %}
+
+## Action Items
+{% for item in action_items %}- [ ] **{{ item.priority }}**: {{ item.description }} (Owner: {{ item.owner }}, Due: {{ item.due_date }})
+{% endfor %}
+
+## Appendix
+- Full event log: {{ appendix.log_link }}
+- Raw metrics: {{ appendix.metrics_link }}
+- Incident details: {{ appendix.incident_link }}
+
+---
+*Generated at {{ generated_at }} | Next report: {{ next_report_date }}*

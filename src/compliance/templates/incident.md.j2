@@ -1,0 +1,90 @@
+# Incident Report — {{ incident_id }}
+
+## Classification
+| Field | Value |
+|-------|-------|
+| **Incident ID** | {{ incident_id }} |
+| **Severity** | {{ severity }} ({{ severity_level }}/5) |
+| **Status** | {{ status }} |
+| **Detected At** | {{ detected_at }} |
+| **Resolved At** | {{ resolved_at }} |
+| **Duration** | {{ duration }} |
+| **Affected Users** | {{ affected_users }} |
+| **Affected Agents** | {{ affected_agents }} |
+| **Regulatory Impact** | {{ regulatory_impact }} |
+
+## Incident Summary
+{{ summary }}
+
+## Triggering Event(s)
+| Event ID | Timestamp | Agent | Action | Risk Score |
+|----------|-----------|-------|--------|------------|
+{% for e in triggering_events %}| {{ e.event_id }} | {{ e.timestamp }} | {{ e.agent }} | {{ e.action }} | {{ e.risk_score }}
+{% endfor %}
+
+## Rules Triggered
+| Rule ID | Rule Name | Severity | Details |
+|---------|-----------|----------|---------|
+{% for r in rules_triggered %}| {{ r.rule_id }} | {{ r.rule_name }} | {{ r.severity }} | {{ r.details }}
+{% endfor %}
+
+## Timeline
+| Time | Event | Actor | Details |
+|------|-------|-------|---------|
+{% for t in timeline %}| {{ t.time }} | {{ t.event_type }} | {{ t.actor }} | {{ t.details }}
+{% endfor %}
+
+## Impact Assessment
+
+### Data Exposure
+- **PII exposed**: {{ impact.pii_exposed }}
+- **Types of data**: {{ impact.pii_types }}
+- **Records affected**: {{ impact.records_affected }}
+- **Data classification**: {{ impact.data_classification }}
+
+### Decision Impact
+- **Affected decisions**: {{ impact.affected_decisions }}
+- **Automated decisions with legal effect**: {{ impact.legal_effect_decisions }}
+- **Users notified**: {{ impact.users_notified }}
+
+### Regulatory Impact
+- **EU AI Act articles violated**: {{ impact.eu_ai_act_articles }}
+- **GDPR articles violated**: {{ impact.gdpr_articles }}
+- **Notification required (72hr)**: {{ impact.notification_required }}
+- **DPA notified**: {{ impact.dpa_notified }}
+- **Users notified**: {{ impact.users_notified_reg }}
+
+## Root Cause Analysis
+{{ root_cause }}
+
+## Remediation Actions
+| Action | Owner | Status | Deadline |
+|--------|-------|--------|----------|
+{% for a in remediation_actions %}| {{ a.action }} | {{ a.owner }} | {{ a.status }} | {{ a.deadline }}
+{% endfor %}
+
+## Evidence
+
+### Audit Event Chain
+```json
+{{ evidence_events }}
+```
+
+### Hash Verification
+- **Chain integrity**: {{ hash_verification.integrity_status }}
+- **First event hash**: {{ hash_verification.first_hash }}
+- **Last event hash**: {{ hash_verification.last_hash }}
+- **Verification method**: SHA-256 chain
+
+## Lessons Learned
+{{ lessons_learned }}
+
+## Sign-Off
+| Role | Name | Date | Signature |
+|------|------|------|-----------|
+| Incident Commander | {{ signoff.incident_commander.name }} | {{ signoff.incident_commander.date }} | {{ signoff.incident_commander.signature }} |
+| Compliance Officer | {{ signoff.compliance_officer.name }} | {{ signoff.compliance_officer.date }} | {{ signoff.compliance_officer.signature }} |
+| CISO | {{ signoff.ciso.name }} | {{ signoff.ciso.date }} | {{ signoff.ciso.signature }} |
+
+---
+*Report generated at {{ generated_at }} | Classification: {{ classification }}*

@@ -1,0 +1,54 @@
+# Daily Compliance Report — {{ date }}
+
+## Executive Summary
+- **Total decisions logged**: {{ total_events }}
+- **Violation count**: {{ violation_count }} ({{ violation_delta }}% vs yesterday)
+- **Critical incidents**: {{ critical_count }}
+- **Overall compliance score**: {{ compliance_score }}/100
+
+## Key Metrics
+| Metric | Value | Trend |
+|--------|-------|-------|
+| Total events | {{ total_events }} | {{ trends.total_events }} |
+| Unique agents | {{ unique_agents }} | {{ trends.unique_agents }} |
+| Avg confidence | {{ avg_confidence }} | {{ trends.avg_confidence }} |
+| Avg risk score | {{ avg_risk }} | {{ trends.avg_risk }} |
+| PII events | {{ pii_events }} | {{ trends.pii_events }} |
+| Consent violations | {{ consent_violations }} | {{ trends.consent_violations }} |
+
+## Top Violations
+| Rule ID | Rule Name | Count | Severity | Delta |
+|---------|-----------|-------|----------|-------|
+{% for v in top_violations %}| {{ v.rule_id }} | {{ v.rule_name }} | {{ v.count }} | {{ v.severity }} | {{ v.delta }}
+{% endfor %}
+
+## Agent Activity
+| Agent | Decisions | Avg Risk | Violations | Status |
+|-------|-----------|----------|------------|--------|
+{% for a in agent_activity %}| {{ a.agent_name }} | {{ a.decisions }} | {{ a.avg_risk }} | {{ a.violations }} | {{ a.status }}
+{% endfor %}
+
+## High-Risk Events (Top 5)
+| Time | Agent | Action | Risk Score | Rule Triggered |
+|------|-------|--------|------------|----------------|
+{% for e in high_risk_events %}| {{ e.time }} | {{ e.agent }} | {{ e.action }} | {{ e.risk_score }} | {{ e.rule }}
+{% endfor %}
+
+## PII Incidents
+| Time | Agent | PII Types | Input/Output | Risk Score |
+|------|-------|-----------|--------------|------------|
+{% for p in pii_incidents %}| {{ p.time }} | {{ p.agent }} | {{ p.pii_types }} | {{ p.direction }} | {{ p.risk_score }}
+{% endfor %}
+
+## EU AI Act Coverage
+- Art. 12 (Record-keeping): {{ "✅" if coverage.art_12 >= 95 else "⚠️" }} {{ coverage.art_12 }}%
+- Art. 13 (Transparency): {{ "✅" if coverage.art_13 >= 95 else "⚠️" }} {{ coverage.art_13 }}%
+- Art. 14 (Human Oversight): {{ "✅" if coverage.art_14 >= 95 else "⚠️" }} {{ coverage.art_14 }}%
+- Art. 15 (Accuracy/Robustness): {{ "✅" if coverage.art_15 >= 95 else "⚠️" }} {{ coverage.art_15 }}%
+
+## Recommendations
+{% for r in recommendations %}- {{ r }}
+{% endfor %}
+
+---
+*Generated at {{ generated_at }} by AgentsFactory Compliance Engine v{{ version }}*

@@ -1,5 +1,5 @@
 """
-AIdentify Pipeline Manager.
+AgentsFactory Pipeline Manager.
 
 This is the bridge between "Phani picks an opportunity" and "agents build it."
 
@@ -150,7 +150,7 @@ OPPORTUNITY_TEMPLATES = {
 
 
 class PipelineManager:
-    """Manages projects and task assignments for AIdentify."""
+    """Manages projects and task assignments for AgentsFactory."""
 
     def __init__(self):
         init_activity_db()
@@ -315,7 +315,7 @@ def format_project_summary(result: dict) -> str:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="AIdentify Pipeline Manager")
+    parser = argparse.ArgumentParser(description="AgentsFactory Pipeline Manager")
     parser.add_argument("--list", action="store_true", help="List available opportunities")
     parser.add_argument("--create", type=str, help="Create project from opportunity key")
     parser.add_argument("--custom-title", type=str, help="Custom project title")
@@ -378,7 +378,7 @@ if __name__ == "__main__":
         print(f"🚫 Task {args.block[0]} blocked: {args.block[1]}")
 
     else:
-        print("AIdentify Pipeline Manager")
+        print("AgentsFactory Pipeline Manager")
         print()
         print("Usage:")
         print("  python pipeline_manager.py --list                    # Show available opportunities")

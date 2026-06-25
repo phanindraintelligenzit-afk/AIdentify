@@ -82,6 +82,11 @@ def create_post(
     }
     if scheduled_at:
         data["scheduledAt"] = scheduled_at
+    else:
+        # Auto-schedule 3 minutes ahead to avoid DRAFT status
+        from datetime import datetime, timezone, timedelta
+        auto_time = (datetime.now(timezone.utc) + timedelta(minutes=3)).strftime("%Y-%m-%dT%H:%M:%S.000Z")
+        data["scheduledAt"] = auto_time
     if media_urls:
         data["mediaUrls"] = media_urls
     if post_template_id:

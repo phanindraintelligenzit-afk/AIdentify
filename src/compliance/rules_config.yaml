@@ -1,0 +1,370 @@
+# =============================================================================
+# Compliance Rules Engine — Rule Configuration
+# =============================================================================
+# Version: 1.0.0
+# Target Compliance: EU AI Act (2024/1689), GDPR, SOC 2 Type II
+#
+# Each rule defines a condition evaluated against an AuditEvent.
+# Severity levels: info | warning | violation | critical
+# =============================================================================
+
+rules_engine:
+  version: "1.0.0"
+  default_severity_threshold: "warning"
+
+  # -------------------------------------------------------------------
+  # Retention policy definitions (used by RULE-005)
+  # -------------------------------------------------------------------
+  retention_policies:
+    financial_7yr: 2555    # 7 years in days
+    standard_2yr: 730       # 2 years
+    short_30d: 30           # 30 days
+    default: 730            # fallback
+
+  # -------------------------------------------------------------------
+  # Agent action allowlists (used by RULE-007)
+  # Key = agent_name or "__default__" for all agents
+  # -------------------------------------------------------------------
+  agent_allowlists:
+    __default__:
+      - generate_text
+      - classify
+      - recommend
+      - approve
+      - reject
+      - escalate
+      - data_access
+      - data_write
+      - data_delete
+      - tool_call
+      - decision
+      - inference
+      - routing
+      - summarize
+      - translate
+      - custom
+
+  # -------------------------------------------------------------------
+  # Approved model registry (used by RULE-009)
+  # -------------------------------------------------------------------
+  approved_models:
+    - "gpt-4o-2024-08-06"
+    - "gpt-4o-2024-11-20"
+    - "gpt-4o-mini-2024-07-18"
+    - "claude-sonnet-4-20250514"
+    - "claude-sonnet-4-20250514-1m"
+    - "claude-haiku-4-20250514"
+    - "claude-opus-4-20250514"
+    - "llama-4-maverick-17b-128e"
+    - "llama-4-scout-17b-16e"
+    - "gemini-2.5-pro"
+    - "gemini-2.5-flash"
+    - "gemini-2.5-flash-lite"
+    - "mistral-large-2411"
+    - "mixtral-8x7b"
+    - "internal"
+
+  # -------------------------------------------------------------------
+  # Jurisdictions considered "adequate" for data transfer (RULE-008)
+  # -------------------------------------------------------------------
+  adequate_jurisdictions:
+    - "EU"
+    - "EEA"
+    - "UK"
+    - "CH"
+    - "US"   # only if SCC flagged in metadata
+
+  # -------------------------------------------------------------------
+  # Sensitive PII categories (RULE-001, RULE-014)
+  # -------------------------------------------------------------------
+  sensitive_pii_categories:
+    - "ssn"
+    - "social_security"
+    - "financial"
+    - "bank_account"
+    - "credit_card"
+    - "health"
+    - "medical"
+    - "biometric"
+    - "genetic"
+
+  special_category_types:
+    - "health"
+    - "biometric"
+    - "political"
+    - "religious"
+    - "sexual_orientation"
+    - "ethnic_origin"
+    - "trade_union"
+    - "genetic"
+
+  # -------------------------------------------------------------------
+  # Consent scopes required per action type (RULE-011)
+  # -------------------------------------------------------------------
+  required_consent_scopes:
+    decision:
+      - "data_processing"
+      - "automated_decision"
+    approve:
+      - "data_processing"
+      - "automated_decision"
+    reject:
+      - "data_processing"
+      - "automated_decision"
+    data_access:
+      - "data_processing"
+    data_write:
+      - "data_processing"
+    data_delete:
+      - "data_processing"
+    classify:
+      - "data_processing"
+    recommend:
+      - "data_processing"
+    profiling:
+      - "data_processing"
+      - "profiling"
+    default:
+      - "data_processing"
+
+  # -------------------------------------------------------------------
+  # The 15 compliance rules
+  # -------------------------------------------------------------------
+  rules:
+
+    - id: "RULE-001"
+      name: "PII Leakage in Output"
+      description: >
+        Detects when PII (especially sensitive categories like SSN, financial,
+        or health data) is present in the agent's output, indicating a potential
+        data leak.
+      severity: "critical"
+      auto_block: true
+      enabled: true
+      condition: "output_summary.pii_detected == true AND output_summary.pii_types intersects sensitive_pii_categories"
+      articles:
+        - "EU AI Act Art. 13"
+        - "GDPR Art. 32"
+      notify:
+        - "compliance-team@company.com"
+        - "slack:#compliance-alerts"
+
+    - id: "RULE-002"
+      name: "Decision Without User Consent"
+      description: >
+        Flags decisions made without user consent where the consent type is 'none'
+        and the action involves personal data processing.
+      severity: "violation"
+      auto_block: true
+      enabled: true
+      condition: "consent_flags.user_consent_obtained == false AND consent_flags.consent_type == 'none' AND action involves personal data"
+      articles:
+        - "EU AI Act Art. 13"
+        - "GDPR Art. 6"
+      notify:
+        - "dpo@company.com"
+
+    - id: "RULE-003"
+      name: "Low Confidence Decision"
+      description: >
+        Warns when the model's confidence score is below the threshold for
+        high-stakes action types (approve, decision, escalate).
+      severity: "warning"
+      auto_block: false
+      enabled: true
+      threshold: 0.70
+      condition: "confidence_score < 0.70 AND action_type in [approve, decision, escalate]"
+      articles:
+        - "EU AI Act Art. 15 (Accuracy)"
+      notify:
+        - "ml-ops@company.com"
+
+    - id: "RULE-004"
+      name: "Unauthorized Data Access"
+      description: >
+        Detects any data source access where authorization was not verified.
+        This is a critical security violation.
+      severity: "critical"
+      auto_block: true
+      enabled: true
+      condition: "any source in data_lineage.sources_accessed where authorization_verified == false"
+      articles:
+        - "EU AI Act Art. 12"
+        - "GDPR Art. 32"
+      notify:
+        - "security@company.com"
+        - "slack:#security-incidents"
+
+    - id: "RULE-005"
+      name: "Data Retention Exceeded"
+      description: >
+        Flags events where the data has exceeded the retention period defined
+        by the retention_policy field.
+      severity: "violation"
+      auto_block: false
+      enabled: true
+      condition: "event timestamp exceeds retention period in data_lineage.retention_policy"
+      articles:
+        - "EU AI Act Art. 12(3)"
+        - "GDPR Art. 5(1)(e)"
+      notify:
+        - "data-governance@company.com"
+
+    - id: "RULE-006"
+      name: "High-Risk Without Human Oversight"
+      description: >
+        Violation when risk_score >= 70 and no human review has been performed.
+        Required by EU AI Act Article 14 (Human Oversight).
+      severity: "violation"
+      auto_block: true
+      enabled: true
+      risk_threshold: 70
+      condition: "risk_score >= 70 AND (human_review is None OR human_review.review_decision is None)"
+      articles:
+        - "EU AI Act Art. 14 (Human Oversight)"
+      notify:
+        - "compliance-team@company.com"
+
+    - id: "RULE-007"
+      name: "Off-Policy Action"
+      description: >
+        Detects when an agent performs an action not in its registered allowlist.
+      severity: "violation"
+      auto_block: true
+      enabled: true
+      condition: "action_type NOT IN agent's registered action allowlist"
+      articles:
+        - "EU AI Act Art. 15 (Risk Management)"
+      notify:
+        - "ml-ops@company.com"
+        - "slack:#agent-alerts"
+
+    - id: "RULE-008"
+      name: "Cross-Border Data Transfer"
+      description: >
+        Warns when data is accessed from sources outside EU/EEA without
+        adequate safeguards (adequacy decision or SCC).
+      severity: "warning"
+      auto_block: false
+      enabled: true
+      condition: "data source outside EU/EEA AND no adequacy/SCC in metadata"
+      articles:
+        - "GDPR Chapter V"
+      notify:
+        - "dpo@company.com"
+
+    - id: "RULE-009"
+      name: "Model Version Deprecated"
+      description: >
+        Warns when the model version is not in the approved registry or is
+        more than 90 days past its release date.
+      severity: "warning"
+      auto_block: false
+      enabled: true
+      max_model_age_days: 90
+      condition: "model_version NOT IN approved_models OR model age > 90 days"
+      articles:
+        - "EU AI Act Art. 15(2) (Post-market monitoring)"
+      notify:
+        - "ml-ops@company.com"
+
+    - id: "RULE-010"
+      name: "Excessive Data Collection"
+      description: >
+        Warns when the number of data sources accessed or records affected
+        exceeds configured thresholds (data minimization principle).
+      severity: "warning"
+      auto_block: false
+      enabled: true
+      max_sources_per_event: 10
+      max_records_per_event: 1000
+      condition: "len(data_lineage.sources_accessed) > 10 OR total records_affected > 1000"
+      articles:
+        - "GDPR Art. 5(1)(c) (Minimization)"
+      notify:
+        - "data-governance@company.com"
+
+    - id: "RULE-011"
+      name: "Consent Scope Mismatch"
+      description: >
+        Violation when the consent scope does not cover all processing
+        purposes required by the action type.
+      severity: "violation"
+      auto_block: true
+      enabled: true
+      condition: "consent_scope does not include all required scopes for action_type"
+      articles:
+        - "GDPR Art. 6(1)(a)"
+      notify:
+        - "dpo@company.com"
+
+    - id: "RULE-012"
+      name: "Right to Explanation Not Available"
+      description: >
+        Violation when right_to_explanation is false for a decision action
+        with legal or significant effect on the user.
+      severity: "violation"
+      auto_block: true
+      enabled: true
+      condition: "consent_flags.right_to_explanation == false AND action_type == 'decision' AND decision has significant effect"
+      articles:
+        - "EU AI Act Art. 22"
+        - "EU AI Act Art. 13(2)(f)"
+      notify:
+        - "dpo@company.com"
+        - "compliance-team@company.com"
+
+    - id: "RULE-013"
+      name: "Anomalous Decision Rate"
+      description: >
+        Warns when an agent's decision rate exceeds configured thresholds
+        (absolute rate or statistical anomaly).
+      severity: "warning"
+      auto_block: false
+      enabled: true
+      rate_limit_per_minute: 50
+      stddev_threshold: 3
+      condition: "agent decisions/minute > 50 OR rate > 3σ above 7-day mean"
+      articles:
+        - "EU AI Act Art. 15 (Monitoring)"
+      notify:
+        - "ml-ops@company.com"
+
+    - id: "RULE-014"
+      name: "Sensitive Category Processing"
+      description: >
+        Critical violation when special category data (health, biometric,
+        political, religious, sexual orientation) is processed without
+        explicit consent for those categories (GDPR Art. 9).
+      severity: "critical"
+      auto_block: true
+      enabled: true
+      sensitive_types:
+        - "health"
+        - "biometric"
+        - "political"
+        - "religious"
+        - "sexual_orientation"
+        - "ethnic_origin"
+      condition: "input_summary.pii_types intersects special_category_types AND no explicit consent for special categories"
+      articles:
+        - "GDPR Art. 9"
+      notify:
+        - "dpo@company.com"
+        - "slack:#privacy-incidents"
+
+    - id: "RULE-015"
+      name: "Audit Log Tampering Detected"
+      description: >
+        Critical violation when the audit event hash chain is broken or
+        event_id sequence gaps are detected, indicating potential tampering.
+      severity: "critical"
+      auto_block: true
+      enabled: true
+      hash_algorithm: "SHA-256"
+      condition: "event hash chain broken OR event_id sequence gap detected"
+      articles:
+        - "EU AI Act Art. 12(2) (Integrity)"
+      notify:
+        - "security@company.com"
+        - "slack:#security-critical"
