@@ -377,9 +377,15 @@ def phase_update_marketplace(name: str, repo_url: str, category: str,
 
     MARKETPLACE_HTML.write_text(html, encoding="utf-8")
 
+    # Also update projects.json (loaded by marketplace-loader.js on the live site)
+    SYNC_SCRIPT = BASE_DIR / "marketplace_sync.py"
+    if SYNC_SCRIPT.exists():
+        log("MARKETPLACE", "Syncing projects.json via marketplace_sync.py...")
+        run_cmd([sys.executable, str(SYNC_SCRIPT)], cwd=str(AIDENTIFY_DIR), timeout=60)
+
     # Commit and push
     log("MARKETPLACE", "Committing marketplace update...")
-    run_cmd(["git", "add", "docs/marketplace.html"], cwd=str(AIDENTIFY_DIR))
+    run_cmd(["git", "add", "docs/marketplace.html", "docs/data/projects.json"], cwd=str(AIDENTIFY_DIR))
     run_cmd(
         ["git", "commit", "-m", f"feat: add {name} to marketplace"],
         cwd=str(AIDENTIFY_DIR),

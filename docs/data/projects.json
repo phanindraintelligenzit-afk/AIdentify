@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-25T15:30:00+00:00",
-  "total_projects": 6,
+  "generated_at": "2026-06-26T04:30:00+00:00",
+  "total_projects": 7,
   "projects": [
     {
       "id": "healthcare-prior-auth",
@@ -91,6 +91,21 @@
       "language": "Python",
       "monetization": "Free repo + $1K-2K setup",
       "updated_at": "2026-06-25T15:30:00+00:00"
+    },
+    {
+      "id": "ai-agent-sandbox-governance",
+      "name": "AI Agent Sandbox & Governance",
+      "description": "Open-source governance layer — permission boundaries, sandboxed execution, and tamper-proof audit trails for any AI agent. YAML-defined policies, pre-execution enforcement, and CI/CD integration.",
+      "category": "security",
+      "icon": "🔒",
+      "tags": ["Security", "Governance", "Open Source", "Python", "FastAPI"],
+      "agents": 3,
+      "github_url": "https://github.com/aidentify/ai-agent-sandbox-governance",
+      "stars": 0,
+      "forks": 0,
+      "language": "Python",
+      "monetization": "Free repo (MIT) + Enterprise pricing",
+      "updated_at": "2026-06-26T04:30:00+00:00"
     }
   ]
 }
