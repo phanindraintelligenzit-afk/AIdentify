@@ -1,0 +1,70 @@
+[
+  {
+    "source": "hackernews",
+    "title": "What surprised you about Estonia e-Residency and running an Estonian OÜ?",
+    "url": "https://news.ycombinator.com/item?id=48673801",
+    "score": 72,
+    "comments": 62,
+    "text": "From the official information online, joining the e-Residency program and setting up an Estonian company seems relatively straightforward.",
+    "opportunity_id": "estonia-e-residency-compliance-automator",
+    "pain_signals": ["compliance complexity", "banking friction for non-residents", "tax reporting"],
+    "opportunity_keywords": ["compliance automation", "digital nomad tools", "company formation"],
+    "industries": ["legal", "hr", "finance"],
+    "engagement": "high"
+  },
+  {
+    "source": "hackernews",
+    "title": "Anthropic banned me from using Claude Code and I don't know what to do",
+    "url": "https://news.ycombinator.com/item?id=48641160",
+    "score": 80,
+    "comments": 92,
+    "text": "After using Claude Code at work for months I wanted to use it on my own projects too. Got banned after 1 hour.",
+    "opportunity_id": "ai-coding-policy-compliance",
+    "pain_signals": ["AI coding tool policy compliance", "IP-based false positives", "account recovery"],
+    "opportunity_keywords": ["AI coding policy", "code integrity auditing", "usage compliance"],
+    "industries": ["devtools", "enterprise"],
+    "engagement": "very_high"
+  },
+  {
+    "source": "devto",
+    "title": "How My AI Agent Hacked Its Own Permissions (And What It Taught Me)",
+    "url": "https://dev.to/gdg/how-my-ai-agent-hacked-its-own-permissions-and-what-it-taught-me-34bm",
+    "reactions": 15,
+    "comments": 13,
+    "tags": ["ai", "security", "agents", "automation"],
+    "text": "Have you ever tried to build an automation that works so well it bypasses the very rules you set for it?",
+    "opportunity_id": "ai-agent-permission-sandbox",
+    "pain_signals": ["Agent permission escalation", "sandbox security"],
+    "opportunity_keywords": ["agent governance", "permission boundaries", "AI security controls"],
+    "industries": ["security", "devtools"],
+    "engagement": "high"
+  },
+  {
+    "source": "hackernews",
+    "title": "Write SaaS apps where users control where their data is stored",
+    "url": "https://github.com/wolfoo2931/linkedrecords/",
+    "hn_url": "https://news.ycombinator.com/item?id=48595882",
+    "score": 68,
+    "comments": 30,
+    "text": "Linked Records — an open source backend as a service. Firebase/convex alternative with user-controlled data storage.",
+    "opportunity_id": "self-hosted-baas-control-plane",
+    "pain_signals": ["data sovereignty", "vendor lock-in", "compliance requirements"],
+    "opportunity_keywords": ["sovereign BaaS", "self-hosted backend", "tenant-controlled storage"],
+    "industries": ["saas", "enterprise", "compliance"],
+    "engagement": "high"
+  },
+  {
+    "source": "hackernews",
+    "title": "MiniPCs.zip – Charting the Pareto frontier of Mini PCs",
+    "url": "https://minipcs.zip",
+    "hn_url": "https://news.ycombinator.com/item?id=48612432",
+    "score": 95,
+    "comments": 36,
+    "text": "Charting thousands of Mini PCs by benchmark and reveal the Pareto Front. Uses Gemini to extract specs from listings.",
+    "opportunity_id": "ai-hardware-benchmark-suite",
+    "pain_signals": ["Hardware comparison inefficiency", "spec extraction from messy data"],
+    "opportunity_keywords": ["hardware benchmarking", "price-performance analysis", "LLM-powered data extraction"],
+    "industries": ["consumer_tech", "homelab", "devtools"],
+    "engagement": "high"
+  }
+]

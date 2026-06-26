@@ -1,0 +1,26 @@
+{
+  "build": {
+    "slug": "ai-agent-sandbox-governance",
+    "date": "2026-06-26",
+    "cycle": 2,
+    "status": "complete",
+    "source_opportunity": {
+      "title": "How My AI Agent Hacked Its Own Permissions (And What It Taught Me)",
+      "url": "https://dev.to/gdg/how-my-ai-agent-hacked-its-own-permissions-and-what-it-taught-me-34bm"
+    },
+    "artifacts": {
+      "readme": "builds/ai-agent-sandbox-governance-2026-06-26/README.md",
+      "core_module": "builds/ai-agent-sandbox-governance-2026-06-26/agent_sandbox.py",
+      "api_server": "builds/ai-agent-sandbox-governance-2026-06-26/main.py",
+      "requirements": "builds/ai-agent-sandbox-governance-2026-06-26/requirements.txt"
+    },
+    "tech_stack": ["Python 3.11", "FastAPI", "pydantic", "SQLite", "Docker (planned)"],
+    "version": "0.1.0",
+    "next_steps": [
+      "Add Bubblewrap/container isolation",
+      "Implement policy-as-code YAML parsing",
+      "Add audit log persistence with tamper detection",
+      "CI/CD integration plugins"
+    ]
+  }
+}

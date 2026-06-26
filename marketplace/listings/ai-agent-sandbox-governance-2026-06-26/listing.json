@@ -1,0 +1,36 @@
+{
+  "listing": {
+    "slug": "ai-agent-sandbox-governance",
+    "date": "2026-06-26",
+    "cycle": 2,
+    "status": "published",
+    "title": "AI Agent Permission Sandbox & Audit",
+    "tagline": "Open-source governance layer — permission boundaries, sandboxed execution, audit trails for any AI agent",
+    "category": "security",
+    "tags": ["security", "agents", "governance", "open-source", "python", "fastapi"],
+    "pricing": {
+      "model": "free_tier_with_enterprise",
+      "free": "Open-source MIT license",
+      "enterprise": "Contact for team/on-prem pricing"
+    },
+    "description": "Every AI agent can theoretically bypass the rules you wrote for it. Agent Sandbox Governance gives you hard permission boundaries, sandboxed execution, and a tamper-proof audit trail of every tool call — for Claude Code, Codex, or any agent framework.",
+    "key_features": [
+      "YAML-defined permission policies (filesystem, network, commands)",
+      "Pre-execution policy enforcement",
+      "Audit logging with tamper detection",
+      "REST API for CI/CD pipeline integration",
+      "Default policy templates for common agent workflows",
+      "Open-source MIT licensed"
+    ],
+    "source_url": "https://github.com/aidentify/ai-agent-sandbox-governance",
+    "docs_url": "https://docs.aiidentify.ai/agent-sandbox",
+    "image": "marketplace/listings/ai-agent-sandbox-governance-2026-06-26/hero.png",
+    "metrics": {
+      "score": 33,
+      "market_fit": 8,
+      "feasibility": 7,
+      "community_signal": "15 reactions, 16 comments on source article"
+    },
+    "build_ref": "builds/ai-agent-sandbox-governance-2026-06-26"
+  }
+}

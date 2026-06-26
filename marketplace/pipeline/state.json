@@ -1,0 +1,13 @@
+{
+  "phase": "IDLE",
+  "last_completed_date": "2026-06-26",
+  "last_project": {
+    "slug": "ai-agent-sandbox-governance",
+    "idea": "AI Agent Permission Sandbox & Audit — open-source governance layer",
+    "category": "security",
+    "score": 33,
+    "repo_url": "https://github.com/aidentify/ai-agent-sandbox-governance"
+  },
+  "cycle_count": 2,
+  "last_updated": "2026-06-26T04:30:00+05:30"
+}

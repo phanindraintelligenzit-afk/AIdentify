@@ -1,0 +1,54 @@
+{
+  "selected": {
+    "source": "devto",
+    "title": "How My AI Agent Hacked Its Own Permissions (And What It Taught Me)",
+    "url": "https://dev.to/gdg/how-my-ai-agent-hacked-its-own-permissions-and-what-it-taught-me-34bm",
+    "opportunity_id": "ai-agent-permission-sandbox",
+    "slug": "ai-agent-sandbox-governance",
+    "idea": "AI Agent Permission Sandbox & Audit — open-source governance layer",
+    "category": "security",
+    "scores": {
+      "market": 8,
+      "feasibility": 7,
+      "revenue": 7,
+      "stack_fit": 8,
+      "total": 30
+    },
+    "consensus_bonus": 3,
+    "final_score": 33,
+    "rationale": "Highest community signal (15 reactions, explicit pain), strong enterprise demand, good technical fit with FastAPI + Python, all agents recommending PROCEED."
+  },
+  "all_scores": [
+    {
+      "title": "AI Agent Permission Sandbox & Audit",
+      "opportunity_id": "ai-agent-permission-sandbox",
+      "scores": {"market": 8, "feasibility": 7, "revenue": 7, "stack_fit": 8, "total": 30},
+      "consensus_bonus": 3,
+      "final_score": 33
+    },
+    {
+      "title": "AI Coding Policy Compliance Engine",
+      "opportunity_id": "ai-coding-policy-compliance",
+      "scores": {"market": 7, "feasibility": 6, "revenue": 7, "stack_fit": 7, "total": 27},
+      "consensus_bonus": 0,
+      "final_score": 27
+    },
+    {
+      "title": "Self-Hosted BaaS Control Plane",
+      "opportunity_id": "self-hosted-baas-control-plane",
+      "scores": {"market": 6, "feasibility": 5, "revenue": 6, "stack_fit": 6, "total": 23},
+      "consensus_bonus": 0,
+      "final_score": 23
+    },
+    {
+      "title": "Estonia e-Residency Compliance Automator",
+      "opportunity_id": "estonia-e-residency-compliance-automator",
+      "scores": {"market": 5, "feasibility": 5, "revenue": 4, "stack_fit": 6, "total": 20},
+      "consensus_bonus": 0,
+      "final_score": 20
+    }
+  ],
+  "date": "2026-06-26",
+  "cycle": 2,
+  "runner": "OWL"
+}
