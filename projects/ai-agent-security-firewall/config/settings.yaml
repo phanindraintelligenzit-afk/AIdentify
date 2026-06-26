@@ -1,0 +1,51 @@
+# AI Agent Security Firewall - Configuration
+
+# Severity levels: block, flag, log
+# - block: reject the request entirely
+# - flag: allow but log as suspicious
+# - log: silently log without action
+
+firewall:
+  default_severity: "block"
+  
+  rules:
+    prompt_injection:
+      enabled: true
+      severity: "block"
+      score_threshold: 0.3
+    
+    jailbreak:
+      enabled: true
+      severity: "block"
+      score_threshold: 0.3
+    
+    data_exfiltration:
+      enabled: true
+      severity: "block"
+      score_threshold: 0.3
+    
+    roleplay_attack:
+      enabled: true
+      severity: "flag"
+      score_threshold: 0.3
+    
+    instruction_override:
+      enabled: true
+      severity: "block"
+      score_threshold: 0.3
+
+  rate_limiting:
+    enabled: true
+    max_requests_per_minute: 60
+    block_duration_seconds: 300
+
+  logging:
+    level: "INFO"
+    file: "logs/firewall.log"
+    max_size_mb: 50
+    backup_count: 5
+
+server:
+  host: "0.0.0.0"
+  port: 8080
+  workers: 4

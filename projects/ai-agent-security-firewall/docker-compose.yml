@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  firewall:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aisf-firewall
+    ports:
+      - "8080:8080"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./logs:/app/logs
+      - ./config:/app/config:ro
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://localhost:8080/api/v1/health').raise_for_status()"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Optional: Add your LLM service behind the firewall
+  # llm-backend:
+  #   image: your-llm-image
+  #   container_name: llm-backend
+  #   networks:
+  #     - aisf-network
+  #   # This service is only accessible through the firewall
+
+networks:
+  default:
+    name: aisf-network
