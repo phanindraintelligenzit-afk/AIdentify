@@ -136,19 +136,9 @@ def sync():
     git("push", "origin", "main")
     print("🚀 Pushed to main.")
 
-    # Also deploy to gh-pages if it exists
-    try:
-        result = git("branch", "--list", "gh-pages")
-        if "gh-pages" in result.stdout:
-            print("Deploying to gh-pages...")
-            git("checkout", "gh-pages")
-            git("merge", "main")
-            git("push", "origin", "gh-pages")
-            git("checkout", "main")
-            print("✅ gh-pages updated.")
-    except Exception as e:
-        print(f"⚠️ gh-pages deploy skipped: {e}")
-
+    # Deploy to gh-pages (force push main as gh-pages since docs/ is the site root)
+    git("push", "origin", "main:gh-pages", "--force")
+    print("🚀 Pushed to gh-pages — live site will update within ~2 min.")
 
 if __name__ == "__main__":
     sync()
