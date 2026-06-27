@@ -1282,6 +1282,28 @@
           </div>
         </div>
 
+        <!-- Card: Business Inbox Agent -->
+        <div class="project-card" data-category="marketing" style="cursor:pointer;">
+          <div class="project-card__header">
+            <div class="project-card__icon">📣</div>
+            <span class="project-card__badge project-card__badge--free">Free Repo</span>
+          </div>
+          <h3 class="project-card__name">Business Inbox Agent</h3>
+          <p class="project-card__desc">AI agent that classifies incoming business requests (lead/support/invoice/scheduling), extracts structured data, and rou</p>
+          <div class="project-card__tags">
+            <span class="project-card__tag">email-automation</span> <span class="project-card__tag">crm-integration</span> <span class="project-card__tag">lead-routing</span> <span class="project-card__tag">multi-agent</span>
+          </div>
+          <div class="project-card__meta">
+            <span class="project-card__meta-item">🐍 Python</span>
+            <span class="project-card__meta-item">📝 MIT</span>
+            <span class="project-card__meta-item">👤 AIdentify</span>
+          </div>
+          <div class="project-card__actions">
+            <a href="https://github.com/phanindraintelligenzit-afk/business-inbox-agent" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
+            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
+          </div>
+        </div>
+
 <!-- Card 6: Coming Soon / CTA -->
         <div class="project-card" data-category="cta" style="border-style: dashed; border-color: var(--purple-light); background: var(--bg-subtle);">
           <div class="project-card__header">
@@ -1632,8 +1654,17 @@
         tags:["Multi-Platform", "Analytics"],
         github_url:"https://github.com/phanindraintelligenzit-afk/-i-built-an-ai-team-that-finds-leads-decision-make"
       }
+,
+      "business-inbox-agent": {
+        name:"Business Inbox Agent",icon:"📣",category:"Marketing",
+        description:"AI agent that classifies incoming business requests (lead/support/invoice/scheduling), extracts structured data, and routes to the right workflow with draft replies.",
+        agents:["Classifier \u2014 request type detection", "Extractor \u2014 structured data pull", "Router \u2014 downstream dispatch", "Responder \u2014 draft reply generation"],
+        tags:["email-automation", "crm-integration", "lead-routing", "multi-agent"],
+        github_url:"https://github.com/phanindraintelligenzit-afk/business-inbox-agent"
+      }
     };
     const REPO_MAP = {
+        "marketing":"business-inbox-agent",
         "marketing":"-i-built-an-ai-team-that-finds-leads-decision-make",
         "legal":"estonia-e-residency-compliance-automator","healthcare":"healthcare-prior-auth","realestate":"real-estate-lead-gen","ecommerce":"ecommerce-product-optimizer","hr":"hr-operations","marketing":"ai-powered-lead-generation-team-multi-agent-system","devtools":"ai-agent-sandbox-governance"};
     document.querySelectorAll('.project-card[data-category]').forEach(function(card){
