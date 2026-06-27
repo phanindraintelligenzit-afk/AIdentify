@@ -1304,6 +1304,28 @@
           </div>
         </div>
 
+        <!-- Card: YouTube Channel Manager -->
+        <div class="project-card" data-category="marketing" style="cursor:pointer;">
+          <div class="project-card__header">
+            <div class="project-card__icon">📣</div>
+            <span class="project-card__badge project-card__badge--free">Free Repo</span>
+          </div>
+          <h3 class="project-card__name">YouTube Channel Manager</h3>
+          <p class="project-card__desc">AI content engine for YouTube creators. Generates video ideas, full scripts, SEO metadata, thumbnail briefs, and weekly </p>
+          <div class="project-card__tags">
+            <span class="project-card__tag">youtube</span> <span class="project-card__tag">content-creation</span> <span class="project-card__tag">seo</span> <span class="project-card__tag">script-writing</span>
+          </div>
+          <div class="project-card__meta">
+            <span class="project-card__meta-item">🐍 Python</span>
+            <span class="project-card__meta-item">📝 MIT</span>
+            <span class="project-card__meta-item">👤 AIdentify</span>
+          </div>
+          <div class="project-card__actions">
+            <a href="https://github.com/phanindraintelligenzit-afk/youtube-channel-manager" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
+            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
+          </div>
+        </div>
+
 <!-- Card 6: Coming Soon / CTA -->
         <div class="project-card" data-category="cta" style="border-style: dashed; border-color: var(--purple-light); background: var(--bg-subtle);">
           <div class="project-card__header">
@@ -1662,8 +1684,17 @@
         tags:["email-automation", "crm-integration", "lead-routing", "multi-agent"],
         github_url:"https://github.com/phanindraintelligenzit-afk/business-inbox-agent"
       }
+,
+      "youtube-channel-manager": {
+        name:"YouTube Channel Manager",icon:"📣",category:"Marketing",
+        description:"AI content engine for YouTube creators. Generates video ideas, full scripts, SEO metadata, thumbnail briefs, and weekly content calendar.",
+        agents:["Trend Researcher \u2014 video idea generation", "Script Writer \u2014 full scripts with hooks & timestamps", "SEO Agent \u2014 titles, descriptions, tags", "Thumbnail Brief \u2014 visual concepts", "Content Calendar \u2014 weekly scheduling"],
+        tags:["youtube", "content-creation", "seo", "script-writing", "creator-tools"],
+        github_url:"https://github.com/phanindraintelligenzit-afk/youtube-channel-manager"
+      }
     };
     const REPO_MAP = {
+        "marketing":"youtube-channel-manager",
         "marketing":"business-inbox-agent",
         "marketing":"-i-built-an-ai-team-that-finds-leads-decision-make",
         "legal":"estonia-e-residency-compliance-automator","healthcare":"healthcare-prior-auth","realestate":"real-estate-lead-gen","ecommerce":"ecommerce-product-optimizer","hr":"hr-operations","marketing":"ai-powered-lead-generation-team-multi-agent-system","devtools":"ai-agent-sandbox-governance"};
