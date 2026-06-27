@@ -1260,6 +1260,28 @@
           </div>
         </div>
 
+        <!-- Card: I Built an Ai Team That Finds Leads Decision Make -->
+        <div class="project-card" data-category="marketing" style="cursor:pointer;">
+          <div class="project-card__header">
+            <div class="project-card__icon">📣</div>
+            <span class="project-card__badge project-card__badge--free">Free Repo</span>
+          </div>
+          <h3 class="project-card__name">I Built an Ai Team That Finds Leads Decision Make</h3>
+          <p class="project-card__desc">🚀 I Built an AI Team That Finds Leads, Decision Makers & Writes Outreach While I Sleep</p>
+          <div class="project-card__tags">
+            <span class="project-card__tag">Multi-Platform</span> <span class="project-card__tag">Analytics</span>
+          </div>
+          <div class="project-card__meta">
+            <span class="project-card__meta-item">🐍 Python</span>
+            <span class="project-card__meta-item">📝 MIT</span>
+            <span class="project-card__meta-item">👤 AIdentify</span>
+          </div>
+          <div class="project-card__actions">
+            <a href="https://github.com/phanindraintelligenzit-afk/-i-built-an-ai-team-that-finds-leads-decision-make" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
+            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
+          </div>
+        </div>
+
 <!-- Card 6: Coming Soon / CTA -->
         <div class="project-card" data-category="cta" style="border-style: dashed; border-color: var(--purple-light); background: var(--bg-subtle);">
           <div class="project-card__header">
@@ -1602,8 +1624,17 @@
         tags:["Compliance","GDPR","Legal","Multi-Agent"],
         github_url:"https://github.com/phanindraintelligenzit-afk/estonia-e-residency-compliance-automator"
       }
+,
+      "-i-built-an-ai-team-that-finds-leads-decision-make": {
+        name:"I Built an Ai Team That Finds Leads Decision Make",icon:"📣",category:"Marketing",
+        description:"🚀 I Built an AI Team That Finds Leads, Decision Makers & Writes Outreach While I Sleep",
+        agents:["content_generator \u2014 Generate platform-specific content from briefs and trends", "scheduler \u2014 Optimize posting schedule by platform, audience, engagement data", "analytics_agent \u2014 Track performance, generate insights, recommend optimizations"],
+        tags:["Multi-Platform", "Analytics"],
+        github_url:"https://github.com/phanindraintelligenzit-afk/-i-built-an-ai-team-that-finds-leads-decision-make"
+      }
     };
     const REPO_MAP = {
+        "marketing":"-i-built-an-ai-team-that-finds-leads-decision-make",
         "legal":"estonia-e-residency-compliance-automator","healthcare":"healthcare-prior-auth","realestate":"real-estate-lead-gen","ecommerce":"ecommerce-product-optimizer","hr":"hr-operations","marketing":"ai-powered-lead-generation-team-multi-agent-system","devtools":"ai-agent-sandbox-governance"};
     document.querySelectorAll('.project-card[data-category]').forEach(function(card){
       var cat = card.dataset.category;
