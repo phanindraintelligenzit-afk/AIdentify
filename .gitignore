@@ -43,3 +43,8 @@ logs/
 docs/gh_docs/marketing-dashboard/.next/
 node_modules/
 *.log
+
+# Embedded project repos (pipeline creates these)
+projects/*/.git
+projects/*/src/.social-assets-repo/.git
+marketplace/builds/*/.git
