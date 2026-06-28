@@ -30,5 +30,13 @@
     "github_url": "https://github.com/phanindraintelligenzit-afk/ai-app-store-screenshot-generator",
     "project_dir": "projects/ai-app-store-screenshot-generator",
     "created_at": "2026-06-28T14:25:00+00:00"
+  },
+  "dsar-automator": {
+    "name": "DataGuard DSAR Automator",
+    "category": "legal",
+    "status": "built",
+    "github_url": "https://github.com/phanindraintigenzit-afk/AIdentify/tree/gh-pages/projects/dsar-automator",
+    "project_dir": "projects/dsar-automator",
+    "created_at": "2026-06-28T10:00:00.000000+00:00"
   }
 }
