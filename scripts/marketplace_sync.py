@@ -131,14 +131,24 @@ def sync():
     print(f"\n✅ Added {len(new_projects)} project(s) to projects.json")
 
     # Commit and push
+    # Get current branch
+    result = subprocess.run(
+        ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+        cwd=str(REPO_ROOT),
+        capture_output=True,
+        text=True,
+    )
+    current_branch = result.stdout.strip() or "main"
+
     git("add", "docs/data/projects.json")
     git("commit", "-m", f"feat: sync {len(new_projects)} new marketplace listing(s) to projects.json")
-    git("push", "origin", "main")
-    print("🚀 Pushed to main.")
+    git("push", "origin", current_branch)
+    print(f"🚀 Pushed to {current_branch}.")
 
-    # Deploy to gh-pages (force push main as gh-pages since docs/ is the site root)
-    git("push", "origin", "main:gh-pages", "--force")
+    # Deploy to gh-pages (force push current branch as gh-pages since docs/ is the site root)
+    git("push", "origin", f"{current_branch}:gh-pages", "--force")
     print("🚀 Pushed to gh-pages — live site will update within ~2 min.")
+
 
 if __name__ == "__main__":
     sync()

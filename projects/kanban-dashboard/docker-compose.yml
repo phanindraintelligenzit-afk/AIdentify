@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  kanban:
+    build: .
+    container_name: kanban-dashboard
+    ports:
+      - "8000:8000"
+    environment:
+      - KANBAN_DATABASE_URL=sqlite+aiosqlite:///./data/kanban.db
+      - PORT=8000
+      - HOST=0.0.0.0
+    volumes:
+      - kanban-data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://localhost:8000/api/health').raise_for_status()"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  kanban-data:

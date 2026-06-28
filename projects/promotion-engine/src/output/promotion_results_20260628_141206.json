@@ -1,0 +1,191 @@
+{
+  "healthcare-prior-auth": {
+    "name": "Healthcare Prior Auth",
+    "results": {
+      "linkedin": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "twitter": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "instagram": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "facebook": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      }
+    },
+    "image_urls": {
+      "twitter": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/twitter_healthcare-prior-auth.png",
+      "linkedin": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/linkedin_healthcare-prior-auth.png",
+      "instagram": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/instagram_healthcare-prior-auth.png",
+      "facebook": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/facebook_healthcare-prior-auth.png"
+    }
+  },
+  "real-estate-lead-gen": {
+    "name": "Real Estate Lead Gen",
+    "results": {
+      "linkedin": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "twitter": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "instagram": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "facebook": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      }
+    },
+    "image_urls": {
+      "twitter": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/twitter_real-estate-lead-gen.png",
+      "linkedin": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/linkedin_real-estate-lead-gen.png",
+      "instagram": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/instagram_real-estate-lead-gen.png",
+      "facebook": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/facebook_real-estate-lead-gen.png"
+    }
+  },
+  "ecommerce-operations": {
+    "name": "E-Commerce Operations",
+    "results": {
+      "linkedin": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "twitter": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "instagram": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "facebook": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      }
+    },
+    "image_urls": {
+      "twitter": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/twitter_e-commerce-operations.png",
+      "linkedin": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/linkedin_e-commerce-operations.png",
+      "instagram": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/instagram_e-commerce-operations.png",
+      "facebook": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/facebook_e-commerce-operations.png"
+    }
+  },
+  "legal-contract-review": {
+    "name": "Legal Contract Review",
+    "results": {
+      "linkedin": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "twitter": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "instagram": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "facebook": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      }
+    },
+    "image_urls": {
+      "twitter": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/twitter_legal-contract-review.png",
+      "linkedin": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/linkedin_legal-contract-review.png",
+      "instagram": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/instagram_legal-contract-review.png",
+      "facebook": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/facebook_legal-contract-review.png"
+    }
+  },
+  "hr-operations": {
+    "name": "HR Operations",
+    "results": {
+      "linkedin": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "twitter": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "instagram": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "facebook": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      }
+    },
+    "image_urls": {
+      "twitter": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/twitter_hr-operations.png",
+      "linkedin": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/linkedin_hr-operations.png",
+      "instagram": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/instagram_hr-operations.png",
+      "facebook": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/facebook_hr-operations.png"
+    }
+  },
+  "leadgen-ai-team": {
+    "name": "LeadGen AI Team",
+    "results": {
+      "linkedin": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "twitter": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "instagram": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "facebook": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      }
+    },
+    "image_urls": {
+      "twitter": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/twitter_leadgen-ai-team.png",
+      "linkedin": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/linkedin_leadgen-ai-team.png",
+      "instagram": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/instagram_leadgen-ai-team.png",
+      "facebook": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/facebook_leadgen-ai-team.png"
+    }
+  },
+  "ai-agent-sandbox-governance": {
+    "name": "AI Agent Sandbox & Governance",
+    "results": {
+      "linkedin": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "twitter": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "instagram": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      },
+      "facebook": {
+        "status": "error",
+        "error": "HTTP Error 500: Internal Server Error"
+      }
+    },
+    "image_urls": {
+      "twitter": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/twitter_ai-agent-sandbox-&-governance.png",
+      "linkedin": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/linkedin_ai-agent-sandbox-&-governance.png",
+      "instagram": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/instagram_ai-agent-sandbox-&-governance.png",
+      "facebook": "https://raw.githubusercontent.com/phanindraintelligenzit-afk/social-assets/main/images/facebook_ai-agent-sandbox-&-governance.png"
+    }
+  }
+}

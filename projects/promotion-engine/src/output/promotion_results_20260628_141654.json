@@ -1,0 +1,191 @@
+{
+  "healthcare-prior-auth": {
+    "name": "Healthcare Prior Auth",
+    "results": {
+      "linkedin": {
+        "status": "scheduled",
+        "post_id": "cmqxjnc79000504le166d3lp3"
+      },
+      "twitter": {
+        "status": "scheduled",
+        "post_id": "cmqxjnd71000904leh3jzag4d"
+      },
+      "instagram": {
+        "status": "skipped",
+        "reason": "no_image"
+      },
+      "facebook": {
+        "status": "scheduled",
+        "post_id": "cmqxjndv6000d04le2e8lgusm"
+      }
+    },
+    "image_urls": {
+      "twitter": null,
+      "linkedin": null,
+      "instagram": null,
+      "facebook": null
+    }
+  },
+  "real-estate-lead-gen": {
+    "name": "Real Estate Lead Gen",
+    "results": {
+      "linkedin": {
+        "status": "scheduled",
+        "post_id": "cmqxjnm9f000h04legey1367p"
+      },
+      "twitter": {
+        "status": "scheduled",
+        "post_id": "cmqxjnn4h000l04le6dupd23c"
+      },
+      "instagram": {
+        "status": "skipped",
+        "reason": "no_image"
+      },
+      "facebook": {
+        "status": "scheduled",
+        "post_id": "cmqxjnnnu000404jl2kgz8pjq"
+      }
+    },
+    "image_urls": {
+      "twitter": null,
+      "linkedin": null,
+      "instagram": null,
+      "facebook": null
+    }
+  },
+  "ecommerce-operations": {
+    "name": "E-Commerce Operations",
+    "results": {
+      "linkedin": {
+        "status": "scheduled",
+        "post_id": "cmqxjnx68000804jl2ubh15nx"
+      },
+      "twitter": {
+        "status": "scheduled",
+        "post_id": "cmqxjnxvk000c04jlelpja1d7"
+      },
+      "instagram": {
+        "status": "skipped",
+        "reason": "no_image"
+      },
+      "facebook": {
+        "status": "scheduled",
+        "post_id": "cmqxjnyg0001004l1dh1569xj"
+      }
+    },
+    "image_urls": {
+      "twitter": null,
+      "linkedin": null,
+      "instagram": null,
+      "facebook": null
+    }
+  },
+  "legal-contract-review": {
+    "name": "Legal Contract Review",
+    "results": {
+      "linkedin": {
+        "status": "scheduled",
+        "post_id": "cmqxjo6u5000g04jl95tu54qe"
+      },
+      "twitter": {
+        "status": "scheduled",
+        "post_id": "cmqxjo7ik000k04jlc0xp3xth"
+      },
+      "instagram": {
+        "status": "skipped",
+        "reason": "no_image"
+      },
+      "facebook": {
+        "status": "scheduled",
+        "post_id": "cmqxjo815000o04jla5pqfq3h"
+      }
+    },
+    "image_urls": {
+      "twitter": null,
+      "linkedin": null,
+      "instagram": null,
+      "facebook": null
+    }
+  },
+  "hr-operations": {
+    "name": "HR Operations",
+    "results": {
+      "linkedin": {
+        "status": "scheduled",
+        "post_id": "cmqxjogx5001404l1g6bc9eyq"
+      },
+      "twitter": {
+        "status": "scheduled",
+        "post_id": "cmqxjohlp001804l10c3ef3oi"
+      },
+      "instagram": {
+        "status": "skipped",
+        "reason": "no_image"
+      },
+      "facebook": {
+        "status": "scheduled",
+        "post_id": "cmqxjoi8e001c04l18t2pcwvi"
+      }
+    },
+    "image_urls": {
+      "twitter": null,
+      "linkedin": null,
+      "instagram": null,
+      "facebook": null
+    }
+  },
+  "leadgen-ai-team": {
+    "name": "LeadGen AI Team",
+    "results": {
+      "linkedin": {
+        "status": "scheduled",
+        "post_id": "cmqxjoppt000s04jl7tc8f908"
+      },
+      "twitter": {
+        "status": "scheduled",
+        "post_id": "cmqxjoqoa000w04jlfmj1aggx"
+      },
+      "instagram": {
+        "status": "skipped",
+        "reason": "no_image"
+      },
+      "facebook": {
+        "status": "scheduled",
+        "post_id": "cmqxjor9h001004jl3wy50kzi"
+      }
+    },
+    "image_urls": {
+      "twitter": null,
+      "linkedin": null,
+      "instagram": null,
+      "facebook": null
+    }
+  },
+  "ai-agent-sandbox-governance": {
+    "name": "AI Agent Sandbox & Governance",
+    "results": {
+      "linkedin": {
+        "status": "scheduled",
+        "post_id": "cmqxjoyyf001404jlbata2ydg"
+      },
+      "twitter": {
+        "status": "scheduled",
+        "post_id": "cmqxjozkf001804jlhejb9q05"
+      },
+      "instagram": {
+        "status": "skipped",
+        "reason": "no_image"
+      },
+      "facebook": {
+        "status": "scheduled",
+        "post_id": "cmqxjp06g001c04jlf9lnhm74"
+      }
+    },
+    "image_urls": {
+      "twitter": null,
+      "linkedin": null,
+      "instagram": null,
+      "facebook": null
+    }
+  }
+}

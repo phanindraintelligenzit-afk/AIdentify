@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIdentify Kanban Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦉</text></svg>">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <span class="logo-icon">🦉</span>
+                    <span class="logo-text">AIdentify</span>
+                </div>
+                <nav class="board-nav">
+                    <select id="board-selector" class="board-selector">
+                        <option value="">Loading boards...</option>
+                    </select>
+                </nav>
+            </div>
+            <div class="header-center">
+                <div class="search-bar">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                    </svg>
+                    <input type="text" id="search-input" placeholder="Search tasks..." />
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="filters">
+                    <select id="filter-assignee" class="filter-select">
+                        <option value="">All Agents</option>
+                    </select>
+                    <select id="filter-priority" class="filter-select">
+                        <option value="">All Priorities</option>
+                    </select>
+                    <select id="filter-label" class="filter-select">
+                        <option value="">All Labels</option>
+                    </select>
+                </div>
+                <button id="btn-new-task" class="btn btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14M5 12h14"/>
+                    </svg>
+                    New Task
+                </button>
+                <div class="connection-status" id="connection-status" title="Connection status">
+                    <span class="status-dot"></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-label">Total</span>
+                <span class="stat-value" id="stat-total">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Backlog</span>
+                <span class="stat-value" id="stat-backlog">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">In Progress</span>
+                <span class="stat-value" id="stat-in_progress">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Review</span>
+                <span class="stat-value" id="stat-review">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Done</span>
+                <span class="stat-value" id="stat-done">0</span>
+            </div>
+            <div class="stat-item overdue">
+                <span class="stat-label">Overdue</span>
+                <span class="stat-value" id="stat-overdue">0</span>
+            </div>
+        </div>
+
+        <!-- Kanban Board -->
+        <main class="board" id="board">
+            <!-- Columns rendered dynamically -->
+        </main>
+
+        <!-- Task Modal -->
+        <div class="modal-overlay" id="task-modal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h2 id="modal-title">Create Task</h2>
+                    <button class="modal-close" id="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="task-form">
+                        <input type="hidden" id="task-id" />
+                        <div class="form-group">
+                            <label for="task-title-input">Title</label>
+                            <input type="text" id="task-title-input" placeholder="Task title..." required />
+                        </div>
+                        <div class="form-group">
+                            <label for="task-description-input">Description</label>
+                            <textarea id="task-description-input" placeholder="Add description..." rows="3"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="task-status-input">Status</label>
+                                <select id="task-status-input">
+                                    <option value="backlog">Backlog</option>
+                                    <option value="in_progress">In Progress</option>
+                                    <option value="review">Review</option>
+                                    <option value="done">Done</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="task-priority-input">Priority</label>
+                                <select id="task-priority-input">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                    <option value="urgent">Urgent</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="task-assignee-input">Assignee</label>
+                                <select id="task-assignee-input">
+                                    <option value="owl">Owl (Default)</option>
+                                    <option value="researcher">Researcher</option>
+                                    <option value="writer">Writer</option>
+                                    <option value="outreach">Outreach</option>
+                                    <option value="social">Social</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="task-duedate-input">Due Date</label>
+                                <input type="datetime-local" id="task-duedate-input" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-column-input">Column</label>
+                            <select id="task-column-input"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Labels</label>
+                            <div class="label-selector" id="label-selector"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Tags</label>
+                            <div class="tag-selector" id="tag-selector"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-ghost" id="modal-cancel">Cancel</button>
+                    <button class="btn btn-primary" id="modal-save">Save Task</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Container -->
+        <div class="toast-container" id="toast-container"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
