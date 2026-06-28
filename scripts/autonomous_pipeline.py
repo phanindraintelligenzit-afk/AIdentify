@@ -34,6 +34,10 @@ SCOUT_SCRIPT = BASE_DIR / "opportunity_scanner.py"
 PIPELINE_SCRIPT = BASE_DIR / "project_pipeline.py"
 GITHUB_ORG = "phanindraintelligenzit-afk"
 
+# Import scanner helpers for alternate search queries (threshold loop)
+sys.path.insert(0, str(BASE_DIR))
+from opportunity_scanner import search_ddg, score_opportunity
+
 IST = timezone(timedelta(hours=5, minutes=30))
 
 # Industry keyword → category mapping
@@ -80,14 +84,16 @@ def run_cmd(cmd: list, cwd=None, timeout=120) -> tuple:
 # PHASE 1: SCAN
 # ═══════════════════════════════════════════
 
-def phase_scan() -> list:
+def phase_scan(enable_llm: bool = False, enable_js: bool = False) -> list:
     """Scan HN, GitHub, Reddit, dev.to for business opportunities."""
     log("SCAN", "Running opportunity scanner...")
 
-    code, stdout, stderr = run_cmd(
-        [sys.executable, str(SCOUT_SCRIPT), "--json"],
-        timeout=180,
-    )
+    cmd = [sys.executable, str(SCOUT_SCRIPT), "--json"]
+    if enable_llm:
+        cmd.append("--llm")
+    if enable_js:
+        cmd.append("--js")
+    code, stdout, stderr = run_cmd(cmd, timeout=180)
 
     if code != 0:
         log("SCAN", f"Scanner failed (exit {code}): {stderr[:200]}")
@@ -390,7 +396,10 @@ def phase_update_marketplace(name: str, repo_url: str, category: str,
         ["git", "commit", "-m", f"feat: add {name} to marketplace"],
         cwd=str(AIDENTIFY_DIR),
     )
-    code, _, stderr = run_cmd(["git", "push", "origin", "main"], cwd=str(AIDENTIFY_DIR), timeout=60)
+    # Push to current branch (gh-pages for AIdentify)
+    _branch_result = run_cmd(["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=str(AIDENTIFY_DIR))
+    _current_branch = _branch_result[1].strip() if _branch_result[0] == 0 else "gh-pages"
+    code, _, stderr = run_cmd(["git", "push", "origin", _current_branch], cwd=str(AIDENTIFY_DIR), timeout=60)
     if code == 0:
         log("MARKETPLACE", f"Marketplace updated and pushed ✅")
         return True
@@ -403,7 +412,8 @@ def phase_update_marketplace(name: str, repo_url: str, category: str,
 # MAIN LOOP
 # ═══════════════════════════════════════════
 
-def run_full_cycle(idea_override: str = None, category_override: str = None, dry_run: bool = False):
+def run_full_cycle(idea_override: str = None, category_override: str = None,
+                   dry_run: bool = False, enable_llm: bool = False):
     """Run one complete cycle of the autonomous pipeline."""
 
     print(f"\n{'█' * 60}")
@@ -424,14 +434,48 @@ def run_full_cycle(idea_override: str = None, category_override: str = None, dry
             "source": "manual",
         }
     else:
-        opportunities = phase_scan()
+        MIN_SCORE = 30
+        best = None
+
+        # Primary scan (with JS sources enabled)
+        opportunities = phase_scan(enable_llm=enable_llm, enable_js=True)
         if not opportunities:
             log("SCAN", "No opportunities found. Exiting.")
             return 2
 
-        # ── PHASE 2: SELECT ──
+        # ── PHASE 2: SELECT (with threshold loop) ──
         best = phase_select(opportunities)
-        if not best:
+        if best and best.get("final_score", 0) < MIN_SCORE:
+            log("SELECT", f"Top score {best.get('final_score', 0)} < {MIN_SCORE} — trying alternate scans...")
+
+            # Alternate DDG queries to find richer signals
+            alt_queries = [
+                "AI agent workflow automation pain points 2026",
+                "small business struggling manual processes automation",
+                "startup MVP idea AI automation underserved market",
+                "enterprise compliance automation AI tool gap",
+            ]
+
+            for q in alt_queries:
+                log("SCAN", f"Alternate scan: '{q}'")
+                alt_items = search_ddg(q, limit=10)
+                for item in alt_items:
+                    score_opportunity(item)
+                alt_scored = [o for o in alt_items if o.get("opportunity_score", 0) >= 30]
+                alt_scored.sort(key=lambda x: x.get("opportunity_score", 0), reverse=True)
+
+                # Merge with existing opportunities
+                opportunities.extend(alt_scored)
+                # Re-run select with merged pool
+                best = phase_select(opportunities)
+                if best and best.get("final_score", 0) >= MIN_SCORE:
+                    log("SELECT", f"Found qualifying signal: {best.get('title', '?')[:50]} (score: {best.get('final_score', 0)})")
+                    break
+
+            if not best or best.get("final_score", 0) < MIN_SCORE:
+                log("SELECT", f"No signal reached {MIN_SCORE} after all scans. Best: {best.get('final_score', 0) if best else 'none'}. Exiting.")
+                return 2
+        elif not best:
             log("SELECT", "Selection failed. Exiting.")
             return 2
 
