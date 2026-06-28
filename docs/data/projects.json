@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-26T04:30:00+00:00",
-  "total_projects": 7,
+  "generated_at": "2026-06-28T08:56:56.177275+00:00",
+  "total_projects": 8,
   "projects": [
     {
       "id": "healthcare-prior-auth",
@@ -8,7 +8,11 @@
       "description": "Automate prior authorization workflows — extract patient data, check insurer requirements, flag denial risks, generate submission packages.",
       "category": "healthcare",
       "icon": "🏥",
-      "tags": ["4 Agents", "HIPAA Ready", "EHR Integration"],
+      "tags": [
+        "4 Agents",
+        "HIPAA Ready",
+        "EHR Integration"
+      ],
       "agents": 4,
       "github_url": "https://github.com/phanindraintelligenzit-afk/healthcare-prior-auth",
       "stars": 0,
@@ -23,7 +27,11 @@
       "description": "Scout markets, qualify leads from expired listings and pre-foreclosures, score prospects, generate outreach campaigns.",
       "category": "realestate",
       "icon": "🏠",
-      "tags": ["4 Agents", "Market Analysis", "Lead Scoring"],
+      "tags": [
+        "4 Agents",
+        "Market Analysis",
+        "Lead Scoring"
+      ],
       "agents": 4,
       "github_url": "https://github.com/phanindraintelligenzit-afk/real-estate-lead-gen",
       "stars": 0,
@@ -38,7 +46,11 @@
       "description": "Product analysis, competitive research, listing optimization, review management, pricing recommendations.",
       "category": "ecommerce",
       "icon": "🛒",
-      "tags": ["4 Agents", "SEO", "Conversion"],
+      "tags": [
+        "4 Agents",
+        "SEO",
+        "Conversion"
+      ],
       "agents": 4,
       "github_url": "https://github.com/phanindraintelligenzit-afk/ecommerce-operations",
       "stars": 0,
@@ -53,7 +65,11 @@
       "description": "Parse contracts, identify redlines, assess risk, generate negotiation summaries, ensure compliance.",
       "category": "legal",
       "icon": "⚖️",
-      "tags": ["4 Agents", "Risk Matrix", "GDPR / SOC2"],
+      "tags": [
+        "4 Agents",
+        "Risk Matrix",
+        "GDPR / SOC2"
+      ],
       "agents": 4,
       "github_url": "https://github.com/phanindraintelligenzit-afk/legal-contract-review",
       "stars": 0,
@@ -68,7 +84,11 @@
       "description": "Resume screening, candidate scoring, personalized outreach, onboarding package generation, compliance tracking.",
       "category": "hr",
       "icon": "👥",
-      "tags": ["4 Agents", "Screening", "Onboarding"],
+      "tags": [
+        "4 Agents",
+        "Screening",
+        "Onboarding"
+      ],
       "agents": 4,
       "github_url": "https://github.com/phanindraintelligenzit-afk/hr-operations",
       "stars": 0,
@@ -83,7 +103,12 @@
       "description": "6 AI agents that automate your entire lead generation pipeline — prospecting, contact discovery, outreach drafting, and lead scoring. Wake up to a full pipeline every morning.",
       "category": "marketing",
       "icon": "🎯",
-      "tags": ["6 Agents", "Multi-Channel", "AI Scoring", "Outreach"],
+      "tags": [
+        "6 Agents",
+        "Multi-Channel",
+        "AI Scoring",
+        "Outreach"
+      ],
       "agents": 6,
       "github_url": "https://github.com/phanindraintelligenzit-afk/AIdentify/tree/main/projects/ai-powered-lead-generation-team-multi-agent-system",
       "stars": 0,
@@ -98,7 +123,13 @@
       "description": "Open-source governance layer — permission boundaries, sandboxed execution, and tamper-proof audit trails for any AI agent. YAML-defined policies, pre-execution enforcement, and CI/CD integration.",
       "category": "security",
       "icon": "🔒",
-      "tags": ["Security", "Governance", "Open Source", "Python", "FastAPI"],
+      "tags": [
+        "Security",
+        "Governance",
+        "Open Source",
+        "Python",
+        "FastAPI"
+      ],
       "agents": 3,
       "github_url": "https://github.com/aidentify/ai-agent-sandbox-governance",
       "stars": 0,
@@ -106,6 +137,26 @@
       "language": "Python",
       "monetization": "Free repo (MIT) + Enterprise pricing",
       "updated_at": "2026-06-26T04:30:00+00:00"
+    },
+    {
+      "id": "ai-app-store-screenshot-generator",
+      "name": "AI App Store Screenshot Generator",
+      "description": "Generate 800+ localized App Store and Play Play screenshots across 39 languages and 3 device sizes — automatically",
+      "category": "marketing",
+      "icon": "🎯",
+      "tags": [
+        "marketing",
+        "app-store",
+        "localization",
+        "automation"
+      ],
+      "agents": 4,
+      "github_url": "https://github.com/phanindraintelligenzit-afk/ai-app-store-screenshot-generator",
+      "stars": 0,
+      "forks": 0,
+      "language": "Python",
+      "monetization": "Free repo (Open-source MIT license) + Enterprise pricing",
+      "updated_at": "2026-06-28T08:56:56.177275+00:00"
     }
   ]
 }
