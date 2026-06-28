@@ -1,0 +1,123 @@
+{
+  "id": "mcp-server-for-google-ads-meta-ads-ga4",
+  "idea": "MCP Server for Google Ads Meta Ads GA4",
+  "category": "marketing",
+  "score": 65,
+  "icon": "\ud83d\udce3",
+  "agents": 3,
+  "tags": [
+    "Multi-Platform",
+    "Analytics"
+  ],
+  "monetization": "Free repo + $1K-2K setup",
+  "compliance": [],
+  "status": "built (not published)",
+  "created_at": "2026-06-28T18:58:43.695668+00:00",
+  "research": {
+    "problem_statement": "Businesses in marketing spend significant manual effort on: MCP Server for Google Ads Meta Ads GA4. This automation eliminates repetitive tasks, reduces errors, and accelerates turnaround.",
+    "target_audience": "Marketing teams, agencies, growth teams",
+    "competitor_analysis": "Scheduling tools exist but content generation + analytics + optimization in one pipeline is rare.",
+    "technical_feasibility": "High \u2014 well-understood patterns, available APIs, proven agent architectures",
+    "monetization_strategy": "Free repo + $1K-2K setup",
+    "estimated_dev_hours": 24,
+    "roi_estimate": "Saves 5+ hours/week on content ops. Pays for itself in 1-2 weeks."
+  },
+  "roadmap": {
+    "project_name": "Mcp Server For Google Ads Meta Ads Ga4",
+    "repo_name": "mcp-server-for-google-ads-meta-ads-ga4",
+    "description": "Businesses in marketing spend significant manual effort on: MCP Server for Google Ads Meta Ads GA4. This automation eliminates repetitive tasks, reduces errors, and accelerates turnaround.",
+    "agent_pipeline": [
+      {
+        "name": "content_generator",
+        "role": "Generate platform-specific content from briefs and trends"
+      },
+      {
+        "name": "scheduler",
+        "role": "Optimize posting schedule by platform, audience, engagement data"
+      },
+      {
+        "name": "analytics_agent",
+        "role": "Track performance, generate insights, recommend optimizations"
+      }
+    ],
+    "tech_stack": {
+      "language": "Python 3.11+",
+      "framework": "FastAPI",
+      "agent_framework": "LangGraph",
+      "testing": "pytest",
+      "ci_cd": "GitHub Actions",
+      "containerization": "Docker",
+      "docs": "Markdown + MkDocs"
+    },
+    "milestones": [
+      {
+        "phase": 1,
+        "name": "Agent 1: content_generator",
+        "deliverable": "Working content_generator with tests",
+        "acceptance": "Agent processes input and produces validated output for generate platform-specific content from briefs and trends"
+      },
+      {
+        "phase": 2,
+        "name": "Agent 2: scheduler",
+        "deliverable": "Working scheduler with tests",
+        "acceptance": "Agent processes input and produces validated output for optimize posting schedule by platform, audience, engagement data"
+      },
+      {
+        "phase": 3,
+        "name": "Agent 3: analytics_agent",
+        "deliverable": "Working analytics_agent with tests",
+        "acceptance": "Agent processes input and produces validated output for track performance, generate insights, recommend optimizations"
+      },
+      {
+        "phase": 4,
+        "name": "Integration & Publish",
+        "deliverable": "Full pipeline tested, repo published, marketplace listing created",
+        "acceptance": "End-to-end pipeline runs, all tests pass, repo is public"
+      }
+    ],
+    "file_structure": [
+      "mcp-server-for-google-ads-meta-ads-ga4/",
+      "\u251c\u2500\u2500 README.md",
+      "\u251c\u2500\u2500 LICENSE (MIT)",
+      "\u251c\u2500\u2500 pyproject.toml",
+      "\u251c\u2500\u2500 Dockerfile",
+      "\u251c\u2500\u2500 .github/",
+      "\u2502   \u2514\u2500\u2500 workflows/",
+      "\u2502       \u2514\u2500\u2500 ci.yml",
+      "\u251c\u2500\u2500 src/",
+      "\u2502   \u251c\u2500\u2500 __init__.py",
+      "\u2502   \u251c\u2500\u2500 pipeline.py",
+      "\u2502   \u251c\u2500\u2500 agents/",
+      "\u2502   \u2502   \u251c\u2500\u2500 __init__.py",
+      "\u2502   \u2502   \u2514\u2500\u2500 (one .py per agent)",
+      "\u2502   \u2514\u2500\u2500 config.py",
+      "\u251c\u2500\u2500 tests/",
+      "\u2502   \u251c\u2500\u2500 __init__.py",
+      "\u2502   \u251c\u2500\u2500 conftest.py",
+      "\u2502   \u2514\u2500\u2500 test_*.py",
+      "\u2514\u2500\u2500 docs/",
+      "    \u251c\u2500\u2500 setup.md",
+      "    \u2514\u2500\u2500 api.md"
+    ]
+  },
+  "build": {
+    "project_dir": "C:\\Users\\Admin\\Projects\\AIdentify-marketplace\\projects\\mcp-server-for-google-ads-meta-ads-ga4",
+    "files_created": [
+      "README.md",
+      "pyproject.toml",
+      "Dockerfile",
+      ".github/workflows/ci.yml",
+      "src/pipeline.py",
+      "src/config.py",
+      "src/agents/content_generator.py",
+      "src/agents/scheduler.py",
+      "src/agents/analytics_agent.py",
+      "tests/test_content_generator.py",
+      "tests/test_scheduler.py",
+      "tests/test_analytics_agent.py",
+      "tests/test_pipeline.py",
+      "docs/setup.md"
+    ],
+    "total_files": 14
+  }
+}

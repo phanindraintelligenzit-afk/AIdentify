@@ -1,0 +1,138 @@
+{
+  "id": "ai-invoice-reconciliation-agent",
+  "idea": "AI Invoice Reconciliation Agent",
+  "category": "finance",
+  "score": 71,
+  "icon": "\ud83d\udcb0",
+  "agents": 4,
+  "tags": [
+    "Reconciliation",
+    "Audit Trail"
+  ],
+  "monetization": "Free repo + $3K-10K setup",
+  "compliance": [
+    "SOX",
+    "PCI-DSS"
+  ],
+  "status": "built (not published)",
+  "created_at": "2026-06-28T18:58:23.439493+00:00",
+  "research": {
+    "problem_statement": "Businesses in finance spend significant manual effort on: AI Invoice Reconciliation Agent. This automation eliminates repetitive tasks, reduces errors, and accelerates turnaround.",
+    "target_audience": "Accounting teams, fintech startups, CFO offices",
+    "competitor_analysis": "Reconciliation tools are rule-based. AI-powered matching and anomaly detection is the gap.",
+    "technical_feasibility": "Medium \u2014 requires domain expertise, some custom integrations needed",
+    "monetization_strategy": "Free repo + $3K-10K setup",
+    "estimated_dev_hours": 32,
+    "roi_estimate": "Eliminates 80% of manual reconciliation. Pays for itself in 2-4 weeks."
+  },
+  "roadmap": {
+    "project_name": "Ai Invoice Reconciliation Agent",
+    "repo_name": "ai-invoice-reconciliation-agent",
+    "description": "Businesses in finance spend significant manual effort on: AI Invoice Reconciliation Agent. This automation eliminates repetitive tasks, reduces errors, and accelerates turnaround.",
+    "agent_pipeline": [
+      {
+        "name": "data_extractor",
+        "role": "Extract transactions from bank feeds, invoices, receipts"
+      },
+      {
+        "name": "reconciliation_agent",
+        "role": "Match transactions, flag anomalies, auto-categorize"
+      },
+      {
+        "name": "report_generator",
+        "role": "Generate P&L, cash flow, balance sheet reports"
+      },
+      {
+        "name": "audit_trail",
+        "role": "Maintain audit trail, flag compliance issues, generate audit packages"
+      }
+    ],
+    "tech_stack": {
+      "language": "Python 3.11+",
+      "framework": "FastAPI",
+      "agent_framework": "LangGraph",
+      "testing": "pytest",
+      "ci_cd": "GitHub Actions",
+      "containerization": "Docker",
+      "docs": "Markdown + MkDocs"
+    },
+    "milestones": [
+      {
+        "phase": 1,
+        "name": "Agent 1: data_extractor",
+        "deliverable": "Working data_extractor with tests",
+        "acceptance": "Agent processes input and produces validated output for extract transactions from bank feeds, invoices, receipts"
+      },
+      {
+        "phase": 2,
+        "name": "Agent 2: reconciliation_agent",
+        "deliverable": "Working reconciliation_agent with tests",
+        "acceptance": "Agent processes input and produces validated output for match transactions, flag anomalies, auto-categorize"
+      },
+      {
+        "phase": 3,
+        "name": "Agent 3: report_generator",
+        "deliverable": "Working report_generator with tests",
+        "acceptance": "Agent processes input and produces validated output for generate p&l, cash flow, balance sheet reports"
+      },
+      {
+        "phase": 4,
+        "name": "Agent 4: audit_trail",
+        "deliverable": "Working audit_trail with tests",
+        "acceptance": "Agent processes input and produces validated output for maintain audit trail, flag compliance issues, generate audit packages"
+      },
+      {
+        "phase": 5,
+        "name": "Integration & Publish",
+        "deliverable": "Full pipeline tested, repo published, marketplace listing created",
+        "acceptance": "End-to-end pipeline runs, all tests pass, repo is public"
+      }
+    ],
+    "file_structure": [
+      "ai-invoice-reconciliation-agent/",
+      "\u251c\u2500\u2500 README.md",
+      "\u251c\u2500\u2500 LICENSE (MIT)",
+      "\u251c\u2500\u2500 pyproject.toml",
+      "\u251c\u2500\u2500 Dockerfile",
+      "\u251c\u2500\u2500 .github/",
+      "\u2502   \u2514\u2500\u2500 workflows/",
+      "\u2502       \u2514\u2500\u2500 ci.yml",
+      "\u251c\u2500\u2500 src/",
+      "\u2502   \u251c\u2500\u2500 __init__.py",
+      "\u2502   \u251c\u2500\u2500 pipeline.py",
+      "\u2502   \u251c\u2500\u2500 agents/",
+      "\u2502   \u2502   \u251c\u2500\u2500 __init__.py",
+      "\u2502   \u2502   \u2514\u2500\u2500 (one .py per agent)",
+      "\u2502   \u2514\u2500\u2500 config.py",
+      "\u251c\u2500\u2500 tests/",
+      "\u2502   \u251c\u2500\u2500 __init__.py",
+      "\u2502   \u251c\u2500\u2500 conftest.py",
+      "\u2502   \u2514\u2500\u2500 test_*.py",
+      "\u2514\u2500\u2500 docs/",
+      "    \u251c\u2500\u2500 setup.md",
+      "    \u2514\u2500\u2500 api.md"
+    ]
+  },
+  "build": {
+    "project_dir": "C:\\Users\\Admin\\Projects\\AIdentify-marketplace\\projects\\ai-invoice-reconciliation-agent",
+    "files_created": [
+      "README.md",
+      "pyproject.toml",
+      "Dockerfile",
+      ".github/workflows/ci.yml",
+      "src/pipeline.py",
+      "src/config.py",
+      "src/agents/data_extractor.py",
+      "src/agents/reconciliation_agent.py",
+      "src/agents/report_generator.py",
+      "src/agents/audit_trail.py",
+      "tests/test_data_extractor.py",
+      "tests/test_reconciliation_agent.py",
+      "tests/test_report_generator.py",
+      "tests/test_audit_trail.py",
+      "tests/test_pipeline.py",
+      "docs/setup.md"
+    ],
+    "total_files": 16
+  }
+}
