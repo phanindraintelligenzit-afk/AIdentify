@@ -479,27 +479,6 @@ def run_idea_loop(min_score: int = 30, max_projects: int = 2) -> dict:
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="Autonomous Idea Loop Agent")
-    parser.add_argument("--min-score", type=int, default=50, help="Minimum score to build")
-    parser.add_argument("--max-projects", type=int, default=2, help="Max projects per run")
-    parser.add_argument("--dry-run", action="store_true", help="Don't actually build/publish")
-    args = parser.parse_args()
-
-    if args.dry_run:
-        print("🔍 DRY RUN — generating ideas only")
-        gen = IdeaGenerator(set())
-        ideas = gen.generate_all()
-        scored = IdeaScorer().score(ideas)
-        top = IdeaSelector(args.max_projects).select(scored)
-        for i, idea in enumerate(top, 1):
-            print(f"  {i}. [{idea.get('final_score', 0)}/100] {idea['title']} ({idea.get('origin', '')})")
-    else:
-        results = run_idea_loop(min_score=args.min_score, max_projects=args.max_projects)
-        print(f"\n✅ Cycle complete: built {results['built']} projects")
-
-# Make sure the file can be run as a script
-if __name__ == "__main__":
-    import argparse
-    parser = argparse.ArgumentParser()
     parser.add_argument("--dry-run", action="store_true", help="Generate ideas only")
     parser.add_argument("--min-score", type=int, default=30, help="Minimum score threshold")
     parser.add_argument("--max-projects", type=int, default=2, help="Max projects per cycle")
