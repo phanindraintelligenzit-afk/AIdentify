@@ -1,0 +1,36 @@
+{
+  "listing": {
+    "slug": "ai-app-store-screenshot-generator",
+    "date": "2026-06-28",
+    "cycle": 3,
+    "status": "published",
+    "title": "AI App Store Screenshot Generator",
+    "tagline": "Generate 800+ localized App Store and Play Play screenshots across 39 languages and 3 device sizes — automatically",
+    "category": "marketing",
+    "tags": ["marketing", "app-store", "localization", "automation", "python", "pillow"],
+    "pricing": {
+      "model": "free_tier_with_enterprise",
+      "free": "Open-source MIT license",
+      "enterprise": "Contact for team/on-prem pricing"
+    },
+    "description": "App Store screenshot generation is a pain point for every mobile app team. Existing tools (Fastlane, ScreenshotFramer) require manual template setup and don't handle localization well. This AI-powered pipeline takes a single design template and automatically generates 800+ localized screenshots across 39+ languages and 3 device sizes (iPhone 6.7\", iPhone 6.5\", iPhone 5.5\"), then exports directly to App Store Connect and Google Play Console formats.",
+    "key_features": [
+      "Single template → 800+ localized screenshots automatically",
+      "AI-powered translation across 39+ languages with context awareness",
+      "3 device size variants generated in parallel (iPhone 6.7\", 6.5\", 5.5\")",
+      "Brand kit system — consistent colors, fonts, and layout across all variants",
+      "Batch processing — generate screenshots for multiple apps simultaneously",
+      "CI/CD integration — auto-update screenshots on every release"
+    ],
+    "source_url": "https://github.com/phanindraintelligenzit-afk/ai-app-store-screenshot-generator",
+    "docs_url": "https://docs.aiidentify.ai/app-store-screenshots",
+    "image": "marketplace/listings/ai-app-store-screenshot-generator/hero.png",
+    "metrics": {
+      "score": 62,
+      "market_fit": 8,
+      "feasibility": 7,
+      "community_signal": "Based on real dev.to article with 200+ reactions"
+    },
+    "build_ref": "builds/ai-app-store-screenshot-generator-2026-06-28"
+  }
+}
