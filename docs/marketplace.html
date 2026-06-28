@@ -1,1863 +1,912 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AIdentify — AI Automation Marketplace</title>
-  <meta name="description" content="Browse, hire, and deploy AI automation solutions. Open-source repos free to test and build. Done-for-you setup available." />
+  <title>AIdentify — AI Agent Marketplace</title>
+  <meta name="description" content="Discover, deploy, and customize AI automation agents. Open-source repos ready to fork, with done-for-you setup available." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
-    /* ═══════════════════════════════════════════
-       STRIPE DESIGN SYSTEM — AIdentify Marketplace
-       ═══════════════════════════════════════════ */
-
     :root {
-      /* Primary */
-      --purple: #533afd;
-      --purple-hover: #4434d4;
-      --purple-deep: #2e2b8c;
-      --purple-light: #b9b9f9;
-      --purple-soft: #d6d9fc;
-      --navy: #061b31;
-      --white: #ffffff;
-
-      /* Brand Dark */
-      --brand-dark: #1c1e54;
-      --dark-navy: #0d253d;
-
-      /* Accent */
-      --ruby: #ea2261;
-      --magenta: #f96bee;
-      --magenta-light: #ffd7ef;
-
-      /* Interactive */
-      --link: #533afd;
-      --link-hover: #4434d4;
-
-      /* Neutral */
-      --heading: #061b31;
-      --label: #273951;
-      --body: #64748d;
-      --border: #e5edf5;
-      --bg: #ffffff;
-      --bg-subtle: #f6f9fc;
-
-      /* Success */
-      --success: #15be53;
-      --success-text: #108c3d;
-      --success-bg: rgba(21,190,83,0.2);
-      --success-border: rgba(21,190,83,0.4);
-
-      /* Shadows */
-      --shadow-ambient: rgba(23,23,23,0.06) 0px 3px 6px;
-      --shadow-standard: rgba(23,23,23,0.08) 0px 15px 35px;
-      --shadow-elevated: rgba(50,50,93,0.25) 0px 30px 45px -30px, rgba(0,0,0,0.1) 0px 18px 36px -18px;
-      --shadow-deep: rgba(3,3,39,0.25) 0px 14px 21px -14px, rgba(0,0,0,0.1) 0px 8px 17px -8px;
-
-      /* Typography */
-      --font: 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-      --font-mono: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --bg: #0a0a0f;
+      --bg-surface: #12121a;
+      --bg-card: #16161f;
+      --bg-card-hover: #1c1c28;
+      --border: #2a2a3a;
+      --border-subtle: #1e1e2a;
+      --text: #e4e4ef;
+      --text-secondary: #8b8b9e;
+      --text-muted: #5a5a6e;
+      --accent: #7c5cfc;
+      --accent-light: #a78bfa;
+      --accent-glow: rgba(124, 92, 252, 0.15);
+      --green: #3dd68c;
+      --green-glow: rgba(61, 214, 140, 0.12);
+      --orange: #f0a040;
+      --orange-glow: rgba(240, 160, 64, 0.12);
+      --blue: #4ea8de;
+      --blue-glow: rgba(78, 168, 222, 0.12);
+      --red: #f06;
+      --radius: 12px;
+      --radius-lg: 16px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.3);
+      --shadow-lg: 0 8px 40px rgba(0,0,0,0.5);
+      --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* ── Reset ── */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: var(--font);
-      color: var(--body);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
-      line-height: 1.4;
-      font-weight: 300;
+      color: var(--text);
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      font-feature-settings: "ss01";
+      min-height: 100vh;
     }
 
-    /* ── Typography ── */
-    h1, h2, h3, h4 {
-      color: var(--heading);
-      font-weight: 300;
-      font-feature-settings: "ss01";
+    /* Ambient glow */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at 20% 20%, rgba(124,92,252,0.06) 0%, transparent 50%),
+                  radial-gradient(ellipse at 80% 80%, rgba(78,168,222,0.04) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
     }
 
-    a { color: var(--purple); text-decoration: none; }
-    a:hover { color: var(--purple-hover); }
-
-    /* ── Container ── */
     .container {
-      max-width: 1080px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 0 24px;
+      position: relative;
+      z-index: 1;
     }
 
-    /* ═══════════════════════════════════════════
-       NAVIGATION
-       ═══════════════════════════════════════════ */
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      border-radius: 0;
+    /* Header */
+    header {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 48px;
     }
-
-    .nav__inner {
+    header .container {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 60px;
     }
-
-    .nav__logo {
+    .logo {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--heading);
-      text-decoration: none;
-      font-feature-settings: "ss01";
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
-
-    .nav__logo-icon {
-      width: 28px;
-      height: 28px;
-      background: var(--purple);
-      border-radius: 6px;
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent), #4ea8de);
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-size: 14px;
-      font-weight: 700;
+      font-size: 18px;
     }
-
-    .nav__links {
+    .nav-links {
       display: flex;
-      align-items: center;
-      gap: 24px;
+      gap: 8px;
     }
-
-    .nav__links a {
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--heading);
+    .nav-links a {
+      color: var(--text-secondary);
       text-decoration: none;
-      font-feature-settings: "ss01";
-      transition: color 0.15s;
-    }
-
-    .nav__links a:hover { color: var(--purple); }
-
-    .nav__cta {
-      display: inline-flex;
-      align-items: center;
-      padding: 6px 14px;
-      background: var(--purple);
-      color: var(--white) !important;
-      border-radius: 4px;
       font-size: 14px;
-      font-weight: 400;
-      text-decoration: none;
-      transition: background 0.15s;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+    .nav-links a:hover {
+      color: var(--text);
+      background: var(--bg-card);
+    }
+    .nav-links .cta {
+      background: var(--accent);
+      color: white;
+    }
+    .nav-links .cta:hover {
+      background: var(--accent-light);
     }
 
-    .nav__cta:hover {
-      background: var(--purple-hover);
-      color: var(--white) !important;
-    }
-
-    .nav__hamburger {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-    }
-
-    .nav__hamburger span {
-      display: block;
-      width: 20px;
-      height: 2px;
-      background: var(--heading);
-      margin: 5px 0;
-      transition: 0.2s;
-    }
-
-    .nav__mobile { display: none; }
-
-    /* ═══════════════════════════════════════════
-       HERO
-       ═══════════════════════════════════════════ */
+    /* Hero */
     .hero {
-      padding: 140px 0 80px;
       text-align: center;
+      margin-bottom: 56px;
+      padding: 40px 0;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 56px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #fff 0%, #a78bfa 50%, #4ea8de 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin: 0 auto 32px;
+      font-weight: 400;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .hero-stat {
+      text-align: center;
+    }
+    .hero-stat .num {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .hero-stat .label {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Search & Filters */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 32px;
+      align-items: center;
+    }
+    .search-box {
+      flex: 1;
+      min-width: 240px;
+      position: relative;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 14px 18px 14px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+      transition: var(--transition);
+    }
+    .search-box input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-box input::placeholder { color: var(--text-muted); }
+    .search-box::before {
+      content: '⌕';
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 16px;
+    }
+
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      user-select: none;
+    }
+    .chip:hover { border-color: var(--accent); color: var(--text); }
+    .chip.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+    .chip .count {
+      opacity: 0.6;
+      margin-left: 4px;
+      font-size: 12px;
+    }
+
+    /* Results info */
+    .results-info {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 16px;
+      margin-bottom: 64px;
+    }
+
+    /* Card */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      transition: var(--transition);
+      cursor: pointer;
       position: relative;
       overflow: hidden;
     }
-
-    .hero::before {
+    .card::before {
       content: '';
       position: absolute;
-      top: -200px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 800px;
-      height: 800px;
-      background: radial-gradient(circle, rgba(83,58,253,0.06) 0%, transparent 70%);
-      pointer-events: none;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(124,92,252,0.03) 0%, transparent 60%);
+      opacity: 0;
+      transition: var(--transition);
     }
-
-    .hero__inner {
-      position: relative;
-      z-index: 1;
-      max-width: 720px;
-      margin: 0 auto;
-    }
-
-    .hero__badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 12px;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: 400;
-      background: var(--bg-subtle);
-      border: 1px solid var(--border);
-      color: var(--body);
-      margin-bottom: 32px;
-      font-feature-settings: "ss01";
-    }
-
-    .hero__title {
-      font-size: 56px;
-      line-height: 1.03;
-      letter-spacing: -1.4px;
-      margin-bottom: 24px;
-      color: var(--heading);
-      font-weight: 300;
-    }
-
-    .hero__subtitle {
-      font-size: 18px;
-      line-height: 1.4;
-      color: var(--body);
-      max-width: 560px;
-      margin: 0 auto 36px;
-      font-weight: 300;
-    }
-
-    .hero__actions {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 56px;
-    }
-
-    .hero__stats {
-      display: flex;
-      justify-content: center;
-      gap: 48px;
-      padding-top: 40px;
-      border-top: 1px solid var(--border);
-    }
-
-    .hero__stat-num {
-      font-size: 28px;
-      font-weight: 300;
-      color: var(--heading);
-      letter-spacing: -0.5px;
-      font-feature-settings: "ss01", "tnum";
-    }
-
-    .hero__stat-label {
-      font-size: 13px;
-      color: var(--body);
-      margin-top: 4px;
-      font-weight: 400;
-    }
-
-    /* ═══════════════════════════════════════════
-       BUTTONS
-       ═══════════════════════════════════════════ */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 16px;
-      border-radius: 4px;
-      font-size: 16px;
-      font-weight: 400;
-      font-family: var(--font);
-      font-feature-settings: "ss01";
-      text-decoration: none;
-      cursor: pointer;
-      border: none;
-      transition: all 0.15s;
-      white-space: nowrap;
-    }
-
-    .btn--primary {
-      background: var(--purple);
-      color: var(--white);
-    }
-
-    .btn--primary:hover {
-      background: var(--purple-hover);
-      color: var(--white);
-    }
-
-    .btn--ghost {
-      background: transparent;
-      color: var(--purple);
-      border: 1px solid var(--purple-light);
-    }
-
-    .btn--ghost:hover {
-      background: rgba(83,58,253,0.05);
-      color: var(--purple);
-    }
-
-    .btn--outline {
-      background: transparent;
-      color: var(--heading);
-      border: 1px solid var(--border);
-    }
-
-    .btn--outline:hover {
-      border-color: var(--purple-light);
-      color: var(--heading);
-    }
-
-    .btn--lg {
-      padding: 10px 20px;
-      font-size: 16px;
-    }
-
-    .btn--full {
-      width: 100%;
-      justify-content: center;
-    }
-
-    .btn--sm {
-      padding: 5px 12px;
-      font-size: 14px;
-    }
-
-    /* ═══════════════════════════════════════════
-       SECTION
-       ═══════════════════════════════════════════ */
-    .section {
-      padding: 80px 0;
-    }
-
-    .section--dark {
-      background: var(--brand-dark);
-    }
-
-    .section--subtle {
-      background: var(--bg-subtle);
-    }
-
-    .section-header {
-      text-align: center;
-      max-width: 560px;
-      margin: 0 auto 48px;
-    }
-
-    .section-tag {
-      display: inline-block;
-      font-size: 12px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--purple);
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      font-size: 32px;
-      letter-spacing: -0.64px;
-      margin-bottom: 12px;
-      color: var(--heading);
-    }
-
-    .section--dark .section-title {
-      color: var(--white);
-    }
-
-    .section-desc {
-      font-size: 16px;
-      color: var(--body);
-      line-height: 1.5;
-      font-weight: 300;
-    }
-
-    .section--dark .section-desc {
-      color: rgba(255,255,255,0.7);
-    }
-
-    /* ═══════════════════════════════════════════
-       SEARCH BAR
-       ═══════════════════════════════════════════ */
-    .search-bar {
-      max-width: 600px;
-      margin: 0 auto 48px;
-      position: relative;
-    }
-
-    .search-bar input {
-      width: 100%;
-      padding: 12px 16px 12px 44px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      font-size: 16px;
-      font-family: var(--font);
-      font-weight: 300;
-      font-feature-settings: "ss01";
-      color: var(--heading);
-      background: var(--bg);
-      transition: border-color 0.15s;
-      outline: none;
-    }
-
-    .search-bar input::placeholder {
-      color: var(--body);
-      font-weight: 300;
-    }
-
-    .search-bar input:focus {
-      border-color: var(--purple);
-      box-shadow: 0 0 0 2px rgba(83,58,253,0.15);
-    }
-
-    .search-bar__icon {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--body);
-      font-size: 16px;
-      pointer-events: none;
-    }
-
-    /* ═══════════════════════════════════════════
-       FILTER TABS
-       ═══════════════════════════════════════════ */
-    .filter-tabs {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 40px;
-    }
-
-    .filter-tab {
-      padding: 5px 14px;
-      border-radius: 4px;
-      font-size: 14px;
-      font-weight: 400;
-      font-family: var(--font);
-      font-feature-settings: "ss01";
-      border: 1px solid var(--border);
-      background: var(--bg);
-      color: var(--body);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
-    .filter-tab:hover {
-      border-color: var(--purple-light);
-      color: var(--heading);
-    }
-
-    .filter-tab.active {
-      background: var(--navy);
-      color: var(--white);
-      border-color: var(--navy);
-    }
-
-    /* ═══════════════════════════════════════════
-       PROJECT CARDS GRID
-       ═══════════════════════════════════════════ */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .project-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 24px;
-      transition: all 0.2s;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .project-card:hover {
-      box-shadow: var(--shadow-elevated);
+    .card:hover {
+      border-color: var(--accent);
       transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
     }
+    .card:hover::before { opacity: 1; }
 
-    .project-card__header {
+    .card-header {
       display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      margin-bottom: 16px;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
     }
-
-    .project-card__icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 6px;
-      background: var(--bg-subtle);
-      border: 1px solid var(--border);
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 24px;
       flex-shrink: 0;
     }
+    .card-icon.healthcare { background: rgba(230,60,120,0.15); }
+    .card-icon.marketing { background: rgba(78,168,222,0.15); }
+    .card-icon.legal { background: rgba(240,160,64,0.15); }
+    .card-icon.security { background: rgba(61,214,140,0.15); }
+    .card-icon.productivity { background: rgba(167,139,250,0.15); }
+    .card-icon.finance { background: rgba(61,214,140,0.12); }
+    .card-icon.other { background: rgba(139,139,158,0.15); }
 
-    .project-card__badge {
-      padding: 1px 6px;
-      border-radius: 4px;
-      font-size: 10px;
-      font-weight: 300;
-      font-feature-settings: "ss01";
+    .card-title {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 3px;
+      letter-spacing: -0.01em;
+    }
+    .card-category {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
 
-    .project-card__badge--free {
-      background: var(--success-bg);
-      color: var(--success-text);
-      border: 1px solid var(--success-border);
-    }
-
-    .project-card__badge--paid {
-      background: rgba(83,58,253,0.1);
-      color: var(--purple);
-      border: 1px solid var(--purple-light);
-    }
-
-    .project-card__name {
-      font-size: 18px;
-      font-weight: 400;
-      color: var(--heading);
-      margin-bottom: 6px;
-      font-feature-settings: "ss01";
-    }
-
-    .project-card__desc {
+    .card-desc {
       font-size: 14px;
-      color: var(--body);
-      line-height: 1.5;
-      margin-bottom: 16px;
-      flex: 1;
-      font-weight: 300;
+      color: var(--text-secondary);
+      margin-bottom: 18px;
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
-    .project-card__meta {
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+    .tag {
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 500;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      color: var(--text-secondary);
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .card-meta {
+      display: flex;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .card-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .card-link {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent-light);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: var(--transition);
+    }
+    .card-link:hover { color: var(--text); }
+
+    /* Status badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge-built {
+      background: var(--green-glow);
+      color: var(--green);
+    }
+    .badge-coming {
+      background: var(--orange-glow);
+      color: var(--orange);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      max-width: 680px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 36px;
+      box-shadow: var(--shadow-lg);
+      animation: modalIn 0.25s ease;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    .modal-close:hover { color: var(--text); border-color: var(--accent); }
+    .modal-header {
       display: flex;
       align-items: center;
       gap: 16px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
-      margin-bottom: 16px;
+      margin-bottom: 24px;
     }
-
-    .project-card__meta-item {
-      font-size: 12px;
-      color: var(--body);
-      font-weight: 400;
-      font-feature-settings: "tnum";
-    }
-
-    .project-card__meta-item strong {
-      color: var(--heading);
-      font-weight: 500;
-    }
-
-    .project-card__tags {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-    }
-
-    .project-card__tag {
-      padding: 1px 6px;
-      border-radius: 4px;
-      font-size: 10px;
-      font-weight: 300;
-      background: var(--bg-subtle);
-      color: var(--body);
-      border: 1px solid var(--border);
-      font-feature-settings: "ss01";
-    }
-
-    .project-card__actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    /* ═══════════════════════════════════════════
-       HOW IT WORKS
-       ═══════════════════════════════════════════ */
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-    }
-
-    .step {
-      text-align: center;
-      padding: 24px 16px;
-    }
-
-    .step__num {
-      width: 36px;
-      height: 36px;
-      border-radius: 4px;
-      background: var(--navy);
-      color: var(--white);
+    .modal-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 28px;
+    }
+    .modal-title {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .modal-category {
+      font-size: 13px;
+      color: var(--accent-light);
       font-weight: 500;
-      margin: 0 auto 16px;
-      font-feature-settings: "tnum";
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 4px;
     }
-
-    .step__title {
-      font-size: 16px;
-      font-weight: 400;
-      color: var(--heading);
-      margin-bottom: 8px;
-      font-feature-settings: "ss01";
+    .modal-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 28px;
     }
-
-    .step__desc {
-      font-size: 14px;
-      color: var(--body);
-      line-height: 1.5;
-      font-weight: 300;
-    }
-
-    /* ═══════════════════════════════════════════
-       DARK SECTION — WHY AIDENTIFY
-       ═══════════════════════════════════════════ */
-    .features {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-    }
-
-    .feature {
-      padding: 28px;
-      border-radius: 6px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.03);
-    }
-
-    .feature__icon {
-      font-size: 20px;
+    .modal-section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
       margin-bottom: 12px;
     }
-
-    .feature__title {
-      font-size: 16px;
-      font-weight: 400;
-      color: var(--white);
-      margin-bottom: 8px;
-      font-feature-settings: "ss01";
+    .agent-list {
+      margin-bottom: 28px;
     }
-
-    .feature__desc {
-      font-size: 14px;
-      color: rgba(255,255,255,0.6);
-      line-height: 1.5;
-      font-weight: 300;
-    }
-
-    /* ═══════════════════════════════════════════
-       REQUEST PROJECT SECTION
-       ═══════════════════════════════════════════ */
-    .request-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: start;
-    }
-
-    .request-info h3 {
-      font-size: 22px;
-      letter-spacing: -0.22px;
-      margin-bottom: 12px;
-    }
-
-    .request-info p {
-      font-size: 16px;
-      color: var(--body);
-      line-height: 1.5;
-      margin-bottom: 24px;
-      font-weight: 300;
-    }
-
-    .request-benefits {
-      list-style: none;
+    .agent-item {
       display: flex;
-      flex-direction: column;
       gap: 12px;
-    }
-
-    .request-benefits li {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
+      padding: 12px 16px;
+      background: var(--bg-card);
+      border-radius: 10px;
+      margin-bottom: 8px;
       font-size: 14px;
-      color: var(--body);
-      font-weight: 300;
+      align-items: flex-start;
     }
-
-    .request-benefits li::before {
-      content: '✓';
-      color: var(--success-text);
-      font-weight: 500;
+    .agent-item::before {
+      content: '→';
+      color: var(--accent-light);
+      font-weight: 600;
       flex-shrink: 0;
-      font-size: 14px;
+      margin-top: 1px;
     }
-
-    .request-form {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 32px;
-      box-shadow: var(--shadow-standard);
-    }
-
-    .form-group {
-      margin-bottom: 16px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--label);
-      margin-bottom: 4px;
-      font-feature-settings: "ss01";
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 8px 12px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      font-size: 14px;
-      font-family: var(--font);
-      font-weight: 300;
-      font-feature-settings: "ss01";
-      color: var(--heading);
-      background: var(--bg);
-      outline: none;
-      transition: border-color 0.15s;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: var(--purple);
-      box-shadow: 0 0 0 2px rgba(83,58,253,0.15);
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    .form-group input::placeholder,
-    .form-group textarea::placeholder {
-      color: var(--body);
-      font-weight: 300;
-    }
-
-    .form-note {
-      font-size: 12px;
-      color: var(--body);
-      text-align: center;
-      margin-top: 12px;
-      font-weight: 300;
-    }
-
-    /* ═══════════════════════════════════════════
-       FOOTER
-       ═══════════════════════════════════════════ */
-    .footer {
-      padding: 48px 0 32px;
-      border-top: 1px solid var(--border);
-    }
-
-    .footer__inner {
+    .modal-actions {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 32px;
+      gap: 12px;
+      margin-top: 28px;
+      flex-wrap: wrap;
     }
-
-    .footer__brand {
-      max-width: 280px;
-    }
-
-    .footer__logo {
-      display: flex;
+    .btn {
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--heading);
-      margin-bottom: 8px;
-      font-feature-settings: "ss01";
+      transition: var(--transition);
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
     }
-
-    .footer__tagline {
-      font-size: 13px;
-      color: var(--body);
-      font-weight: 300;
+    .btn-primary {
+      background: var(--accent);
+      color: white;
     }
-
-    .footer__links {
-      display: flex;
-      gap: 24px;
+    .btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
     }
+    .btn-outline:hover { border-color: var(--accent); }
 
-    .footer__links a {
-      font-size: 14px;
-      color: var(--body);
-      text-decoration: none;
-      font-weight: 400;
-    }
-
-    .footer__links a:hover { color: var(--heading); }
-
-    .footer__bottom {
+    /* Request section */
+    .request-section {
       text-align: center;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
+      padding: 64px 0;
+      border-top: 1px solid var(--border-subtle);
+      margin-top: 48px;
+    }
+    .request-section h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .request-section p {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      font-size: 16px;
+    }
+
+    /* Footer */
+    footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--border-subtle);
+      text-align: center;
       font-size: 13px;
-      color: var(--body);
-      font-weight: 300;
+      color: var(--text-muted);
     }
-
-    .footer__bottom a { color: var(--purple); }
-
-    /* ═══════════════════════════════════════════
-       RESPONSIVE
-       ═══════════════════════════════════════════ */
-    @media (max-width: 1024px) {
-      .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .steps {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    footer a {
+      color: var(--text-secondary);
+      text-decoration: none;
     }
+    footer a:hover { color: var(--text); }
 
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--text-muted);
+    }
+    .empty-state .icon { font-size: 48px; margin-bottom: 16px; }
+    .empty-state h3 { font-size: 18px; color: var(--text-secondary); margin-bottom: 8px; }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+    .loading::after {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Responsive */
     @media (max-width: 768px) {
-      .nav__links { display: none; }
-      .nav__hamburger { display: block; }
-
-      .nav__mobile {
-        display: none;
-        position: fixed;
-        top: 60px;
-        left: 0;
-        right: 0;
-        background: var(--bg);
-        border-bottom: 1px solid var(--border);
-        padding: 16px 24px;
-        flex-direction: column;
-        gap: 16px;
-      }
-
-      .nav__mobile.open {
-        display: flex;
-      }
-
-      .nav__mobile a {
-        font-size: 14px;
-        font-weight: 400;
-        color: var(--heading);
-        text-decoration: none;
-        font-feature-settings: "ss01";
-      }
-
-      .hero__title {
-        font-size: 32px;
-        letter-spacing: -0.64px;
-      }
-
-      .hero__stats {
-        flex-direction: column;
-        gap: 20px;
-      }
-
-      .projects-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .features {
-        grid-template-columns: 1fr;
-      }
-
-      .request-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .steps {
-        grid-template-columns: 1fr;
-      }
-
-      .footer__inner {
-        flex-direction: column;
-        gap: 24px;
-      }
+      .grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 32px; }
+      .hero-stats { gap: 24px; }
+      .controls { flex-direction: column; }
+      .filter-chips { width: 100%; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+      header .container { flex-direction: column; gap: 16px; }
     }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
   </style>
 </head>
 <body>
 
-  <!-- ═══════════════════════════════════════
-       NAV
-       ═══════════════════════════════════════ -->
-  <nav class="nav">
-    <div class="container nav__inner">
-      <a href="#" class="nav__logo">
-        <span class="nav__logo-icon">A</span>
-        AIdentify
-      </a>
-      <div class="nav__links">
+  <header>
+    <div class="container">
+      <div class="logo">
+        <div class="logo-icon">🦉</div>
+        <span>AIdentify</span>
+      </div>
+      <nav class="nav-links">
         <a href="#projects">Projects</a>
-        <a href="#how-it-works">How It Works</a>
-        <a href="#why">Why AIdentify</a>
-        <a href="#request">Request Project</a>
-        <a href="https://github.com/phanindraintelligenzit-afk" target="_blank" rel="noopener">GitHub</a>
-        <a href="#request" class="nav__cta">Post a Project</a>
-      </div>
-      <button class="nav__hamburger" aria-label="Open menu" id="hamburgerBtn">
-        <span></span><span></span><span></span>
-      </button>
+        <a href="#request" class="cta">Request Custom</a>
+      </nav>
     </div>
-    <div class="nav__mobile" id="mobileMenu">
-      <a href="#projects">Projects</a>
-      <a href="#how-it-works">How It Works</a>
-      <a href="#why">Why AIdentify</a>
-      <a href="#request">Request Project</a>
-      <a href="https://github.com/phanindraintelligenzit-afk" target="_blank" rel="noopener">GitHub</a>
-      <a href="#request">Post a Project</a>
-    </div>
-  </nav>
+  </header>
 
-  <!-- ═══════════════════════════════════════
-       HERO
-       ═══════════════════════════════════════ -->
   <section class="hero">
-    <div class="container hero__inner">
-      <div class="hero__badge">Open-source repos · Done-for-you setup · Free to start</div>
-      <h1 class="hero__title">AI Automation,<br/>Ready to Deploy</h1>
-      <p class="hero__subtitle">Browse production-ready automation solutions. Fork the repo and build yourself, or hire our team to set it up for you.</p>
-      <div class="hero__actions">
-        <a href="#projects" class="btn btn--primary btn--lg">Browse Projects</a>
-        <a href="#request" class="btn btn--ghost btn--lg">Post a Project Request</a>
-      </div>
-      <div class="hero__stats">
-        <div>
-          <div class="hero__stat-num">6</div>
-          <div class="hero__stat-label">Solutions Listed</div>
+    <div class="container">
+      <h1>AI Agents That<br/>Actually Ship</h1>
+      <p>Open-source AI automation solutions ready to fork, customize, and deploy. From lead generation to compliance — built by agents, for humans.</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="num" id="statProjects">—</div>
+          <div class="label">Projects</div>
         </div>
-        <div>
-          <div class="hero__stat-num">70+</div>
-          <div class="hero__stat-label">Tests Passing</div>
+        <div class="hero-stat">
+          <div class="num" id="statAgents">—</div>
+          <div class="label">AI Agents</div>
         </div>
-        <div>
-          <div class="hero__stat-num">$0</div>
-          <div class="hero__stat-label">To Start Building</div>
+        <div class="hero-stat">
+          <div class="num">∞</div>
+          <div class="label">Possibilities</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════
-       PROJECTS MARKETPLACE
-       ═══════════════════════════════════════ -->
-  <section class="section" id="projects">
+  <main class="container" id="projects">
+    <div class="controls">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search projects, categories, agents..." />
+      </div>
+      <div class="filter-chips" id="filterChips"></div>
+    </div>
+    <div class="results-info" id="resultsInfo"></div>
+    <div class="grid" id="projectGrid">
+      <div class="loading">Loading projects from GitHub</div>
+    </div>
+  </main>
+
+  <section class="request-section" id="request">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Marketplace</span>
-        <h2 class="section-title">Automation Solutions</h2>
-        <p class="section-desc">Every project ships as a free open-source repo. Clone, test, and deploy — or hire us to do it for you.</p>
-      </div>
-
-      <div class="search-bar">
-        <span class="search-bar__icon">⌕</span>
-        <input type="text" placeholder="Search projects by name, category, or keyword…" id="searchInput" />
-      </div>
-
-      <div class="filter-tabs">
-        <button class="filter-tab active" data-filter="all">All</button>
-        <button class="filter-tab" data-filter="healthcare">Healthcare</button>
-        <button class="filter-tab" data-filter="ecommerce">E-Commerce</button>
-        <button class="filter-tab" data-filter="legal">Legal</button>
-        <button class="filter-tab" data-filter="hr">HR</button>
-        <button class="filter-tab" data-filter="realestate">Real Estate</button>
-        <button class="filter-tab" data-filter="marketing">Marketing</button>
-      </div>
-
-      <div class="projects-grid" id="projectsGrid">
-
-        <!-- Card 1: Healthcare Prior Auth -->
-        <div class="project-card" data-category="healthcare">
-          <div class="project-card__header">
-            <div class="project-card__icon">🏥</div>
-            <span class="project-card__badge project-card__badge--free">Free Repo</span>
-          </div>
-          <h3 class="project-card__name">Healthcare Prior Auth</h3>
-          <p class="project-card__desc">Automate prior authorization workflows — extract patient data, check insurer requirements, flag denial risks, generate submission packages.</p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">4 Agents</span>
-            <span class="project-card__tag">HIPAA Ready</span>
-            <span class="project-card__tag">EHR Integration</span>
-          </div>
-          <div class="project-card__meta">
-            <span class="project-card__meta-item">🐍 Python</span>
-            <span class="project-card__meta-item">📝 MIT</span>
-            <span class="project-card__meta-item">👤 AIdentify</span>
-          </div>
-          <div class="project-card__actions">
-            <a href="https://github.com/phanindraintelligenzit-afk/healthcare-prior-auth" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
-            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
-          </div>
-        </div>
-
-        <!-- Card 2: Real Estate Lead Gen -->
-        <div class="project-card" data-category="realestate">
-          <div class="project-card__header">
-            <div class="project-card__icon">🏠</div>
-            <span class="project-card__badge project-card__badge--free">Free Repo</span>
-          </div>
-          <h3 class="project-card__name">Real Estate Lead Gen</h3>
-          <p class="project-card__desc">Scout markets, qualify leads from expired listings and pre-foreclosures, score prospects, generate outreach campaigns.</p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">4 Agents</span>
-            <span class="project-card__tag">Market Analysis</span>
-            <span class="project-card__tag">Lead Scoring</span>
-          </div>
-          <div class="project-card__meta">
-            <span class="project-card__meta-item">🐍 Python</span>
-            <span class="project-card__meta-item">📝 MIT</span>
-            <span class="project-card__meta-item">👤 AIdentify</span>
-          </div>
-          <div class="project-card__actions">
-            <a href="https://github.com/phanindraintelligenzit-afk/real-estate-lead-gen" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
-            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
-          </div>
-        </div>
-
-        <!-- Card 3: E-Commerce Operations -->
-        <div class="project-card" data-category="ecommerce">
-          <div class="project-card__header">
-            <div class="project-card__icon">🛒</div>
-            <span class="project-card__badge project-card__badge--free">Free Repo</span>
-          </div>
-          <h3 class="project-card__name">E-Commerce Operations</h3>
-          <p class="project-card__desc">Product analysis, competitive research, listing optimization, review management, pricing recommendations.</p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">4 Agents</span>
-            <span class="project-card__tag">SEO</span>
-            <span class="project-card__tag">Conversion</span>
-          </div>
-          <div class="project-card__meta">
-            <span class="project-card__meta-item">🐍 Python</span>
-            <span class="project-card__meta-item">📝 MIT</span>
-            <span class="project-card__meta-item">👤 AIdentify</span>
-          </div>
-          <div class="project-card__actions">
-            <a href="https://github.com/phanindraintelligenzit-afk/ecommerce-product-optimizer" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
-            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
-          </div>
-        </div>
-
-        <!-- Card 4: Legal Contract Review -->
-        <div class="project-card" data-category="legal">
-          <div class="project-card__header">
-            <div class="project-card__icon">⚖️</div>
-            <span class="project-card__badge project-card__badge--free">Free Repo</span>
-          </div>
-          <h3 class="project-card__name">Legal Contract Review</h3>
-          <p class="project-card__desc">Parse contracts, identify redlines, assess risk, generate negotiation summaries, ensure compliance.</p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">4 Agents</span>
-            <span class="project-card__tag">Risk Matrix</span>
-            <span class="project-card__tag">GDPR / SOC2</span>
-          </div>
-          <div class="project-card__meta">
-            <span class="project-card__meta-item">🐍 Python</span>
-            <span class="project-card__meta-item">📝 MIT</span>
-            <span class="project-card__meta-item">👤 AIdentify</span>
-          </div>
-          <div class="project-card__actions">
-            <a href="https://github.com/phanindraintelligenzit-afk/legal-contract-review" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
-            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
-          </div>
-        </div>
-
-        <!-- Card 5: HR Operations -->
-        <div class="project-card" data-category="hr">
-          <div class="project-card__header">
-            <div class="project-card__icon">👥</div>
-            <span class="project-card__badge project-card__badge--free">Free Repo</span>
-          </div>
-          <h3 class="project-card__name">HR Operations</h3>
-          <p class="project-card__desc">Resume screening, candidate scoring, personalized outreach, onboarding package generation, compliance tracking.</p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">4 Agents</span>
-            <span class="project-card__tag">Screening</span>
-            <span class="project-card__tag">Onboarding</span>
-          </div>
-          <div class="project-card__meta">
-            <span class="project-card__meta-item">🐍 Python</span>
-            <span class="project-card__meta-item">📝 MIT</span>
-            <span class="project-card__meta-item">👤 AIdentify</span>
-          </div>
-          <div class="project-card__actions">
-            <a href="https://github.com/phanindraintelligenzit-afk/hr-operations" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
-            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
-          </div>
-        </div>
-
-                <!-- Card: Automate Legal Contract Review and Risk Assessment -->
-        <div class="project-card" data-category="legal" style="cursor:pointer;">
-          <div class="project-card__header">
-            <div class="project-card__icon">⚖️</div>
-            <span class="project-card__badge project-card__badge--free">Free Repo</span>
-          </div>
-          <h3 class="project-card__name">Automate Legal Contract Review and Risk Assessment</h3>
-          <p class="project-card__desc">Automate legal contract review and risk assessment for law firms</p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">Risk Matrix</span> <span class="project-card__tag">GDPR / SOC2</span>
-          </div>
-          <div class="project-card__meta">
-            <span class="project-card__meta-item">🐍 Python</span>
-            <span class="project-card__meta-item">📝 MIT</span>
-            <span class="project-card__meta-item">👤 AIdentify</span>
-          </div>
-          <div class="project-card__actions">
-            <a href="https://github.com/phanindraintelligenzit-afk/automate-legal-contract-review-and-risk-assessment" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
-            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
-          </div>
-        </div>
-
-        <!-- Card: AI Team Leads Decision Makers Outreach -->
-        <div class="project-card" data-category="marketing" style="cursor:pointer;">
-          <div class="project-card__header">
-            <div class="project-card__icon">�</div>
-            <span class="project-card__badge project-card__badge--free">Free Repo</span>
-          </div>
-          <h3 class="project-card__name">AI Team Leads &amp; Outreach</h3>
-          <p class="project-card__desc">AI agent team that finds qualified leads, identifies decision makers, and writes personalized outreach sequences automatically.</p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">Lead Gen</span>
-            <span class="project-card__tag">6 Agents</span>
-            <span class="project-card__tag">Outreach AI</span>
-          </div>
-          <div class="project-card__meta">
-            <span class="project-card__meta-item">🐍 Python</span>
-            <span class="project-card__meta-item">📝 MIT</span>
-            <span class="project-card__meta-item">👤 AIdentify</span>
-          </div>
-          <div class="project-card__actions">
-            <a href="https://github.com/phanindraintelligenzit-afk/ai-team-leads-decision-makers-outreach" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
-            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
-          </div>
-        </div>
-
-        <!-- Card: AI-Powered Lead Generation Team -->
-        <div class="project-card" data-category="marketing" style="cursor:pointer;">
-          <div class="project-card__header">
-            <div class="project-card__icon">📣</div>
-            <span class="project-card__badge project-card__badge--free">Free Repo</span>
-          </div>
-          <h3 class="project-card__name">AI-Powered Lead Generation Team</h3>
-          <p class="project-card__desc">Multi-agent system that automates prospecting, contact discovery, outreach drafting, and lead scoring.</p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">Lead Gen</span> <span class="project-card__tag">Multi-Agent</span> <span class="project-card__tag">FastAPI</span>
-          </div>
-          <div class="project-card__meta">
-            <span class="project-card__meta-item">🐍 Python</span>
-            <span class="project-card__meta-item">📝 MIT</span>
-            <span class="project-card__meta-item">👤 AIdentify</span>
-          </div>
-          <div class="project-card__actions">
-            <a href="https://github.com/phanindraintelligenzit-afk/ai-powered-lead-generation-team-multi-agent-system" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
-            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
-          </div>
-        </div>
-
-        <!-- Card: AI Agent Sandbox Governance -->
-        <div class="project-card" data-category="devtools" style="cursor:pointer;">
-          <div class="project-card__header">
-            <div class="project-card__icon">🔒</div>
-            <span class="project-card__badge project-card__badge--free">Free Repo</span>
-          </div>
-          <h3 class="project-card__name">AI Agent Sandbox &amp; Audit</h3>
-          <p class="project-card__desc">Open-source governance layer — permission boundaries, sandboxed execution, audit trails for any AI agent.</p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">Security</span> <span class="project-card__tag">Governance</span> <span class="project-card__tag">Python</span>
-          </div>
-          <div class="project-card__meta">
-            <span class="project-card__meta-item">🐍 Python</span>
-            <span class="project-card__meta-item">📝 MIT</span>
-            <span class="project-card__meta-item">👤 AIdentify</span>
-          </div>
-          <div class="project-card__actions">
-            <a href="https://github.com/phanindraintelligenzit-afk/ai-agent-sandbox-governance" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
-            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
-          </div>
-        </div>
-
-        <!-- Card: Estonia e-Residency Compliance Automator -->
-        <div class="project-card" data-category="legal" style="cursor:pointer;">
-          <div class="project-card__header">
-            <div class="project-card__icon">⚖️</div>
-            <span class="project-card__badge project-card__badge--free">Free Repo</span>
-          </div>
-          <h3 class="project-card__name">Estonia e-Residency Compliance</h3>
-          <p class="project-card__desc">Automate compliance workflows for Estonia e-Residency applications — document parsing, risk checks, status tracking.</p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">Compliance</span> <span class="project-card__tag">GDPR</span> <span class="project-card__tag">Legal</span>
-          </div>
-          <div class="project-card__meta">
-            <span class="project-card__meta-item">🐍 Python</span>
-            <span class="project-card__meta-item">📝 MIT</span>
-            <span class="project-card__meta-item">👤 AIdentify</span>
-          </div>
-          <div class="project-card__actions">
-            <a href="https://github.com/phanindraintelligenzit-afk/estonia-e-residency-compliance-automator" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
-            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
-          </div>
-        </div>
-
-        <!-- Card: I Built an Ai Team That Finds Leads Decision Make -->
-        <div class="project-card" data-category="marketing" style="cursor:pointer;">
-          <div class="project-card__header">
-            <div class="project-card__icon">📣</div>
-            <span class="project-card__badge project-card__badge--free">Free Repo</span>
-          </div>
-          <h3 class="project-card__name">I Built an Ai Team That Finds Leads Decision Make</h3>
-          <p class="project-card__desc">🚀 I Built an AI Team That Finds Leads, Decision Makers & Writes Outreach While I Sleep</p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">Multi-Platform</span> <span class="project-card__tag">Analytics</span>
-          </div>
-          <div class="project-card__meta">
-            <span class="project-card__meta-item">🐍 Python</span>
-            <span class="project-card__meta-item">📝 MIT</span>
-            <span class="project-card__meta-item">👤 AIdentify</span>
-          </div>
-          <div class="project-card__actions">
-            <a href="https://github.com/phanindraintelligenzit-afk/-i-built-an-ai-team-that-finds-leads-decision-make" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
-            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
-          </div>
-        </div>
-
-        <!-- Card: Business Inbox Agent -->
-        <div class="project-card" data-category="marketing" style="cursor:pointer;">
-          <div class="project-card__header">
-            <div class="project-card__icon">📣</div>
-            <span class="project-card__badge project-card__badge--free">Free Repo</span>
-          </div>
-          <h3 class="project-card__name">Business Inbox Agent</h3>
-          <p class="project-card__desc">AI agent that classifies incoming business requests (lead/support/invoice/scheduling), extracts structured data, and rou</p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">email-automation</span> <span class="project-card__tag">crm-integration</span> <span class="project-card__tag">lead-routing</span> <span class="project-card__tag">multi-agent</span>
-          </div>
-          <div class="project-card__meta">
-            <span class="project-card__meta-item">🐍 Python</span>
-            <span class="project-card__meta-item">📝 MIT</span>
-            <span class="project-card__meta-item">👤 AIdentify</span>
-          </div>
-          <div class="project-card__actions">
-            <a href="https://github.com/phanindraintelligenzit-afk/business-inbox-agent" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
-            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
-          </div>
-        </div>
-
-        <!-- Card: YouTube Channel Manager -->
-        <div class="project-card" data-category="marketing" style="cursor:pointer;">
-          <div class="project-card__header">
-            <div class="project-card__icon">📣</div>
-            <span class="project-card__badge project-card__badge--free">Free Repo</span>
-          </div>
-          <h3 class="project-card__name">YouTube Channel Manager</h3>
-          <p class="project-card__desc">AI content engine for YouTube creators. Generates video ideas, full scripts, SEO metadata, thumbnail briefs, and weekly </p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">youtube</span> <span class="project-card__tag">content-creation</span> <span class="project-card__tag">seo</span> <span class="project-card__tag">script-writing</span>
-          </div>
-          <div class="project-card__meta">
-            <span class="project-card__meta-item">🐍 Python</span>
-            <span class="project-card__meta-item">📝 MIT</span>
-            <span class="project-card__meta-item">👤 AIdentify</span>
-          </div>
-          <div class="project-card__actions">
-            <a href="https://github.com/phanindraintelligenzit-afk/youtube-channel-manager" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
-            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
-          </div>
-        </div>
-
-        <!-- Card: Ai Team That Finds Leads Decision Makers Writes Ou -->
-        <div class="project-card" data-category="marketing" style="cursor:pointer;">
-          <div class="project-card__header">
-            <div class="project-card__icon">📣</div>
-            <span class="project-card__badge project-card__badge--free">Free Repo</span>
-          </div>
-          <h3 class="project-card__name">Ai Team That Finds Leads Decision Makers Writes Ou</h3>
-          <p class="project-card__desc">AI Team That Finds Leads, Decision Makers & Writes Outreach</p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">Multi-Platform</span> <span class="project-card__tag">Analytics</span>
-          </div>
-          <div class="project-card__meta">
-            <span class="project-card__meta-item">🐍 Python</span>
-            <span class="project-card__meta-item">📝 MIT</span>
-            <span class="project-card__meta-item">👤 AIdentify</span>
-          </div>
-          <div class="project-card__actions">
-            <a href="https://github.com/phanindraintelligenzit-afk/ai-team-that-finds-leads-decision-makers-writes-ou" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
-            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
-          </div>
-        </div>
-
-        <!-- Card: Ai Content Repurposer -->
-        <div class="project-card" data-category="marketing" style="cursor:pointer;">
-          <div class="project-card__header">
-            <div class="project-card__icon">📣</div>
-            <span class="project-card__badge project-card__badge--free">Free Repo</span>
-          </div>
-          <h3 class="project-card__name">Ai Content Repurposer</h3>
-          <p class="project-card__desc">AI Content Repurposer</p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">Multi-Platform</span> <span class="project-card__tag">Analytics</span>
-          </div>
-          <div class="project-card__meta">
-            <span class="project-card__meta-item">🐍 Python</span>
-            <span class="project-card__meta-item">📝 MIT</span>
-            <span class="project-card__meta-item">👤 AIdentify</span>
-          </div>
-          <div class="project-card__actions">
-            <a href="https://github.com/phanindraintelligenzit-afk/ai-content-repurposer" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
-            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
-          </div>
-        </div>
-
-        <!-- Card: Ai Seo Content Pipeline -->
-        <div class="project-card" data-category="marketing" style="cursor:pointer;">
-          <div class="project-card__header">
-            <div class="project-card__icon">📣</div>
-            <span class="project-card__badge project-card__badge--free">Free Repo</span>
-          </div>
-          <h3 class="project-card__name">Ai Seo Content Pipeline</h3>
-          <p class="project-card__desc">AI SEO Content Pipeline</p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">Multi-Platform</span> <span class="project-card__tag">Analytics</span>
-          </div>
-          <div class="project-card__meta">
-            <span class="project-card__meta-item">🐍 Python</span>
-            <span class="project-card__meta-item">📝 MIT</span>
-            <span class="project-card__meta-item">👤 AIdentify</span>
-          </div>
-          <div class="project-card__actions">
-            <a href="https://github.com/phanindraintelligenzit-afk/ai-seo-content-pipeline" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
-            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
-          </div>
-        </div>
-
-        <!-- Card: Ai App Store Screenshot Generator -->
-        <div class="project-card" data-category="marketing" style="cursor:pointer;">
-          <div class="project-card__header">
-            <div class="project-card__icon">📣</div>
-            <span class="project-card__badge project-card__badge--free">Free Repo</span>
-          </div>
-          <h3 class="project-card__name">Ai App Store Screenshot Generator</h3>
-          <p class="project-card__desc">AI App Store Screenshot Generator</p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">Multi-Platform</span> <span class="project-card__tag">Analytics</span>
-          </div>
-          <div class="project-card__meta">
-            <span class="project-card__meta-item">🐍 Python</span>
-            <span class="project-card__meta-item">📝 MIT</span>
-            <span class="project-card__meta-item">👤 AIdentify</span>
-          </div>
-          <div class="project-card__actions">
-            <a href="https://github.com/phanindraintelligenzit-afk/ai-app-store-screenshot-generator" target="_blank" rel="noopener" class="btn btn--primary btn--sm">View Repo</a>
-            <a href="#request" class="btn btn--outline btn--sm">Hire Setup</a>
-          </div>
-        </div>
-
-<!-- Card 6: Coming Soon / CTA -->
-        <div class="project-card" data-category="cta" style="border-style: dashed; border-color: var(--purple-light); background: var(--bg-subtle);">
-          <div class="project-card__header">
-            <div class="project-card__icon" style="background: rgba(83,58,253,0.08); border-color: var(--purple-light);">+</div>
-            <span class="project-card__badge project-card__badge--paid">Your Project</span>
-          </div>
-          <h3 class="project-card__name">Don't See What You Need?</h3>
-          <p class="project-card__desc">Post your automation request and our agent swarm will research, design, and build a custom solution. Free repo + optional done-for-you setup.</p>
-          <div class="project-card__tags">
-            <span class="project-card__tag">Custom Build</span>
-            <span class="project-card__tag">Multi-Agent</span>
-          </div>
-          <div class="project-card__actions" style="margin-top: auto;">
-            <a href="#request" class="btn btn--primary btn--sm">Request a Project</a>
-          </div>
-        </div>
-
-      </div>
+      <h2>Need Something Custom?</h2>
+      <p>Can't find what you need? We'll build a custom AI agent solution for your workflow.</p>
+      <a href="mailto:hello@aiidentify.ai" class="btn btn-primary">Get in Touch →</a>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════
-       HOW IT WORKS
-       ═══════════════════════════════════════ -->
-  <section class="section section--subtle" id="how-it-works">
+  <footer>
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">How It Works</span>
-        <h2 class="section-title">From idea to deployment</h2>
-        <p class="section-desc">Our agent swarm handles the heavy lifting. You pick the solution that fits.</p>
-      </div>
-
-      <div class="steps">
-        <div class="step">
-          <div class="step__num">1</div>
-          <h3 class="step__title">Browse or Request</h3>
-          <p class="step__desc">Find a solution in the marketplace, or post a custom automation request.</p>
-        </div>
-        <div class="step">
-          <div class="step__num">2</div>
-          <h3 class="step__title">Agent Swarm Builds</h3>
-          <p class="step__desc">Our multi-agent pipeline researches, designs, and builds the solution — repo, tests, docs included.</p>
-        </div>
-        <div class="step">
-          <div class="step__num">3</div>
-          <h3 class="step__title">Free Repo on GitHub</h3>
-          <p class="step__desc">Every project ships as an open-source repo. Clone it, test it, deploy it yourself.</p>
-        </div>
-        <div class="step">
-          <div class="step__num">4</div>
-          <h3 class="step__title">Done-for-You Setup</h3>
-          <p class="step__desc">Need it live? Our team deploys, configures, and monitors the solution for you.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════
-       WHY AIDENTIFY (DARK SECTION)
-       ═══════════════════════════════════════ -->
-  <section class="section section--dark" id="why">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag" style="color: var(--purple-light);">Why AIdentify</span>
-        <h2 class="section-title">Built differently</h2>
-        <p class="section-desc">Not a chatbot wrapper. Not a prompt template. Real multi-agent automation, production-tested.</p>
-      </div>
-
-      <div class="features">
-        <div class="feature">
-          <div class="feature__icon">⚡</div>
-          <h3 class="feature__title">Multi-Agent Architecture</h3>
-          <p class="feature__desc">Sequential, parallel, routing, and loop pipelines — not a single LLM call. Each agent has a specific role and output.</p>
-        </div>
-        <div class="feature">
-          <div class="feature__icon">🔓</div>
-          <h3 class="feature__title">Open Source by Default</h3>
-          <p class="feature__desc">Every project is a free GitHub repo. Fork it, modify it, deploy it. No vendor lock-in, no hidden costs.</p>
-        </div>
-        <div class="feature">
-          <div class="feature__icon">🧪</div>
-          <h3 class="feature__title">Production-Tested</h3>
-          <p class="feature__desc">70+ tests across 5 pipelines. Every agent output is validated before it reaches the next step.</p>
-        </div>
-        <div class="feature">
-          <div class="feature__icon">💰</div>
-          <h3 class="feature__title">Free to Start, Scale When Ready</h3>
-          <p class="feature__desc">Use free models to build and test. Upgrade to done-for-you setup when you need production reliability.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════
-       REQUEST A PROJECT
-       ═══════════════════════════════════════ -->
-  <section class="section" id="request">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Request a Project</span>
-        <h2 class="section-title">Need a custom solution?</h2>
-        <p class="section-desc">Tell us what you need and our agent swarm will build it. Free repo + optional done-for-you setup.</p>
-      </div>
-
-      <div class="request-grid">
-        <div class="request-info">
-          <h3>How project requests work</h3>
-          <p>Submit your automation need and our multi-agent pipeline handles the rest — from research to deployment-ready repo.</p>
-          <ul class="request-benefits">
-            <li>Free automation audit — we assess feasibility and ROI before building</li>
-            <li>Agent swarm builds the full solution: code, tests, docs, CI/CD</li>
-            <li>Project published as open-source repo on GitHub</li>
-            <li>Optional done-for-you deployment and monitoring</li>
-            <li>You own everything — no lock-in, no recurring fees for the code</li>
-          </ul>
-        </div>
-
-        <form class="request-form" action="https://formspree.io/f/xlgkpzeo" method="POST">
-          <div class="form-group">
-            <label for="req-name">Full Name</label>
-            <input type="text" id="req-name" name="name" placeholder="e.g. Rahul Sharma" required />
-          </div>
-          <div class="form-group">
-            <label for="req-email">Email Address</label>
-            <input type="email" id="req-email" name="email" placeholder="e.g. rahul@company.com" required />
-          </div>
-          <div class="form-group">
-            <label for="req-category">Automation Category</label>
-            <select id="req-category" name="category" required>
-              <option value="" disabled selected>Select a category</option>
-              <option value="healthcare">Healthcare</option>
-              <option value="ecommerce">E-Commerce</option>
-              <option value="legal">Legal</option>
-              <option value="hr">HR & Recruiting</option>
-              <option value="realestate">Real Estate</option>
-              <option value="finance">Finance & Accounting</option>
-              <option value="marketing">Marketing</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="req-description">Describe Your Automation Need</label>
-            <textarea id="req-description" name="description" rows="4" placeholder="e.g. We spend 5 hours a day manually processing insurance prior authorizations. We need an AI agent that can extract patient data from our EHR, check insurer requirements, and generate submission packages…" required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="req-budget">Budget Range</label>
-            <select id="req-budget" name="budget">
-              <option value="" disabled selected>Select a range (optional)</option>
-              <option value="under-1k">Under $1,000</option>
-              <option value="1k-5k">$1,000 – $5,000</option>
-              <option value="5k-15k">$5,000 – $15,000</option>
-              <option value="15k+">$15,000+</option>
-            </select>
-          </div>
-          <button type="submit" class="btn btn--primary btn--full btn--lg">Submit Project Request →</button>
-          <p class="form-note">🔒 We'll review your request and respond within 24 hours. No spam, ever.</p>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════
-       FOOTER
-       ═══════════════════════════════════════ -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__inner">
-        <div class="footer__brand">
-          <div class="footer__logo">
-            <span class="nav__logo-icon" style="width:24px;height:24px;font-size:12px;border-radius:4px;">A</span>
-            AIdentify
-          </div>
-          <p class="footer__tagline">AI automation marketplace. Open-source repos, done-for-you setup, built by multi-agent swarms.</p>
-        </div>
-        <div class="footer__links">
-          <a href="#projects">Projects</a>
-          <a href="#how-it-works">How It Works</a>
-          <a href="#request">Request Project</a>
-          <a href="https://github.com/phanindraintelligenzit-afk" target="_blank" rel="noopener">GitHub</a>
-        </div>
-      </div>
-      <div class="footer__bottom">
-        <p>© 2026 AIdentify. MIT License. Built by <a href="https://github.com/phanindraintelligenzit-afk" target="_blank" rel="noopener">AIdentify</a>.</p>
-      </div>
+      <p>© 2026 AIdentify · Built by AI agents · <a href="https://github.com/phanindraintelligenzit-afk/AIdentify">Open Source</a></p>
     </div>
   </footer>
 
-  <!-- ═══════════════════════════════════════
-       JAVASCRIPT
-       ═══════════════════════════════════════ -->
-  <script>
-    // Mobile nav toggle
-    const hamburger = document.getElementById('hamburgerBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    hamburger.addEventListener('click', () => {
-      mobileMenu.classList.toggle('open');
-    });
-    mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.remove('open');
-      });
-    });
-
-    // Filter tabs
-    const filterTabs = document.querySelectorAll('.filter-tab');
-    const projectCards = document.querySelectorAll('.project-card[data-category]');
-
-    filterTabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        filterTabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        const filter = tab.dataset.filter;
-        projectCards.forEach(card => {
-          if (filter === 'all' || card.dataset.category === filter) {
-            card.style.display = '';
-          } else {
-            card.style.display = 'none';
-          }
-        });
-      });
-    });
-
-    // Search
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', (e) => {
-      const query = e.target.value.toLowerCase();
-      projectCards.forEach(card => {
-        const text = card.textContent.toLowerCase();
-        if (text.includes(query)) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    });
-  </script>
-
-  <!-- ═══════════════════════════════════════
-       PROJECT DETAIL MODAL
-       ═══════════════════════════════════════ -->
-  <div id="projectModal" class="modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(6,27,49,0.6);z-index:1000;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);" onclick="if(event.target===this)closeProjectDetail()">
-    <div class="modal-content" style="background:var(--bg);border-radius:16px;max-width:720px;width:90%;margin:60px auto;padding:40px;position:relative;box-shadow:var(--shadow-elevated);max-height:80vh;overflow-y:auto;">
-      <button onclick="closeProjectDetail()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--body);padding:4px 8px;line-height:1;">✕</button>
-      <div id="modalIcon" style="font-size:48px;margin-bottom:12px;"></div>
-      <div id="modalBadge" style="display:inline-block;margin-bottom:12px;"></div>
-      <h2 id="modalTitle" style="font-size:28px;font-weight:300;color:var(--heading);margin-bottom:8px;"></h2>
-      <p id="modalCategory" style="color:var(--purple);font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:16px;"></p>
-      <p id="modalDescription" style="color:var(--body);font-size:16px;line-height:1.6;margin-bottom:24px;"></p>
-      <div id="modalAgents" style="margin-bottom:24px;">
-        <h4 style="font-size:14px;font-weight:600;color:var(--heading);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">Agent Pipeline</h4>
-        <div id="modalAgentList"></div>
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal" id="modal">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-header">
+        <div class="modal-icon" id="modalIcon"></div>
+        <div>
+          <div class="modal-title" id="modalTitle"></div>
+          <div class="modal-category" id="modalCategory"></div>
+        </div>
       </div>
-      <div id="modalTags" style="margin-bottom:24px;display:flex;flex-wrap:wrap;gap:6px;"></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;padding:16px 0;border-top:1px solid var(--border);margin-bottom:24px;">
-        <span id="modalLang" style="font-size:13px;color:var(--body);"></span>
-        <span style="color:var(--border);">|</span>
-        <span id="modalLicense" style="font-size:13px;color:var(--body);"></span>
-        <span style="color:var(--border);">|</span>
-        <span id="modalAuthor" style="font-size:13px;color:var(--body);"></span>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div class="modal-section-title">Agent Pipeline</div>
+      <div class="agent-list" id="modalAgents"></div>
+      <div class="modal-section-title">Tech Stack</div>
+      <div class="card-tags" id="modalTags" style="margin-bottom:28px;"></div>
+      <div class="modal-actions">
+        <a id="modalGithub" href="#" target="_blank" class="btn btn-primary">View on GitHub →</a>
+        <a href="#request" class="btn btn-outline" onclick="closeModal()">Request Setup</a>
       </div>
-      <div id="modalActions" style="display:flex;gap:12px;flex-wrap:wrap;"></div>
     </div>
   </div>
-  <style>
-    .modal-agent-item{display:flex;gap:12px;padding:10px 16px;background:var(--bg-subtle);border-radius:8px;margin-bottom:6px;font-size:14px;}
-    .modal-agent-item::before{content:"→";color:var(--purple);font-weight:600;flex-shrink:0;}
-    .project-card{cursor:pointer;}
-    .project-card:hover{transform:translateY(-2px);transition:transform .15s ease;}
-  </style>
-  <script>
-    const PROJECT_DATA = {
-      "healthcare-prior-auth": {
-        name:"Healthcare Prior Auth",icon:"🏥",category:"Healthcare",
-        description:"Automate prior authorization workflows — extract patient data from EHR systems, check insurer requirements, flag denial risks, and generate complete submission packages. Built as a 4-agent multi-agent system using LangGraph.",
-        agents:["Auth Intake Agent — Extracts patient data from EHR/HL7 FHIR feeds","Requirement Checker — Validates insurer-specific criteria and coverage rules","Denial Risk Scorer — Flags high-risk submissions before they get rejected","Documentation Generator — Assembles complete prior auth submission packages"],
-        tags:["HIPAA Ready","EHR Integration","HL7 FHIR","4 Agents"],
-        github_url:"https://github.com/phanindraintelligenzit-afk/healthcare-prior-auth"
-      },
-      "real-estate-lead-gen": {
-        name:"Real Estate Lead Gen",icon:"🏠",category:"Real Estate",
-        description:"AI-powered lead generation team — scouts markets, qualifies leads from expired listings and pre-foreclosures, scores prospects using smart criteria, and generates personalized outreach campaigns. Multi-agent system built with LangGraph.",
-        agents:["Prospecting Agent — Scans expired listings, pre-foreclosures, and off-market signals","Lead Qualifier — Filters and scores leads based on customizable criteria","Outreach Drafter — Generates personalized email/call scripts per lead","Pipeline Tracker — Tracks lead status and follow-up schedules"],
-        tags:["Market Analysis","Lead Scoring","Outreach Automation","Multi-Agent"],
-        github_url:"https://github.com/phanindraintelligenzit-afk/real-estate-lead-gen"
-      },
-      "ecommerce-product-optimizer": {
-        name:"E-Commerce Product Optimizer",icon:"🛒",category:"E-Commerce",
-        description:"Automate product listing optimization for e-commerce stores with AI-powered SEO, competitive pricing, review management, and conversion optimization. 4-agent multi-agent system that handles the full product lifecycle.",
-        agents:["Product Analyzer — Evaluates listing quality and competitor positioning","Content Optimizer — Rewrites titles, descriptions, and keywords for SEO","Pricing Agent — Monitors competitor pricing and recommends optimal prices","Review Manager — Tracks reviews, flags negatives, suggests responses"],
-        tags:["SEO","Conversion","Pricing","Review Management"],
-        github_url:"https://github.com/phanindraintelligenzit-afk/ecommerce-product-optimizer"
-      },
-      "legal-contract-review": {
-        name:"Legal Contract Review",icon:"⚖️",category:"Legal",status:"coming-soon",
-        description:"Parse contracts, identify redlines and risky clauses, assess risk exposure, generate negotiation summaries, and ensure GDPR/SOC2 compliance. Multi-agent system for legal teams.",
-        agents:["Contract Parser — Extracts clauses, terms, and obligations from contracts","Risk Assessor — Flags unusual or risky clauses with severity scoring","Compliance Checker — Validates against GDPR, SOC2, and industry standards","Summary Generator — Creates negotiation briefs and redline summaries"],
-        tags:["Risk Matrix","GDPR / SOC2","Compliance","4 Agents"],
-        github_url:"https://github.com/phanindraintelligenzit-afk/legal-contract-review"
-      },
-      "hr-operations": {
-        name:"HR Operations",icon:"👥",category:"HR",status:"coming-soon",
-        description:"Resume screening, candidate scoring, personalized outreach, onboarding package generation, and compliance tracking. Multi-agent system for HR teams and recruiters.",
-        agents:["Resume Screener — Parses resumes, extracts skills, ranks candidates","Candidate Scorer — Evaluates fit using customizable scoring criteria","Outreach Agent — Generates personalized outreach messages per candidate","Onboarding Agent — Creates onboarding packages and compliance checklists"],
-        tags:["Screening","Onboarding","Compliance","4 Agents"],
-        github_url:"https://github.com/phanindraintelligenzit-afk/hr-operations"
-      }
-,
-      "automate-legal-contract-review-and-risk-assessment": {
-        name:"Automate Legal Contract Review and Risk Assessment",icon:"�️",category:"Legal",
-        description:"Automate legal contract review and risk assessment for law firms",
-        agents:["contract_parser \u2014 Parse contracts, extract key clauses, dates, parties", "redline_detector \u2014 Identify non-standard terms, risky clauses, deviations from template", "risk_assessor \u2014 Score contract risk, generate negotiation recommendations", "compliance_checker \u2014 Check GDPR, SOC2, and regulatory compliance requirements"],
-        tags:["Risk Matrix", "GDPR / SOC2"],
-        github_url:"https://github.com/phanindraintelligenzit-afk/automate-legal-contract-review-and-risk-assessment"
-      },
-      "ai-team-leads-decision-makers-outreach": {
-        name:"AI Team Leads & Outreach",icon:"📣",category:"Marketing",
-        description:"AI agent team that finds qualified leads, identifies decision makers, and writes personalized outreach sequences automatically. Built by AIdentify multi-agent pipeline.",
-        agents:["Lead Researcher — Finds and qualifies leads from multiple sources","Decision Maker Finder — Identifies key contacts and decision makers","Outreach Drafter — Writes personalized email sequences","Pipeline Tracker — Manages follow-ups and engagement","Quality Reviewer — Validates outreach quality and compliance","Analytics Agent — Tracks performance and optimizes strategy"],
-        tags:["Lead Gen","6 Agents","Outreach AI","Marketing"],
-        github_url:"https://github.com/phanindraintelligenzit-afk/ai-team-leads-decision-makers-outreach"
-      },
-      "ai-powered-lead-generation-team-multi-agent-system": {
-        name:"AI-Powered Lead Generation Team",icon:"📣",category:"Marketing",
-        description:"Multi-agent system that automates prospecting, contact discovery, outreach drafting, and lead scoring. Built with LangGraph and FastAPI.",
-        agents:["Content Generator — Generate platform-specific content from briefs and trends","Scheduler — Optimize posting schedule by platform, audience, engagement data","Analytics Agent — Track performance, generate insights, recommend optimizations"],
-        tags:["Lead Gen","Multi-Agent","FastAPI","LangGraph"],
-        github_url:"https://github.com/phanindraintelligenzit-afk/ai-powered-lead-generation-team-multi-agent-system"
-      },
-      "ai-agent-sandbox-governance": {
-        name:"AI Agent Sandbox & Audit",icon:"🔒",category:"DevTools",
-        description:"Open-source governance layer for AI agents — defines permission boundaries, sandboxes execution, and audits every tool call. YAML-defined policies, REST API, tamper-proof audit logs.",
-        agents:["Policy Engine — Enforce YAML-defined permission policies (filesystem, network, commands)","Sandbox Runner — Execute agent actions within defined boundaries","Audit Logger — Tamper-proof audit trail with hash chain verification","API Server — REST API for CI/CD pipeline integration"],
-        tags:["Security","Governance","Open Source","Python","FastAPI"],
-        github_url:"https://github.com/phanindraintelligenzit-afk/ai-agent-sandbox-governance"
-      },
-      "estonia-e-residency-compliance-automator": {
-        name:"Estonia e-Residency Compliance",icon:"⚖️",category:"Legal",
-        description:"Automate compliance workflows for Estonia e-Residency applications — document parsing, risk checks, status tracking. Multi-agent system for legal teams.",
-        agents:["Document Parser — Extract data from e-Residency application documents","Risk Checker — Flag compliance risks and missing requirements","Status Tracker — Monitor application status and deadlines","Report Generator — Create compliance reports and summaries"],
-        tags:["Compliance","GDPR","Legal","Multi-Agent"],
-        github_url:"https://github.com/phanindraintelligenzit-afk/estonia-e-residency-compliance-automator"
-      }
-,
-      "-i-built-an-ai-team-that-finds-leads-decision-make": {
-        name:"I Built an Ai Team That Finds Leads Decision Make",icon:"📣",category:"Marketing",
-        description:"🚀 I Built an AI Team That Finds Leads, Decision Makers & Writes Outreach While I Sleep",
-        agents:["content_generator \u2014 Generate platform-specific content from briefs and trends", "scheduler \u2014 Optimize posting schedule by platform, audience, engagement data", "analytics_agent \u2014 Track performance, generate insights, recommend optimizations"],
-        tags:["Multi-Platform", "Analytics"],
-        github_url:"https://github.com/phanindraintelligenzit-afk/-i-built-an-ai-team-that-finds-leads-decision-make"
-      }
-,
-      "business-inbox-agent": {
-        name:"Business Inbox Agent",icon:"📣",category:"Marketing",
-        description:"AI agent that classifies incoming business requests (lead/support/invoice/scheduling), extracts structured data, and routes to the right workflow with draft replies.",
-        agents:["Classifier \u2014 request type detection", "Extractor \u2014 structured data pull", "Router \u2014 downstream dispatch", "Responder \u2014 draft reply generation"],
-        tags:["email-automation", "crm-integration", "lead-routing", "multi-agent"],
-        github_url:"https://github.com/phanindraintelligenzit-afk/business-inbox-agent"
-      }
-,
-      "youtube-channel-manager": {
-        name:"YouTube Channel Manager",icon:"📣",category:"Marketing",
-        description:"AI content engine for YouTube creators. Generates video ideas, full scripts, SEO metadata, thumbnail briefs, and weekly content calendar.",
-        agents:["Trend Researcher \u2014 video idea generation", "Script Writer \u2014 full scripts with hooks & timestamps", "SEO Agent \u2014 titles, descriptions, tags", "Thumbnail Brief \u2014 visual concepts", "Content Calendar \u2014 weekly scheduling"],
-        tags:["youtube", "content-creation", "seo", "script-writing", "creator-tools"],
-        github_url:"https://github.com/phanindraintelligenzit-afk/youtube-channel-manager"
-      }
-,
-      "ai-team-that-finds-leads-decision-makers-writes-ou": {
-        name:"Ai Team That Finds Leads Decision Makers Writes Ou",icon:"📣",category:"Marketing",
-        description:"AI Team That Finds Leads, Decision Makers & Writes Outreach",
-        agents:["content_generator \u2014 Generate platform-specific content from briefs and trends", "scheduler \u2014 Optimize posting schedule by platform, audience, engagement data", "analytics_agent \u2014 Track performance, generate insights, recommend optimizations"],
-        tags:["Multi-Platform", "Analytics"],
-        github_url:"https://github.com/phanindraintelligenzit-afk/ai-team-that-finds-leads-decision-makers-writes-ou"
-      }
-,
-      "ai-content-repurposer": {
-        name:"Ai Content Repurposer",icon:"📣",category:"Marketing",
-        description:"AI Content Repurposer",
-        agents:["content_generator \u2014 Generate platform-specific content from briefs and trends", "scheduler \u2014 Optimize posting schedule by platform, audience, engagement data", "analytics_agent \u2014 Track performance, generate insights, recommend optimizations"],
-        tags:["Multi-Platform", "Analytics"],
-        github_url:"https://github.com/phanindraintelligenzit-afk/ai-content-repurposer"
-      }
-,
-      "ai-seo-content-pipeline": {
-        name:"Ai Seo Content Pipeline",icon:"📣",category:"Marketing",
-        description:"AI SEO Content Pipeline",
-        agents:["content_generator \u2014 Generate platform-specific content from briefs and trends", "scheduler \u2014 Optimize posting schedule by platform, audience, engagement data", "analytics_agent \u2014 Track performance, generate insights, recommend optimizations"],
-        tags:["Multi-Platform", "Analytics"],
-        github_url:"https://github.com/phanindraintelligenzit-afk/ai-seo-content-pipeline"
-      }
-,
-      "ai-app-store-screenshot-generator": {
-        name:"Ai App Store Screenshot Generator",icon:"📣",category:"Marketing",
-        description:"AI App Store Screenshot Generator",
-        agents:["content_generator \u2014 Generate platform-specific content from briefs and trends", "scheduler \u2014 Optimize posting schedule by platform, audience, engagement data", "analytics_agent \u2014 Track performance, generate insights, recommend optimizations"],
-        tags:["Multi-Platform", "Analytics"],
-        github_url:"https://github.com/phanindraintelligenzit-afk/ai-app-store-screenshot-generator"
-      }
-    };
-    const REPO_MAP = {
-        "marketing":"ai-app-store-screenshot-generator",
-        "marketing":"ai-seo-content-pipeline",
-        "marketing":"ai-content-repurposer",
-        "marketing":"ai-team-that-finds-leads-decision-makers-writes-ou",
-        "marketing":"youtube-channel-manager",
-        "marketing":"business-inbox-agent",
-        "marketing":"-i-built-an-ai-team-that-finds-leads-decision-make",
-        "legal":"estonia-e-residency-compliance-automator","healthcare":"healthcare-prior-auth","realestate":"real-estate-lead-gen","ecommerce":"ecommerce-product-optimizer","hr":"hr-operations","marketing":"ai-powered-lead-generation-team-multi-agent-system","devtools":"ai-agent-sandbox-governance"};
-    document.querySelectorAll('.project-card[data-category]').forEach(function(card){
-      var cat = card.dataset.category;
-      var key = REPO_MAP[cat];
-      if(key && PROJECT_DATA[key]){
-        card.addEventListener('click',function(e){
-          if(e.target.closest('a')||e.target.closest('button'))return;
-          openProjectDetail(key);
-        });
-      }
-    });
-    function openProjectDetail(key){
-      var p = PROJECT_DATA[key]; if(!p)return;
-      var modal = document.getElementById('projectModal');
-      document.getElementById('modalIcon').textContent = p.icon||'';
-      document.getElementById('modalTitle').textContent = p.name;
-      var isCS = p.status==='coming-soon';
-      document.getElementById('modalBadge').innerHTML = isCS
-        ?'<span style="background:rgba(83,58,253,0.08);color:var(--purple);border:1px solid var(--purple-light);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:500;">Coming Soon</span>'
-        :'<span style="background:var(--success-bg);color:var(--success-text);border:1px solid var(--success-border);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:500;">Free &amp; Open Source</span>';
-      document.getElementById('modalCategory').textContent = p.category;
-      document.getElementById('modalDescription').textContent = p.description;
-      var al = document.getElementById('modalAgentList'); al.innerHTML='';
-      if(p.agents) p.agents.forEach(function(a){var d=document.createElement('div');d.className='modal-agent-item';d.textContent=a;al.appendChild(d);});
-      var td = document.getElementById('modalTags'); td.innerHTML='';
-      if(p.tags) p.tags.forEach(function(t){var s=document.createElement('span');s.className='project-card__tag';s.textContent=t;td.appendChild(s);});
-      document.getElementById('modalLang').textContent='🐍 Python';
-      document.getElementById('modalLicense').textContent='📝 MIT';
-      document.getElementById('modalAuthor').textContent='👤 AIdentify';
-      var ad = document.getElementById('modalActions'); ad.innerHTML='';
-      if(p.github_url){var a=document.createElement('a');a.href=p.github_url;a.target='_blank';a.rel='noopener';a.className='btn btn--primary';a.textContent=isCS?'📦 Repo (Coming Soon)':'📦 View on GitHub';if(isCS){a.style.opacity='0.6';a.style.pointerEvents='none';}ad.appendChild(a);}
-      var h=document.createElement('a');h.href='#request';h.className='btn btn--outline';h.textContent='🔧 Hire Us to Set Up';h.addEventListener('click',function(){closeProjectDetail();});ad.appendChild(h);
-      modal.style.display='block';document.body.style.overflow='hidden';
-    }
-    function closeProjectDetail(){document.getElementById('projectModal').style.display='none';document.body.style.overflow='';}
-    document.addEventListener('keydown',function(e){if(e.key==='Escape')closeProjectDetail();});
-  </script>
 
+  <script>
+    // ── Data Source ──
+    const DATA_URL = 'data/projects.json';
+
+    const App = {
+      App.allProjects: [],
+      App.activeFilter: 'all',
+      App.searchQuery: ''
+    };
+    window.App = App;
+
+    // ── Category config ──
+    const CATEGORY_CONFIG = {
+      healthcare: { icon: '🏥', color: 'healthcare' },
+      marketing: { icon: '🎯', color: 'marketing' },
+      legal: { icon: '⚖️', color: 'legal' },
+      security: { icon: '🔐', color: 'security' },
+      productivity: { icon: '⚡', color: 'productivity' },
+      finance: { icon: '💰', color: 'finance' },
+      other: { icon: '📦', color: 'other' }
+    };
+
+    // ── Init ──
+    async function init() {
+      try {
+        const res = await fetch(DATA_URL);
+        if (!res.ok) throw new Error('Failed to load projects');
+        const data = await res.json();
+        App.allProjects = data.projects || [];
+        render();
+        setupControls();
+        updateStats();
+      } catch (err) {
+        document.getElementById('projectGrid').innerHTML = `
+          <div class="empty-state" style="grid-column:1/-1;">
+            <div class="icon">⚠️</div>
+            <h3>Could not load projects</h3>
+            <p>${err.message}</p>
+          </div>`;
+      }
+    }
+
+    // ── Render ──
+    function render() {
+      const grid = document.getElementById('projectGrid');
+      const filtered = getFilteredProjects();
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state" style="grid-column:1/-1;">
+            <div class="icon">🔍</div>
+            <h3>No projects found</h3>
+            <p>Try a different search or filter</p>
+          </div>`;
+        document.getElementById('resultsInfo').textContent = '0 projects';
+        return;
+      }
+
+      document.getElementById('resultsInfo').textContent = `${filtered.length} project${filtered.length !== 1 ? 's' : ''}`;
+
+      grid.innerHTML = filtered.map(p => {
+        const cat = p.category || 'other';
+        const catConfig = CATEGORY_CONFIG[cat] || CATEGORY_CONFIG.other;
+        const status = p.status || 'built';
+        const statusBadge = status === 'coming-soon'
+          ? '<span class="badge badge-coming">Coming Soon</span>'
+          : '<span class="badge badge-built">Built</span>';
+
+        return `
+          <article class="card" data-id="${p.id}" data-category="${cat}">
+            <div class="card-header">
+              <div class="card-icon ${catConfig.color}">${catConfig.icon}</div>
+              <div>
+                <div class="card-title">${escapeHtml(p.name)}</div>
+                <div class="card-category">${cat} ${statusBadge}</div>
+              </div>
+            </div>
+            <div class="card-desc">${escapeHtml(p.description || 'No description available.')}</div>
+            <div class="card-tags">${(p.tags || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>
+            <div class="card-footer">
+              <div class="card-meta">
+                <span>🐍 Python</span>
+                <span>📄 ${p.mit ? 'MIT' : 'License'}</span>
+              </div>
+              ${p.github_url ? `<a href="${escapeHtml(p.github_url)}" target="_blank" class="card-link" onclick="event.stopPropagation()">GitHub →</a>` : ''}
+            </div>
+          </article>`;
+      }).join('');
+
+      // Event delegation for card clicks
+      grid.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', e => {
+          if (e.target.closest('a')) return;
+          openModal(card.dataset.id);
+        });
+      });
+    }
+
+    function getFilteredProjects() {
+      return App.allProjects.filter(p => {
+        const matchCat = App.activeFilter === 'all' || (p.category || 'other') === App.activeFilter;
+        const q = App.searchQuery.toLowerCase();
+        const matchSearch = !q ||
+          (p.name || '').toLowerCase().includes(q) ||
+          (p.description || '').toLowerCase().includes(q) ||
+          (p.category || '').toLowerCase().includes(q) ||
+          (p.tags || []).some(t => t.toLowerCase().includes(q));
+        return matchCat && matchSearch;
+      });
+    }
+
+    // ── Filters ──
+    function renderFilters() {
+      const cats = ['all', ...new Set(App.allProjects.map(p => p.category || 'other'))];
+      const container = document.getElementById('filterChips');
+      container.innerHTML = cats.map(c => {
+        const count = c === 'all' ? App.allProjects.length : App.allProjects.filter(p => (p.category || 'other') === c).length;
+        const label = c === 'all' ? 'All' : c.charAt(0).toUpperCase() + c.slice(1);
+        return `<div class="chip ${App.activeFilter === c ? 'active' : ''}" onclick="setFilter('${c}')">${label}<span class="count">${count}</span></div>`;
+      }).join('');
+    }
+
+    function setFilter(cat) {
+      App.activeFilter = cat;
+      renderFilters();
+      render();
+    }
+
+    // ── Search ──
+    function setupControls() {
+      renderFilters();
+      const input = document.getElementById('searchInput');
+      let debounce;
+      input.addEventListener('input', () => {
+        clearTimeout(debounce);
+        debounce = setTimeout(() => {
+          App.searchQuery = input.value.trim();
+          render();
+        }, 200);
+      });
+    }
+
+    // ── Stats ──
+    function updateStats() {
+      document.getElementById('statProjects').textContent = App.allProjects.length;
+      const totalAgents = App.allProjects.reduce((sum, p) => sum + (p.agents || 4), 0);
+      document.getElementById('statAgents').textContent = totalAgents;
+    }
+
+    // ── Modal ──
+    function openModal(id) {
+      const p = App.allProjects.find(x => x.id === id);
+      if (!p) return;
+
+      const cat = p.category || 'other';
+      const catConfig = CATEGORY_CONFIG[cat] || CATEGORY_CONFIG.other;
+
+      document.getElementById('modalIcon').className = `modal-icon card-icon ${catConfig.color}`;
+      document.getElementById('modalIcon').textContent = catConfig.icon;
+      document.getElementById('modalTitle').textContent = p.name;
+      document.getElementById('modalCategory').textContent = cat;
+      document.getElementById('modalDesc').textContent = p.description || '';
+
+      const agents = p.agents_list || p.agents || [];
+      document.getElementById('modalAgents').innerHTML = agents.length
+        ? agents.map(a => {
+            const parts = String(a).split(/[—–-]/).map(s => s.trim());
+            const name = parts[0] || a;
+            const desc = parts.slice(1).join(' — ');
+            return `<div class="agent-item"><strong>${escapeHtml(name)}</strong>${desc ? ` — ${escapeHtml(desc)}` : ''}</div>`;
+          }).join('')
+        : '<div class="agent-item">Multi-agent pipeline included</div>';
+
+      document.getElementById('modalTags').innerHTML = (p.tags || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('');
+
+      const ghBtn = document.getElementById('modalGithub');
+      if (p.github_url) {
+        ghBtn.href = p.github_url;
+        ghBtn.style.display = 'inline-flex';
+      } else {
+        ghBtn.style.display = 'none';
+      }
+
+      document.getElementById('modalOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // ── Utils ──
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // Keyboard
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Go
+    init();
+  </script>
 </body>
 </html>

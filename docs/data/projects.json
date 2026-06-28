@@ -1,162 +1,182 @@
 {
-  "generated_at": "2026-06-28T08:56:56.177275+00:00",
+  "generated_at": "2026-06-28T14:30:00+00:00",
   "total_projects": 8,
   "projects": [
     {
       "id": "healthcare-prior-auth",
       "name": "Healthcare Prior Auth",
-      "description": "Automate prior authorization workflows — extract patient data, check insurer requirements, flag denial risks, generate submission packages.",
+      "description": "Automate prior authorization workflows — extract patient data from EHR systems, check insurer requirements, flag denial risks, and generate complete submission packages. Built as a 4-agent multi-agent system using LangGraph.",
       "category": "healthcare",
       "icon": "🏥",
-      "tags": [
-        "4 Agents",
-        "HIPAA Ready",
-        "EHR Integration"
-      ],
+      "tags": ["4 Agents", "HIPAA Ready", "EHR Integration", "LangGraph"],
       "agents": 4,
+      "agents_list": [
+        "Auth Intake Agent — Extracts patient data from EHR/HL7 FHIR feeds",
+        "Requirement Checker — Validates insurer-specific criteria and coverage rules",
+        "Denial Risk Scorer — Flags high-risk submissions before they get rejected",
+        "Documentation Generator — Assembles complete prior auth submission packages"
+      ],
       "github_url": "https://github.com/phanindraintelligenzit-afk/healthcare-prior-auth",
       "stars": 0,
       "forks": 0,
       "language": "Python",
       "monetization": "Free repo + $2K-5K setup",
+      "status": "built",
       "updated_at": "2026-06-22T07:30:00+00:00"
     },
     {
       "id": "real-estate-lead-gen",
       "name": "Real Estate Lead Gen",
-      "description": "Scout markets, qualify leads from expired listings and pre-foreclosures, score prospects, generate outreach campaigns.",
-      "category": "realestate",
+      "description": "AI-powered lead generation team — scouts markets, qualifies leads from expired listings and pre-foreclosures, scores prospects using smart criteria, and generates personalized outreach campaigns. Multi-agent system built with LangGraph.",
+      "category": "marketing",
       "icon": "🏠",
-      "tags": [
-        "4 Agents",
-        "Market Analysis",
-        "Lead Scoring"
-      ],
+      "tags": ["4 Agents", "Market Analysis", "Lead Scoring", "Outreach"],
       "agents": 4,
+      "agents_list": [
+        "Prospecting Agent — Scans expired listings, pre-foreclosures, and off-market signals",
+        "Lead Qualifier — Filters and scores leads based on customizable criteria",
+        "Outreach Drafter — Generates personalized email/call scripts per lead",
+        "Pipeline Tracker — Tracks lead status and follow-up schedules"
+      ],
       "github_url": "https://github.com/phanindraintelligenzit-afk/real-estate-lead-gen",
       "stars": 0,
       "forks": 0,
       "language": "Python",
       "monetization": "Free repo + $2K-5K setup",
+      "status": "built",
       "updated_at": "2026-06-22T07:30:00+00:00"
     },
     {
-      "id": "ecommerce-operations",
-      "name": "E-Commerce Operations",
-      "description": "Product analysis, competitive research, listing optimization, review management, pricing recommendations.",
-      "category": "ecommerce",
+      "id": "ecommerce-product-optimizer",
+      "name": "E-Commerce Product Optimizer",
+      "description": "Automate product listing optimization for e-commerce stores with AI-powered SEO, competitive pricing, review management, and conversion optimization. 4-agent multi-agent system that handles the full product lifecycle.",
+      "category": "marketing",
       "icon": "🛒",
-      "tags": [
-        "4 Agents",
-        "SEO",
-        "Conversion"
-      ],
+      "tags": ["4 Agents", "SEO", "Conversion", "Pricing"],
       "agents": 4,
-      "github_url": "https://github.com/phanindraintelligenzit-afk/ecommerce-operations",
+      "agents_list": [
+        "Product Analyzer — Evaluates listing quality and competitor positioning",
+        "Content Optimizer — Rewrites titles, descriptions, and keywords for SEO",
+        "Pricing Agent — Monitors competitor pricing and recommends optimal prices",
+        "Review Manager — Tracks reviews, flags negatives, suggests responses"
+      ],
+      "github_url": "https://github.com/phanindraintelligenzit-afk/ecommerce-product-optimizer",
       "stars": 0,
       "forks": 0,
       "language": "Python",
       "monetization": "Free repo + $1K-3K setup",
+      "status": "built",
       "updated_at": "2026-06-22T07:30:00+00:00"
     },
     {
       "id": "legal-contract-review",
       "name": "Legal Contract Review",
-      "description": "Parse contracts, identify redlines, assess risk, generate negotiation summaries, ensure compliance.",
+      "description": "Parse contracts, identify redlines and risky clauses, assess risk exposure, generate negotiation summaries, and ensure GDPR/SOC2 compliance. Multi-agent system for legal teams.",
       "category": "legal",
       "icon": "⚖️",
-      "tags": [
-        "4 Agents",
-        "Risk Matrix",
-        "GDPR / SOC2"
-      ],
+      "tags": ["4 Agents", "Risk Matrix", "GDPR / SOC2", "Compliance"],
       "agents": 4,
+      "agents_list": [
+        "Contract Parser — Extracts clauses, terms, and obligations from contracts",
+        "Risk Assessor — Flags unusual or risky clauses with severity scoring",
+        "Compliance Checker — Validates against GDPR, SOC2, and industry standards",
+        "Summary Generator — Creates negotiation briefs and redline summaries"
+      ],
       "github_url": "https://github.com/phanindraintelligenzit-afk/legal-contract-review",
       "stars": 0,
       "forks": 0,
       "language": "Python",
-      "monetization": "Free repo + $3K-8K setup",
+      "monetization": "Free repo + $3K-5K setup",
+      "status": "built",
       "updated_at": "2026-06-22T07:30:00+00:00"
     },
     {
       "id": "hr-operations",
       "name": "HR Operations",
-      "description": "Resume screening, candidate scoring, personalized outreach, onboarding package generation, compliance tracking.",
-      "category": "hr",
+      "description": "Resume screening, candidate scoring, personalized outreach, onboarding package generation, and compliance tracking. Multi-agent system for HR teams and recruiters.",
+      "category": "productivity",
       "icon": "👥",
-      "tags": [
-        "4 Agents",
-        "Screening",
-        "Onboarding"
-      ],
+      "tags": ["4 Agents", "Screening", "Onboarding", "Compliance"],
       "agents": 4,
+      "agents_list": [
+        "Resume Screener — Parses resumes, extracts skills, ranks candidates",
+        "Candidate Scorer — Evaluates fit using customizable scoring criteria",
+        "Outreach Agent — Generates personalized outreach messages per candidate",
+        "Onboarding Agent — Creates onboarding packages and compliance checklists"
+      ],
       "github_url": "https://github.com/phanindraintelligenzit-afk/hr-operations",
       "stars": 0,
       "forks": 0,
       "language": "Python",
-      "monetization": "Free repo + $1K-3K setup",
+      "monetization": "Free repo + $2K-4K setup",
+      "status": "built",
       "updated_at": "2026-06-22T07:30:00+00:00"
-    },
-    {
-      "id": "leadgen-ai-team",
-      "name": "LeadGen AI Team",
-      "description": "6 AI agents that automate your entire lead generation pipeline — prospecting, contact discovery, outreach drafting, and lead scoring. Wake up to a full pipeline every morning.",
-      "category": "marketing",
-      "icon": "🎯",
-      "tags": [
-        "6 Agents",
-        "Multi-Channel",
-        "AI Scoring",
-        "Outreach"
-      ],
-      "agents": 6,
-      "github_url": "https://github.com/phanindraintelligenzit-afk/AIdentify/tree/main/projects/ai-powered-lead-generation-team-multi-agent-system",
-      "stars": 0,
-      "forks": 0,
-      "language": "Python",
-      "monetization": "Free repo + $1K-2K setup",
-      "updated_at": "2026-06-25T15:30:00+00:00"
     },
     {
       "id": "ai-agent-sandbox-governance",
       "name": "AI Agent Sandbox & Governance",
-      "description": "Open-source governance layer — permission boundaries, sandboxed execution, and tamper-proof audit trails for any AI agent. YAML-defined policies, pre-execution enforcement, and CI/CD integration.",
+      "description": "Open-source governance layer for AI agents — defines permission boundaries, sandboxes execution, and audits every tool call. YAML-defined policies, REST API, tamper-proof audit logs.",
       "category": "security",
-      "icon": "🔒",
-      "tags": [
-        "Security",
-        "Governance",
-        "Open Source",
-        "Python",
-        "FastAPI"
+      "icon": "🔐",
+      "tags": ["Security", "Governance", "Open Source", "Python", "FastAPI"],
+      "agents": 4,
+      "agents_list": [
+        "Policy Engine — Enforce YAML-defined permission policies (filesystem, network, commands)",
+        "Sandbox Runner — Execute agent actions within defined boundaries",
+        "Audit Logger — Tamper-proof audit trail with hash chain verification",
+        "API Server — REST API for CI/CD pipeline integration"
       ],
-      "agents": 3,
-      "github_url": "https://github.com/aidentify/ai-agent-sandbox-governance",
+      "github_url": "https://github.com/phanindraintelligenzit-afk/ai-agent-sandbox-governance",
       "stars": 0,
       "forks": 0,
       "language": "Python",
-      "monetization": "Free repo (MIT) + Enterprise pricing",
-      "updated_at": "2026-06-26T04:30:00+00:00"
+      "monetization": "Open-source MIT + Enterprise pricing",
+      "status": "built",
+      "updated_at": "2026-06-26T12:00:00+00:00"
+    },
+    {
+      "id": "estonia-e-residency-compliance-automator",
+      "name": "Estonia e-Residency Compliance",
+      "description": "Automate compliance workflows for Estonia e-Residency applications — document parsing, risk checks, status tracking. Multi-agent system for legal teams.",
+      "category": "legal",
+      "icon": "⚖️",
+      "tags": ["Compliance", "GDPR", "Legal", "Multi-Agent"],
+      "agents": 4,
+      "agents_list": [
+        "Document Parser — Extract data from e-Residency application documents",
+        "Risk Checker — Flag compliance risks and missing requirements",
+        "Status Tracker — Monitor application status and deadlines",
+        "Report Generator — Create compliance reports and summaries"
+      ],
+      "github_url": "https://github.com/phanindraintelligenzit-afk/estonia-e-residency-compliance-automator",
+      "stars": 0,
+      "forks": 0,
+      "language": "Python",
+      "monetization": "Free repo + $2K-4K setup",
+      "status": "built",
+      "updated_at": "2026-06-25T19:59:00+00:00"
     },
     {
       "id": "ai-app-store-screenshot-generator",
       "name": "AI App Store Screenshot Generator",
-      "description": "Generate 800+ localized App Store and Play Play screenshots across 39 languages and 3 device sizes — automatically",
+      "description": "Automatically generate 800+ localized App Store and Google Play screenshots from a single design template. AI-powered localization across 39+ languages, 3 device sizes, and custom brand kits. Export directly to App Store Connect and Play Console.",
       "category": "marketing",
       "icon": "🎯",
-      "tags": [
-        "marketing",
-        "app-store",
-        "localization",
-        "automation"
-      ],
+      "tags": ["Marketing", "App Store", "Localization", "Automation", "Python"],
       "agents": 4,
+      "agents_list": [
+        "Design Agent — Generates template layouts and brand-consistent designs",
+        "Localization Agent — AI-powered translation across 39+ languages with context awareness",
+        "Export Agent — Renders screenshots at all device sizes and uploads to stores",
+        "QA Agent — Validates screenshots against platform guidelines and brand consistency"
+      ],
       "github_url": "https://github.com/phanindraintelligenzit-afk/ai-app-store-screenshot-generator",
       "stars": 0,
       "forks": 0,
       "language": "Python",
-      "monetization": "Free repo (Open-source MIT license) + Enterprise pricing",
-      "updated_at": "2026-06-28T08:56:56.177275+00:00"
+      "monetization": "Free repo + $1K-2K setup",
+      "status": "built",
+      "updated_at": "2026-06-28T14:25:00+00:00"
     }
   ]
 }
