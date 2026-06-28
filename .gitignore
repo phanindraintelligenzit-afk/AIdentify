@@ -54,3 +54,6 @@ scripts/.chrome_profile/
 
 # Temp files
 nul
+
+# API tokens
+scripts/.gumroad_token
