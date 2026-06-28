@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIdentify AI Customer Service</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f7fa; color: #1a1a2e; }
+        
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { font-size: 1.5rem; }
+        .header .subtitle { opacity: 0.8; font-size: 0.85rem; }
+        
+        .container { display: grid; grid-template-columns: 1fr 350px; gap: 1.5rem; padding: 1.5rem; max-width: 1400px; margin: 0 auto; }
+        
+        /* Chat area */
+        .chat-panel { background: white; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; height: calc(100vh - 130px); }
+        .chat-header { padding: 1rem 1.5rem; border-bottom: 1px solid #e8ecf1; font-weight: 600; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+        .message { max-width: 80%; padding: 0.75rem 1rem; border-radius: 12px; line-height: 1.5; }
+        .message.customer { align-self: flex-end; background: #667eea; color: white; border-bottom-right-radius: 4px; }
+        .message.agent { align-self: flex-start; background: #f0f2f5; color: #1a1a2e; border-bottom-left-radius: 4px; }
+        .message .meta { font-size: 0.7rem; opacity: 0.7; margin-top: 0.3rem; }
+        .chat-input { padding: 1rem 1.5rem; border-top: 1px solid #e8ecf1; display: flex; gap: 0.5rem; }
+        .chat-input input { flex: 1; padding: 0.75rem 1rem; border: 2px solid #e8ecf1; border-radius: 8px; font-size: 0.95rem; outline: none; }
+        .chat-input input:focus { border-color: #667eea; }
+        .chat-input button { padding: 0.75rem 1.5rem; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
+        .chat-input button:hover { background: #5a6fd6; }
+        .chat-input button:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        /* Escalation banner */
+        .escalation-banner { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 0.75rem 1rem; margin: 0.5rem 1.5rem; font-size: 0.85rem; color: #856404; display: none; }
+        .escalation-banner.active { display: block; }
+        
+        /* Sidebar */
+        .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+        .card { background: white; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); padding: 1.25rem; }
+        .card h3 { font-size: 0.9rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+        
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        .stat { text-align: center; padding: 0.75rem; background: #f8fafc; border-radius: 8px; }
+        .stat .value { font-size: 1.5rem; font-weight: 700; color: #667eea; }
+        .stat .label { font-size: 0.75rem; color: #6b7280; margin-top: 0.25rem; }
+        
+        .triage-info { display: flex; flex-direction: column; gap: 0.5rem; }
+        .triage-row { display: flex; justify-content: space-between; align-items: center; padding: 0.4rem 0; border-bottom: 1px solid #f0f2f5; }
+        .triage-row:last-child { border-bottom: none; }
+        .badge { padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+        .badge.intent { background: #e0e7ff; color: #4338ca; }
+        .badge.sentiment-pos { background: #d1fae5; color: #065f46; }
+        .badge.sentiment-neg { background: #fee2e2; color: #991b1b; }
+        .badge.sentiment-neu { background: #f3f4f6; color: #374151; }
+        .badge.priority-high { background: #fee2e2; color: #991b1b; }
+        .badge.priority-medium { background: #fef3c7; color: #92400e; }
+        .badge.priority-low { background: #d1fae5; color: #065f46; }
+        
+        .sources { font-size: 0.8rem; color: #6b7280; }
+        .sources a { color: #667eea; }
+        
+        .conv-list { max-height: 300px; overflow-y: auto; }
+        .conv-item { padding: 0.6rem; border-radius: 6px; cursor: pointer; border: 1px solid transparent; }
+        .conv-item:hover { background: #f8fafc; border-color: #e8ecf1; }
+        .conv-item .email { font-size: 0.8rem; font-weight: 600; }
+        .conv-item .preview { font-size: 0.75rem; color: #6b7280; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
+        .typing-indicator { display: none; align-self: flex-start; color: #6b7280; font-style: italic; font-size: 0.85rem; }
+        .typing-indicator.active { display: block; }
+        
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+            .chat-panel { height: 60vh; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>🤖 AIdentify AI Support</h1>
+            <div class="subtitle">AI-powered customer service agent</div>
+        </div>
+        <div style="font-size:0.85rem;opacity:0.8;">Powered by Ollama + RAG</div>
+    </div>
+    
+    <div class="container">
+        <div class="chat-panel">
+            <div class="chat-header">💬 Customer Chat</div>
+            <div class="escalation-banner" id="escalationBanner">
+                ⚠️ This conversation has been flagged for human escalation. A support agent will be notified.
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message agent">
+                    Hello! 👋 I'm the AIdentify AI support agent. I can help you with:
+                    <ul style="margin: 0.5rem 0 0 1.2rem;">
+                        <li>Account & billing questions</li>
+                        <li>Technical troubleshooting</li>
+                        <li>Getting started with agents</li>
+                        <li>Data export & privacy requests</li>
+                    </ul>
+                    How can I help you today?
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="messageInput" placeholder="Type your question..." onkeypress="if(event.key==='Enter')sendMessage()" />
+                <button id="sendBtn" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+        
+        <div class="sidebar">
+            <div class="card">
+                <h3>📊 Analytics</h3>
+                <div class="stat-grid">
+                    <div class="stat"><div class="value" id="statTotal">0</div><div class="label">Conversations</div></div>
+                    <div class="stat"><div class="value" id="statResolved">0</div><div class="label">Resolved</div></div>
+                    <div class="stat"><div class="value" id="statRate">0%</div><div class="label">Resolution Rate</div></div>
+                    <div class="stat"><div class="value" id="statEscalated">0</div><div class="label">Escalated</div></div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>🔍 Last Message Triage</h3>
+                <div class="triage-info" id="triageInfo">
+                    <div style="color:#9ca3af;font-size:0.85rem;">Send a message to see triage analysis</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>📚 Knowledge Sources</h3>
+                <div id="sourcesInfo" class="sources">
+                    <div style="color:#9ca3af;font-size:0.85rem;">Sources will appear here</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>📋 Recent Conversations</h3>
+                <div class="conv-list" id="convList">
+                    <div style="color:#9ca3af;font-size:0.85rem;">No conversations yet</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let sessionId = null;
+        let conversationId = null;
+
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const btn = document.getElementById('sendBtn');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            input.value = '';
+            btn.disabled = true;
+            
+            // Add customer message to chat
+            appendMessage('customer', message);
+            
+            // Show typing indicator
+            const typing = document.createElement('div');
+            typing.className = 'typing-indicator active';
+            typing.id = 'typing';
+            typing.textContent = 'AI agent is thinking...';
+            document.getElementById('chatMessages').appendChild(typing);
+            scrollToBottom();
+            
+            try {
+                const resp = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        message: message,
+                        session_id: sessionId,
+                        email: 'customer@example.com'
+                    })
+                });
+                const data = await resp.json();
+                
+                sessionId = data.session_id;
+                conversationId = data.conversation_id;
+                
+                // Remove typing indicator
+                document.getElementById('typing')?.remove();
+                
+                // Add agent response
+                appendMessage('agent', data.response);
+                
+                // Update triage info
+                updateTriage(data.triage);
+                
+                // Update sources
+                updateSources(data.sources);
+                
+                // Show escalation banner if needed
+                if (data.triage.needs_escalation) {
+                    document.getElementById('escalationBanner').classList.add('active');
+                }
+                
+                // Refresh analytics
+                loadAnalytics();
+                loadConversations();
+                
+            } catch (err) {
+                document.getElementById('typing')?.remove();
+                appendMessage('agent', 'Sorry, something went wrong. Please try again.');
+                console.error(err);
+            }
+            
+            btn.disabled = false;
+            input.focus();
+        }
+
+        function appendMessage(sender, content) {
+            const div = document.createElement('div');
+            div.className = `message ${sender}`;
+            div.innerHTML = `<div>${content.replace(/\n/g, '<br>')}</div>`;
+            document.getElementById('chatMessages').appendChild(div);
+            scrollToBottom();
+        }
+
+        function scrollToBottom() {
+            const container = document.getElementById('chatMessages');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function updateTriage(triage) {
+            const container = document.getElementById('triageInfo');
+            const sentimentClass = triage.sentiment === 'positive' ? 'sentiment-pos' : 
+                                   triage.sentiment === 'negative' ? 'sentiment-neg' : 'sentiment-neu';
+            container.innerHTML = `
+                <div class="triage-row"><span>Intent</span><span class="badge intent">${triage.intent}</span></div>
+                <div class="triage-row"><span>Sentiment</span><span class="badge ${sentimentClass}">${triage.sentiment}</span></div>
+                <div class="triage-row"><span>Priority</span><span class="badge priority-${triage.priority}">${triage.priority}</span></div>
+                <div class="triage-row"><span>Escalation</span><span class="badge ${triage.needs_escalation ? 'priority-high' : 'priority-low'}">${triage.needs_escalation ? 'YES' : 'No'}</span></div>
+            `;
+        }
+
+        function updateSources(sources) {
+            const container = document.getElementById('sourcesInfo');
+            if (!sources || sources.length === 0) {
+                container.innerHTML = '<div style="color:#9ca3af;font-size:0.85rem;">No sources found</div>';
+                return;
+            }
+            container.innerHTML = sources.map(s => 
+                `<div style="margin-bottom:0.4rem;">📄 ${s.source} → ${s.section}</div>`
+            ).join('');
+        }
+
+        async function loadAnalytics() {
+            try {
+                const resp = await fetch('/api/analytics');
+                const data = await resp.json();
+                document.getElementById('statTotal').textContent = data.total_conversations;
+                document.getElementById('statResolved').textContent = data.resolved;
+                document.getElementById('statRate').textContent = data.resolution_rate + '%';
+                document.getElementById('statEscalated').textContent = data.escalated_messages;
+            } catch(e) { console.error('Failed to load analytics', e); }
+        }
+
+        async function loadConversations() {
+            try {
+                const resp = await fetch('/api/conversations');
+                const data = await resp.json();
+                const container = document.getElementById('convList');
+                if (data.conversations.length === 0) {
+                    container.innerHTML = '<div style="color:#9ca3af;font-size:0.85rem;">No conversations yet</div>';
+                    return;
+                }
+                container.innerHTML = data.conversations.slice(0, 10).map(c => `
+                    <div class="conv-item" onclick="loadConversation(${c.id})">
+                        <div class="email">${c.customer_email || 'Anonymous'}</div>
+                        <div class="preview">${c.last_message || 'No messages'}</div>
+                    </div>
+                `).join('');
+            } catch(e) { console.error('Failed to load conversations', e); }
+        }
+
+        async function loadConversation(id) {
+            try {
+                const resp = await fetch(`/api/conversations/${id}`);
+                const data = await resp.json();
+                const container = document.getElementById('chatMessages');
+                container.innerHTML = '';
+                data.messages.forEach(m => {
+                    appendMessage(m.sender, m.content);
+                });
+            } catch(e) { console.error('Failed to load conversation', e); }
+        }
+
+        // Initial load
+        loadAnalytics();
+        loadConversations();
+    </script>
+</body>
+</html>
