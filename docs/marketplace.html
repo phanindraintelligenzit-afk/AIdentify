@@ -705,12 +705,9 @@
     // ── Data Source ──
     const DATA_URL = 'data/projects.json';
 
-    const App = {
-      App.allProjects: [],
-      App.activeFilter: 'all',
-      App.searchQuery: ''
-    };
-    window.App = App;
+    var allProjects = [];
+    var activeFilter = 'all';
+    var searchQuery = '';
 
     // ── Category config ──
     const CATEGORY_CONFIG = {
@@ -729,7 +726,7 @@
         const res = await fetch(DATA_URL);
         if (!res.ok) throw new Error('Failed to load projects');
         const data = await res.json();
-        App.allProjects = data.projects || [];
+        allProjects = data.projects || [];
         render();
         setupControls();
         updateStats();
@@ -800,9 +797,9 @@
     }
 
     function getFilteredProjects() {
-      return App.allProjects.filter(p => {
-        const matchCat = App.activeFilter === 'all' || (p.category || 'other') === App.activeFilter;
-        const q = App.searchQuery.toLowerCase();
+      return allProjects.filter(p => {
+        const matchCat = activeFilter === 'all' || (p.category || 'other') === activeFilter;
+        const q = searchQuery.toLowerCase();
         const matchSearch = !q ||
           (p.name || '').toLowerCase().includes(q) ||
           (p.description || '').toLowerCase().includes(q) ||
@@ -814,17 +811,22 @@
 
     // ── Filters ──
     function renderFilters() {
-      const cats = ['all', ...new Set(App.allProjects.map(p => p.category || 'other'))];
+      const cats = ['all', ...new Set(allProjects.map(p => p.category || 'other'))];
       const container = document.getElementById('filterChips');
       container.innerHTML = cats.map(c => {
-        const count = c === 'all' ? App.allProjects.length : App.allProjects.filter(p => (p.category || 'other') === c).length;
+        const count = c === 'all' ? allProjects.length : allProjects.filter(p => (p.category || 'other') === c).length;
         const label = c === 'all' ? 'All' : c.charAt(0).toUpperCase() + c.slice(1);
-        return `<div class="chip ${App.activeFilter === c ? 'active' : ''}" onclick="setFilter('${c}')">${label}<span class="count">${count}</span></div>`;
+        return `<div class="chip ${activeFilter === c ? 'active' : ''}" data-cat="${c}">${label}<span class="count">${count}</span></div>`;
       }).join('');
+
+      // Chip click delegation
+      container.querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', () => setFilter(chip.dataset.cat));
+      });
     }
 
     function setFilter(cat) {
-      App.activeFilter = cat;
+      activeFilter = cat;
       renderFilters();
       render();
     }
@@ -837,7 +839,7 @@
       input.addEventListener('input', () => {
         clearTimeout(debounce);
         debounce = setTimeout(() => {
-          App.searchQuery = input.value.trim();
+          searchQuery = input.value.trim();
           render();
         }, 200);
       });
@@ -845,14 +847,14 @@
 
     // ── Stats ──
     function updateStats() {
-      document.getElementById('statProjects').textContent = App.allProjects.length;
-      const totalAgents = App.allProjects.reduce((sum, p) => sum + (p.agents || 4), 0);
+      document.getElementById('statProjects').textContent = allProjects.length;
+      const totalAgents = allProjects.reduce((sum, p) => sum + (p.agents || 4), 0);
       document.getElementById('statAgents').textContent = totalAgents;
     }
 
     // ── Modal ──
     function openModal(id) {
-      const p = App.allProjects.find(x => x.id === id);
+      const p = allProjects.find(x => x.id === id);
       if (!p) return;
 
       const cat = p.category || 'other';
