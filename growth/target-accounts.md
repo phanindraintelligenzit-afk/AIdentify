@@ -95,7 +95,6 @@
 
 | Handle | Name | Followers | Why Target |
 |--------|------|-----------|------------|
-| patrickc | Patrick C | 60K | AI tools curation, early adopter |
 | paultaylor | Paul Taylor | 45K | SaaS/AI tools analysis |
 | thefought | Dr. Alex F | 20K | AI strategy + implementation context |
 | okataba_ | Ok Ataba | 55K | AI tools launch, Africa tech focus |
@@ -108,10 +107,6 @@
 | ale_cl | Alex C | 20K | SaaS + AI from LATAM region |
 | joshsingh | Josh Singh | 25K | AI business frameworks, growth |
 | anne_strawberry | Anne Strawberry | 8K | Marketing automation, AI tools content |
-| bentossell | Ben Tossell | 95K | AI tools, builder community |
-| abhishekjsingh | Abhishek J Singh | 10K | AI + productivity |
-| danieljeffries | Daniel Jeffries | 60K | AI futurist, agents content |
-| jesseleemann | Jesse Leeman | 20K | YC + workflow automation |
 
 ## 5. Ops / Revenue Leaders
 
@@ -124,7 +119,6 @@
 | shanerawlins | Shane Rawlins | 15K | Process improvement + automation |
 | connorhennessy | Connor Hennessy | 25K | Finance ops automation |
 | amarjmani | Amar Johri | 12K | GTM, RevOps tooling |
-| lauraborke | Laura Borke | 10K | Revenue operations focus |
 | henrychun | Henry Henry | 18K | Healthcare operations, workflow pain |
 | nicolejestribe | Nicole Jestribe | 14K | SaaS operations lead |
 | mattkpeters | Matt Peters | 20K | Operations leadership |
