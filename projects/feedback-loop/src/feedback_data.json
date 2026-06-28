@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-27T18:17:34.491448+05:30",
+  "timestamp": "2026-06-28T18:52:06.658852+05:30",
   "stats": [
     {
       "name": "healthcare-prior-auth",
@@ -26,14 +26,22 @@
       "language": "HTML",
       "topics": [],
       "marketplace_name": "Real Estate Lead Gen",
-      "category": "realestate",
+      "category": "marketing",
       "engagement_score": 0
     },
     {
-      "name": "ecommerce-operations",
-      "error": "HTTP Error 404: Not Found",
-      "marketplace_name": "E-Commerce Operations",
-      "category": "ecommerce"
+      "name": "ecommerce-product-optimizer",
+      "stars": 0,
+      "forks": 0,
+      "watchers": 0,
+      "open_issues": 0,
+      "created_at": "2026-06-25T18:20:46Z",
+      "updated_at": "2026-06-25T18:25:18Z",
+      "language": "Python",
+      "topics": [],
+      "marketplace_name": "E-Commerce Product Optimizer",
+      "category": "marketing",
+      "engagement_score": 0
     },
     {
       "name": "legal-contract-review",
@@ -45,21 +53,7 @@
       "name": "hr-operations",
       "error": "HTTP Error 404: Not Found",
       "marketplace_name": "HR Operations",
-      "category": "hr"
-    },
-    {
-      "name": "ai-powered-lead-generation-team-multi-agent-system",
-      "stars": 0,
-      "forks": 0,
-      "watchers": 0,
-      "open_issues": 0,
-      "created_at": "2026-06-26T02:33:48Z",
-      "updated_at": "2026-06-26T02:34:08Z",
-      "language": "HTML",
-      "topics": [],
-      "marketplace_name": "LeadGen AI Team",
-      "category": "marketing",
-      "engagement_score": 0
+      "category": "productivity"
     },
     {
       "name": "ai-agent-sandbox-governance",
@@ -74,11 +68,45 @@
       "marketplace_name": "AI Agent Sandbox & Governance",
       "category": "security",
       "engagement_score": 0
+    },
+    {
+      "name": "estonia-e-residency-compliance-automator",
+      "stars": 0,
+      "forks": 0,
+      "watchers": 0,
+      "open_issues": 0,
+      "created_at": "2026-06-25T19:59:03Z",
+      "updated_at": "2026-06-25T20:04:35Z",
+      "language": "Python",
+      "topics": [],
+      "marketplace_name": "Estonia e-Residency Compliance",
+      "category": "legal",
+      "engagement_score": 0
+    },
+    {
+      "name": "ai-app-store-screenshot-generator",
+      "stars": 0,
+      "forks": 0,
+      "watchers": 0,
+      "open_issues": 0,
+      "created_at": "2026-06-28T08:54:57Z",
+      "updated_at": "2026-06-28T08:55:05Z",
+      "language": "Python",
+      "topics": [],
+      "marketplace_name": "AI App Store Screenshot Generator",
+      "category": "marketing",
+      "engagement_score": 0
+    },
+    {
+      "name": "main",
+      "error": "HTTP Error 404: Not Found",
+      "marketplace_name": "AI Team That Finds Leads & Writes Outreach",
+      "category": "marketing"
     }
   ],
   "analysis": {
-    "total_projects": 7,
-    "successful_fetches": 4,
+    "total_projects": 9,
+    "successful_fetches": 6,
     "failed_fetches": 3,
     "top_performers": [
       {
@@ -106,20 +134,20 @@
         "language": "HTML",
         "topics": [],
         "marketplace_name": "Real Estate Lead Gen",
-        "category": "realestate",
+        "category": "marketing",
         "engagement_score": 0
       },
       {
-        "name": "ai-powered-lead-generation-team-multi-agent-system",
+        "name": "ecommerce-product-optimizer",
         "stars": 0,
         "forks": 0,
         "watchers": 0,
         "open_issues": 0,
-        "created_at": "2026-06-26T02:33:48Z",
-        "updated_at": "2026-06-26T02:34:08Z",
-        "language": "HTML",
+        "created_at": "2026-06-25T18:20:46Z",
+        "updated_at": "2026-06-25T18:25:18Z",
+        "language": "Python",
         "topics": [],
-        "marketplace_name": "LeadGen AI Team",
+        "marketplace_name": "E-Commerce Product Optimizer",
         "category": "marketing",
         "engagement_score": 0
       },
@@ -136,23 +164,23 @@
         "marketplace_name": "AI Agent Sandbox & Governance",
         "category": "security",
         "engagement_score": 0
-      }
-    ],
-    "needs_attention": [
+      },
       {
-        "name": "healthcare-prior-auth",
+        "name": "estonia-e-residency-compliance-automator",
         "stars": 0,
         "forks": 0,
         "watchers": 0,
         "open_issues": 0,
-        "created_at": "2026-06-25T18:20:20Z",
-        "updated_at": "2026-06-25T18:20:28Z",
+        "created_at": "2026-06-25T19:59:03Z",
+        "updated_at": "2026-06-25T20:04:35Z",
         "language": "Python",
         "topics": [],
-        "marketplace_name": "Healthcare Prior Auth",
-        "category": "healthcare",
+        "marketplace_name": "Estonia e-Residency Compliance",
+        "category": "legal",
         "engagement_score": 0
-      },
+      }
+    ],
+    "needs_attention": [
       {
         "name": "real-estate-lead-gen",
         "stars": 0,
@@ -164,20 +192,20 @@
         "language": "HTML",
         "topics": [],
         "marketplace_name": "Real Estate Lead Gen",
-        "category": "realestate",
+        "category": "marketing",
         "engagement_score": 0
       },
       {
-        "name": "ai-powered-lead-generation-team-multi-agent-system",
+        "name": "ecommerce-product-optimizer",
         "stars": 0,
         "forks": 0,
         "watchers": 0,
         "open_issues": 0,
-        "created_at": "2026-06-26T02:33:48Z",
-        "updated_at": "2026-06-26T02:34:08Z",
-        "language": "HTML",
+        "created_at": "2026-06-25T18:20:46Z",
+        "updated_at": "2026-06-25T18:25:18Z",
+        "language": "Python",
         "topics": [],
-        "marketplace_name": "LeadGen AI Team",
+        "marketplace_name": "E-Commerce Product Optimizer",
         "category": "marketing",
         "engagement_score": 0
       },
@@ -194,16 +222,44 @@
         "marketplace_name": "AI Agent Sandbox & Governance",
         "category": "security",
         "engagement_score": 0
+      },
+      {
+        "name": "estonia-e-residency-compliance-automator",
+        "stars": 0,
+        "forks": 0,
+        "watchers": 0,
+        "open_issues": 0,
+        "created_at": "2026-06-25T19:59:03Z",
+        "updated_at": "2026-06-25T20:04:35Z",
+        "language": "Python",
+        "topics": [],
+        "marketplace_name": "Estonia e-Residency Compliance",
+        "category": "legal",
+        "engagement_score": 0
+      },
+      {
+        "name": "ai-app-store-screenshot-generator",
+        "stars": 0,
+        "forks": 0,
+        "watchers": 0,
+        "open_issues": 0,
+        "created_at": "2026-06-28T08:54:57Z",
+        "updated_at": "2026-06-28T08:55:05Z",
+        "language": "Python",
+        "topics": [],
+        "marketplace_name": "AI App Store Screenshot Generator",
+        "category": "marketing",
+        "engagement_score": 0
       }
     ],
     "category_breakdown": {
       "Python": {
-        "count": 2,
+        "count": 5,
         "total_stars": 0,
         "total_forks": 0
       },
       "HTML": {
-        "count": 2,
+        "count": 1,
         "total_stars": 0,
         "total_forks": 0
       }
