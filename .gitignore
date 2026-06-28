@@ -48,3 +48,9 @@ node_modules/
 projects/*/.git
 projects/*/src/.social-assets-repo/.git
 marketplace/builds/*/.git
+
+# Chrome profile (scraper data)
+scripts/.chrome_profile/
+
+# Temp files
+nul
