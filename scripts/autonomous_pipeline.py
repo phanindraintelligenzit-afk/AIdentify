@@ -26,8 +26,8 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 # ── Paths ──
-BASE_DIR = Path(__file__).resolve().parent
-AIDENTIFY_DIR = BASE_DIR.parent
+BASE_DIR = Path(__file__).resolve().parent.parent  # AIdentify-marketplace root
+AIDENTIFY_DIR = BASE_DIR
 PROJECTS_DIR = AIDENTIFY_DIR / "projects"
 MARKETPLACE_HTML = AIDENTIFY_DIR / "docs" / "marketplace.html"
 SCOUT_SCRIPT = BASE_DIR / "opportunity_scanner.py"
