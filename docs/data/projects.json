@@ -247,7 +247,8 @@
         "Personalized outreach message generation",
         "Multi-channel delivery (email, LinkedIn)",
         "Response tracking and follow-up scheduling"
-      ]
+      ],
+      "icon": "🎯"
     },
     {
       "id": "ai-invoice-reconciliation-agent",
