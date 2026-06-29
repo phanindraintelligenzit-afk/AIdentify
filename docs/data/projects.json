@@ -1,7 +1,35 @@
 {
-  "generated_at": "2026-06-29T17:03:01.054656",
-  "total_projects": 13,
+  "generated_at": "2026-06-29T17:34:37.020255",
+  "total_projects": 14,
   "projects": [
+    {
+      "id": "ai-soc2-compliance-agent",
+      "name": "AI SOC2 Compliance Agent",
+      "description": "Open-source Vanta/Drata alternative \u2014 automate SOC2 evidence collection, control mapping, and audit preparation. Track Trust Services Criteria controls, collect evidence, manage audits, and maintain security policies.",
+      "category": "security",
+      "icon": "\ud83d\udd12",
+      "tags": [
+        "SOC2",
+        "Compliance",
+        "Evidence Collection",
+        "Audit Prep"
+      ],
+      "agents": 5,
+      "agents_list": [
+        "Control Mapper \u2014 Maps SOC2 TSC criteria to your organization controls",
+        "Evidence Collector \u2014 Automated evidence gathering from integrations",
+        "Audit Manager \u2014 Tracks audit progress and manages auditor engagement",
+        "Policy Generator \u2014 Creates and maintains security policies",
+        "Integration Hub \u2014 Connects to AWS, GCP, GitHub, Okta, and 300+ tools"
+      ],
+      "github_url": "https://github.com/phanindraintelligenzit-afk/ai-soc2-compliance-agent",
+      "stars": 0,
+      "forks": 0,
+      "language": "Python",
+      "monetization": "Free repo + $2K-5K setup",
+      "status": "built",
+      "updated_at": "2026-06-29T17:34:37+00:00"
+    },
     {
       "id": "ai-competitive-intelligence-agent",
       "name": "AI Competitive Intelligence Agent",
