@@ -57,3 +57,4 @@ nul
 
 # API tokens
 scripts/.gumroad_token
+projects/*/.git
