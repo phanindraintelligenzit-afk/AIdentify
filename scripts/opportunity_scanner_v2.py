@@ -173,7 +173,7 @@ def detect_category(text: str) -> str:
         return "legal"
     elif any(kw in text for kw in ["hr", "employee", "recruit"]):
         return "hr"
-    elif any(kw in text for kw in ["ecom", "product", "listing", "review"]):
+    elif any(kw in text for kw in ["ecom", "e-commerce", "product listing", "shopify", "review management"]):
         return "ecommerce"
     return "productivity"
 
