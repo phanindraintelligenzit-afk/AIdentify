@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-06-29T00:30:00+00:00",
-  "total_projects": 11,
+  "generated_at": "2026-06-29T03:46:09.829881",
+  "total_projects": 12,
   "projects": [
     {
       "id": "healthcare-prior-auth",
       "name": "Healthcare Prior Auth",
-      "description": "Automate prior authorization workflows — extract patient data from EHR systems, check insurer requirements, flag denial risks, and generate complete submission packages. Built as a 4-agent multi-agent system using LangGraph.",
+      "description": "Automate prior authorization workflows \u2014 extract patient data from EHR systems, check insurer requirements, flag denial risks, and generate complete submission packages. Built as a 4-agent multi-agent system using LangGraph.",
       "category": "healthcare",
-      "icon": "🏥",
+      "icon": "\ud83c\udfe5",
       "tags": [
         "4 Agents",
         "HIPAA Ready",
@@ -16,10 +16,10 @@
       ],
       "agents": 4,
       "agents_list": [
-        "Auth Intake Agent — Extracts patient data from EHR/HL7 FHIR feeds",
-        "Requirement Checker — Validates insurer-specific criteria and coverage rules",
-        "Denial Risk Scorer — Flags high-risk submissions before they get rejected",
-        "Documentation Generator — Assembles complete prior auth submission packages"
+        "Auth Intake Agent \u2014 Extracts patient data from EHR/HL7 FHIR feeds",
+        "Requirement Checker \u2014 Validates insurer-specific criteria and coverage rules",
+        "Denial Risk Scorer \u2014 Flags high-risk submissions before they get rejected",
+        "Documentation Generator \u2014 Assembles complete prior auth submission packages"
       ],
       "github_url": "https://github.com/phanindraintelligenzit-afk/healthcare-prior-auth",
       "stars": 0,
@@ -32,9 +32,9 @@
     {
       "id": "real-estate-lead-gen",
       "name": "Real Estate Lead Gen",
-      "description": "AI-powered lead generation team — scouts markets, qualifies leads from expired listings and pre-foreclosures, scores prospects using smart criteria, and generates personalized outreach campaigns. Multi-agent system built with LangGraph.",
+      "description": "AI-powered lead generation team \u2014 scouts markets, qualifies leads from expired listings and pre-foreclosures, scores prospects using smart criteria, and generates personalized outreach campaigns. Multi-agent system built with LangGraph.",
       "category": "marketing",
-      "icon": "🏠",
+      "icon": "\ud83c\udfe0",
       "tags": [
         "4 Agents",
         "Market Analysis",
@@ -43,10 +43,10 @@
       ],
       "agents": 4,
       "agents_list": [
-        "Prospecting Agent — Scans expired listings, pre-foreclosures, and off-market signals",
-        "Lead Qualifier — Filters and scores leads based on customizable criteria",
-        "Outreach Drafter — Generates personalized email/call scripts per lead",
-        "Pipeline Tracker — Tracks lead status and follow-up schedules"
+        "Prospecting Agent \u2014 Scans expired listings, pre-foreclosures, and off-market signals",
+        "Lead Qualifier \u2014 Filters and scores leads based on customizable criteria",
+        "Outreach Drafter \u2014 Generates personalized email/call scripts per lead",
+        "Pipeline Tracker \u2014 Tracks lead status and follow-up schedules"
       ],
       "github_url": "https://github.com/phanindraintelligenzit-afk/real-estate-lead-gen",
       "stars": 0,
@@ -61,7 +61,7 @@
       "name": "E-Commerce Product Optimizer",
       "description": "Automate product listing optimization for e-commerce stores with AI-powered SEO, competitive pricing, review management, and conversion optimization. 4-agent multi-agent system that handles the full product lifecycle.",
       "category": "marketing",
-      "icon": "🛒",
+      "icon": "\ud83d\uded2",
       "tags": [
         "4 Agents",
         "SEO",
@@ -70,10 +70,10 @@
       ],
       "agents": 4,
       "agents_list": [
-        "Product Analyzer — Evaluates listing quality and competitor positioning",
-        "Content Optimizer — Rewrites titles, descriptions, and keywords for SEO",
-        "Pricing Agent — Monitors competitor pricing and recommends optimal prices",
-        "Review Manager — Tracks reviews, flags negatives, suggests responses"
+        "Product Analyzer \u2014 Evaluates listing quality and competitor positioning",
+        "Content Optimizer \u2014 Rewrites titles, descriptions, and keywords for SEO",
+        "Pricing Agent \u2014 Monitors competitor pricing and recommends optimal prices",
+        "Review Manager \u2014 Tracks reviews, flags negatives, suggests responses"
       ],
       "github_url": "https://github.com/phanindraintelligenzit-afk/ecommerce-product-optimizer",
       "stars": 0,
@@ -88,7 +88,7 @@
       "name": "Legal Contract Review",
       "description": "Parse contracts, identify redlines and risky clauses, assess risk exposure, generate negotiation summaries, and ensure GDPR/SOC2 compliance. Multi-agent system for legal teams.",
       "category": "legal",
-      "icon": "⚖️",
+      "icon": "\u2696\ufe0f",
       "tags": [
         "4 Agents",
         "Risk Matrix",
@@ -97,10 +97,10 @@
       ],
       "agents": 4,
       "agents_list": [
-        "Contract Parser — Extracts clauses, terms, and obligations from contracts",
-        "Risk Assessor — Flags unusual or risky clauses with severity scoring",
-        "Compliance Checker — Validates against GDPR, SOC2, and industry standards",
-        "Summary Generator — Creates negotiation briefs and redline summaries"
+        "Contract Parser \u2014 Extracts clauses, terms, and obligations from contracts",
+        "Risk Assessor \u2014 Flags unusual or risky clauses with severity scoring",
+        "Compliance Checker \u2014 Validates against GDPR, SOC2, and industry standards",
+        "Summary Generator \u2014 Creates negotiation briefs and redline summaries"
       ],
       "github_url": "https://github.com/phanindraintelligenzit-afk/legal-contract-review",
       "stars": 0,
@@ -115,7 +115,7 @@
       "name": "HR Operations",
       "description": "Resume screening, candidate scoring, personalized outreach, onboarding package generation, and compliance tracking. Multi-agent system for HR teams and recruiters.",
       "category": "productivity",
-      "icon": "👥",
+      "icon": "\ud83d\udc65",
       "tags": [
         "4 Agents",
         "Screening",
@@ -124,10 +124,10 @@
       ],
       "agents": 4,
       "agents_list": [
-        "Resume Screener — Parses resumes, extracts skills, ranks candidates",
-        "Candidate Scorer — Evaluates fit using customizable scoring criteria",
-        "Outreach Agent — Generates personalized outreach messages per candidate",
-        "Onboarding Agent — Creates onboarding packages and compliance checklists"
+        "Resume Screener \u2014 Parses resumes, extracts skills, ranks candidates",
+        "Candidate Scorer \u2014 Evaluates fit using customizable scoring criteria",
+        "Outreach Agent \u2014 Generates personalized outreach messages per candidate",
+        "Onboarding Agent \u2014 Creates onboarding packages and compliance checklists"
       ],
       "github_url": "https://github.com/phanindraintelligenzit-afk/hr-operations",
       "stars": 0,
@@ -140,9 +140,9 @@
     {
       "id": "ai-agent-sandbox-governance",
       "name": "AI Agent Sandbox & Governance",
-      "description": "Open-source governance layer for AI agents — defines permission boundaries, sandboxes execution, and audits every tool call. YAML-defined policies, REST API, tamper-proof audit logs.",
+      "description": "Open-source governance layer for AI agents \u2014 defines permission boundaries, sandboxes execution, and audits every tool call. YAML-defined policies, REST API, tamper-proof audit logs.",
       "category": "security",
-      "icon": "🔐",
+      "icon": "\ud83d\udd10",
       "tags": [
         "Security",
         "Governance",
@@ -152,10 +152,10 @@
       ],
       "agents": 4,
       "agents_list": [
-        "Policy Engine — Enforce YAML-defined permission policies (filesystem, network, commands)",
-        "Sandbox Runner — Execute agent actions within defined boundaries",
-        "Audit Logger — Tamper-proof audit trail with hash chain verification",
-        "API Server — REST API for CI/CD pipeline integration"
+        "Policy Engine \u2014 Enforce YAML-defined permission policies (filesystem, network, commands)",
+        "Sandbox Runner \u2014 Execute agent actions within defined boundaries",
+        "Audit Logger \u2014 Tamper-proof audit trail with hash chain verification",
+        "API Server \u2014 REST API for CI/CD pipeline integration"
       ],
       "github_url": "https://github.com/phanindraintelligenzit-afk/ai-agent-sandbox-governance",
       "stars": 0,
@@ -168,9 +168,9 @@
     {
       "id": "estonia-e-residency-compliance-automator",
       "name": "Estonia e-Residency Compliance",
-      "description": "Automate compliance workflows for Estonia e-Residency applications — document parsing, risk checks, status tracking. Multi-agent system for legal teams.",
+      "description": "Automate compliance workflows for Estonia e-Residency applications \u2014 document parsing, risk checks, status tracking. Multi-agent system for legal teams.",
       "category": "legal",
-      "icon": "⚖️",
+      "icon": "\u2696\ufe0f",
       "tags": [
         "Compliance",
         "GDPR",
@@ -179,10 +179,10 @@
       ],
       "agents": 4,
       "agents_list": [
-        "Document Parser — Extract data from e-Residency application documents",
-        "Risk Checker — Flag compliance risks and missing requirements",
-        "Status Tracker — Monitor application status and deadlines",
-        "Report Generator — Create compliance reports and summaries"
+        "Document Parser \u2014 Extract data from e-Residency application documents",
+        "Risk Checker \u2014 Flag compliance risks and missing requirements",
+        "Status Tracker \u2014 Monitor application status and deadlines",
+        "Report Generator \u2014 Create compliance reports and summaries"
       ],
       "github_url": "https://github.com/phanindraintelligenzit-afk/estonia-e-residency-compliance-automator",
       "stars": 0,
@@ -197,7 +197,7 @@
       "name": "AI App Store Screenshot Generator",
       "description": "Automatically generate 800+ localized App Store and Google Play screenshots from a single design template. AI-powered localization across 39+ languages, 3 device sizes, and custom brand kits. Export directly to App Store Connect and Play Console.",
       "category": "marketing",
-      "icon": "🎯",
+      "icon": "\ud83c\udfaf",
       "tags": [
         "Marketing",
         "App Store",
@@ -207,10 +207,10 @@
       ],
       "agents": 4,
       "agents_list": [
-        "Design Agent — Generates template layouts and brand-consistent designs",
-        "Localization Agent — AI-powered translation across 39+ languages with context awareness",
-        "Export Agent — Renders screenshots at all device sizes and uploads to stores",
-        "QA Agent — Validates screenshots against platform guidelines and brand consistency"
+        "Design Agent \u2014 Generates template layouts and brand-consistent designs",
+        "Localization Agent \u2014 AI-powered translation across 39+ languages with context awareness",
+        "Export Agent \u2014 Renders screenshots at all device sizes and uploads to stores",
+        "QA Agent \u2014 Validates screenshots against platform guidelines and brand consistency"
       ],
       "github_url": "https://github.com/phanindraintelligenzit-afk/ai-app-store-screenshot-generator",
       "stars": 0,
@@ -236,10 +236,10 @@
       "status": "published",
       "date_added": "2026-06-28",
       "agents": [
-        "Lead Scout — finds prospects matching ICP",
-        "Decision Maker Finder — identifies key contacts",
-        "Outreach Writer — crafts personalized messages",
-        "Follow-up Manager — schedules and tracks replies"
+        "Lead Scout \u2014 finds prospects matching ICP",
+        "Decision Maker Finder \u2014 identifies key contacts",
+        "Outreach Writer \u2014 crafts personalized messages",
+        "Follow-up Manager \u2014 schedules and tracks replies"
       ],
       "key_features": [
         "Autonomous lead discovery from multiple sources",
@@ -248,14 +248,14 @@
         "Multi-channel delivery (email, LinkedIn)",
         "Response tracking and follow-up scheduling"
       ],
-      "icon": "🎯"
+      "icon": "\ud83c\udfaf"
     },
     {
       "id": "ai-invoice-reconciliation-agent",
       "name": "AI Invoice Reconciliation Agent",
       "description": "Autonomous multi-agent system that matches invoices to purchase orders, flags discrepancies, and routes exceptions for approval. Eliminates manual AP workflows.",
       "category": "finance",
-      "icon": "💰",
+      "icon": "\ud83d\udcb0",
       "tags": [
         "Finance",
         "4 Agents",
@@ -264,10 +264,10 @@
       ],
       "agents": 4,
       "agents_list": [
-        "Document Parser — Extracts line items from invoices (PDF, email, EDI)",
-        "PO Matcher — Matches invoices to purchase orders and receipts",
-        "Discrepancy Detector — Flags price mismatches, missing items, duplicates",
-        "Approval Router — Routes exceptions to correct approver based on rules"
+        "Document Parser \u2014 Extracts line items from invoices (PDF, email, EDI)",
+        "PO Matcher \u2014 Matches invoices to purchase orders and receipts",
+        "Discrepancy Detector \u2014 Flags price mismatches, missing items, duplicates",
+        "Approval Router \u2014 Routes exceptions to correct approver based on rules"
       ],
       "github_url": "https://github.com/phanindraintelligenzit-afk/ai-invoice-reconciliation-agent",
       "stars": 0,
@@ -282,7 +282,7 @@
       "name": "MCP Server for Google Ads, Meta Ads & GA4",
       "description": "Production-ready MCP server that connects Claude, Cursor, and Codex to your Google Ads, Meta Ads, and GA4 accounts. Query campaigns, pull performance data, get AI-powered insights.",
       "category": "marketing",
-      "icon": "🎯",
+      "icon": "\ud83c\udfaf",
       "tags": [
         "Marketing",
         "MCP Server",
@@ -292,10 +292,10 @@
       ],
       "agents": 4,
       "agents_list": [
-        "Campaign Reader — Pulls campaign data from Google Ads & Meta APIs",
-        "Performance Analyzer — Identifies underperforming campaigns and budget waste",
-        "Insight Generator — AI-powered recommendations for optimization",
-        "Report Builder — Generates weekly performance reports automatically"
+        "Campaign Reader \u2014 Pulls campaign data from Google Ads & Meta APIs",
+        "Performance Analyzer \u2014 Identifies underperforming campaigns and budget waste",
+        "Insight Generator \u2014 AI-powered recommendations for optimization",
+        "Report Builder \u2014 Generates weekly performance reports automatically"
       ],
       "github_url": "https://github.com/phanindraintelligenzit-afk/mcp-server-for-google-ads-meta-ads-ga4",
       "stars": 0,
@@ -304,6 +304,31 @@
       "monetization": "Free repo + K-3K setup",
       "status": "built",
       "updated_at": "2026-06-29T00:28:00+00:00"
+    },
+    {
+      "id": "reportgenie-ai",
+      "name": "ReportGenie AI",
+      "description": "Automated multi-source report generation with AI-powered insights. Connect Stripe, HubSpot, Google Analytics, Jira, CSV, PostgreSQL, MySQL and generate executive reports with narrative insights and actionable recommendations.",
+      "category": "marketing",
+      "tags": [
+        "reporting",
+        "analytics",
+        "ai",
+        "automation",
+        "dashboards",
+        "insights"
+      ],
+      "github_url": "https://github.com/phanindraintelligenzit-afk/AIdentify/tree/gh-pages/projects/reportgenie-ai",
+      "status": "published",
+      "created_at": "2026-06-29T03:46:09.829881",
+      "features": [
+        "Multi-source data connectors (Stripe, HubSpot, GA, Jira, CSV, API)",
+        "AI-generated narrative insights and recommendations",
+        "Executive summary, financial, marketing, engineering templates",
+        "Dark-themed dashboard with real-time report generation",
+        "REST API with async FastAPI backend",
+        "Docker + docker-compose deployment"
+      ]
     }
   ]
 }
