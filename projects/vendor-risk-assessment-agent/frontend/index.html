@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Risk Assessment Agent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: { 900: '#0f0f14', 800: '#16161d', 700: '#1e1e28', 600: '#2a2a38' },
+                        accent: { DEFAULT: '#6366f1', light: '#818cf8', dark: '#4f46e5' },
+                        risk: { low: '#10b981', medium: '#f59e0b', high: '#ef4444', critical: '#dc2626' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background: #0f0f14; color: #e2e8f0; font-family: 'Inter', system-ui, sans-serif; }
+        .card { background: #16161d; border: 1px solid #2a2a38; border-radius: 12px; }
+        .glow { box-shadow: 0 0 20px rgba(99, 102, 241, 0.15); }
+        .stat-value { font-size: 2rem; font-weight: 700; }
+        .risk-badge { padding: 2px 10px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+        .risk-low { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+        .risk-medium { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+        .risk-high { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+        .risk-critical { background: rgba(220, 38, 38, 0.2); color: #dc2626; }
+        .btn-primary { background: #6366f1; color: white; padding: 8px 16px; border-radius: 8px; font-weight: 500; transition: all 0.2s; }
+        .btn-primary:hover { background: #4f46e5; }
+        .btn-ghost { background: transparent; border: 1px solid #2a2a38; color: #94a3b8; padding: 8px 16px; border-radius: 8px; }
+        .btn-ghost:hover { border-color: #6366f1; color: #e2e8f0; }
+        .input { background: #1e1e28; border: 1px solid #2a2a38; border-radius: 8px; padding: 8px 12px; color: #e2e8f0; width: 100%; }
+        .input:focus { outline: none; border-color: #6366f1; }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; }
+        th { text-align: left; padding: 12px; color: #94a3b8; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #2a2a38; }
+        td { padding: 12px; border-bottom: 1px solid #1e1e28; }
+        tr:hover td { background: #1e1e28; }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 50; }
+        .modal { background: #16161d; border: 1px solid #2a2a38; border-radius: 16px; padding: 24px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; }
+        .progress-bar { height: 6px; border-radius: 3px; background: #2a2a38; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
+    </style>
+</head>
+<body class="dark">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useCallback } = React;
+
+        const API_BASE = '/api';
+
+        // --- Utility Functions ---
+        const riskBadgeClass = (level) => {
+            const map = { low: 'risk-low', medium: 'risk-medium', high: 'risk-high', critical: 'risk-critical' };
+            return map[level] || 'risk-medium';
+        };
+
+        const riskColor = (level) => {
+            const map = { low: '#10b981', medium: '#f59e0b', high: '#ef4444', critical: '#dc2626' };
+            return map[level] || '#f59e0b';
+        };
+
+        const scoreColor = (score) => {
+            if (score >= 75) return '#ef4444';
+            if (score >= 45) return '#f59e0b';
+            return '#10b981';
+        };
+
+        // --- Components ---
+
+        function StatCard({ label, value, sub, color = '#6366f1' }) {
+            return (
+                <div className="card p-5">
+                    <p className="text-sm text-slate-400 mb-1">{label}</p>
+                    <p className="stat-value" style={{ color }}>{value}</p>
+                    {sub && <p className="text-xs text-slate-500 mt-1">{sub}</p>}
+                </div>
+            );
+        }
+
+        function RiskDistribution({ distribution }) {
+            const total = Object.values(distribution).reduce((a, b) => a + b, 0) || 1;
+            return (
+                <div className="card p-5">
+                    <h3 className="text-sm font-medium text-slate-300 mb-4">Risk Distribution</h3>
+                    <div className="space-y-3">
+                        {['low', 'medium', 'high', 'critical'].map(level => (
+                            <div key={level}>
+                                <div className="flex justify-between text-xs mb-1">
+                                    <span className="capitalize text-slate-400">{level}</span>
+                                    <span className="text-slate-300">{distribution[level] || 0}</span>
+                                </div>
+                                <div className="progress-bar">
+                                    <div className="progress-fill" style={{
+                                        width: `${((distribution[level] || 0) / total) * 100}%`,
+                                        background: riskColor(level)
+                                    }}></div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+
+        function VendorTable({ vendors, onSelect }) {
+            return (
+                <div className="card overflow-hidden">
+                    <div className="p-4 border-b border-dark-600 flex justify-between items-center">
+                        <h3 className="font-medium text-slate-200">Vendors</h3>
+                        <span className="text-xs text-slate-500">{vendors.length} total</span>
+                    </div>
+                    <div className="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Vendor</th>
+                                    <th>Category</th>
+                                    <th>Risk Score</th>
+                                    <th>Level</th>
+                                    <th>Critical</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {vendors.map(v => (
+                                    <tr key={v.id} className="cursor-pointer" onClick={() => onSelect(v)}>
+                                        <td className="font-medium text-slate-200">{v.name}</td>
+                                        <td className="text-slate-400">{v.category || '—'}</td>
+                                        <td>
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-sm font-mono" style={{ color: scoreColor(v.risk_score) }}>{v.risk_score}</span>
+                                                <div className="progress-bar w-16">
+                                                    <div className="progress-fill" style={{
+                                                        width: `${v.risk_score}%`,
+                                                        background: scoreColor(v.risk_score)
+                                                    }}></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span className={`risk-badge ${riskBadgeClass(v.risk_level)}`}>{v.risk_level}</span></td>
+                                        <td>{v.is_critical ? <span className="text-red-400">⚠️</span> : <span className="text-slate-600">—</span>}</td>
+                                    </tr>
+                                ))}
+                                {vendors.length === 0 && (
+                                    <tr><td colSpan="5" className="text-center text-slate-500 py-8">No vendors yet. Add your first vendor to get started.</td></tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            );
+        }
+
+        function AddVendorModal({ onClose, onAdd }) {
+            const [form, setForm] = useState({ name: '', domain: '', category: '', contact_email: '', is_critical: false });
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                if (!form.name.trim()) return;
+                await onAdd(form);
+                onClose();
+            };
+
+            return (
+                <div className="modal-overlay" onClick={onClose}>
+                    <div className="modal" onClick={e => e.stopPropagation()}>
+                        <h2 className="text-lg font-semibold text-slate-100 mb-4">Add New Vendor</h2>
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            <div>
+                                <label className="text-xs text-slate-400 block mb-1">Vendor Name *</label>
+                                <input className="input" value={form.name} onChange={e => setForm({...form, name: e.target.value})} placeholder="Acme Cloud Services" required />
+                            </div>
+                            <div className="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label className="text-xs text-slate-400 block mb-1">Domain</label>
+                                    <input className="input" value={form.domain} onChange={e => setForm({...form, domain: e.target.value})} placeholder="acme.com" />
+                                </div>
+                                <div>
+                                    <label className="text-xs text-slate-400 block mb-1">Category</label>
+                                    <select className="input" value={form.category} onChange={e => setForm({...form, category: e.target.value})}>
+                                        <option value="">Select...</option>
+                                        <option value="cloud">Cloud Infrastructure</option>
+                                        <option value="saas">SaaS Platform</option>
+                                        <option value="payment">Payment Processor</option>
+                                        <option value="data">Data Analytics</option>
+                                        <option value="security">Security Tool</option>
+                                        <option value="marketing">Marketing</option>
+                                        <option value="hr">HR / Payroll</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label className="text-xs text-slate-400 block mb-1">Contact Email</label>
+                                <input className="input" type="email" value={form.contact_email} onChange={e => setForm({...form, contact_email: e.target.value})} placeholder="security@vendor.com" />
+                            </div>
+                            <label className="flex items-center gap-2 text-sm text-slate-300">
+                                <input type="checkbox" checked={form.is_critical} onChange={e => setForm({...form, is_critical: e.target.checked})} className="rounded" />
+                                Critical vendor (business depends on this)
+                            </label>
+                            <div className="flex gap-3 pt-2">
+                                <button type="submit" className="btn-primary flex-1">Add Vendor</button>
+                                <button type="button" className="btn-ghost" onClick={onClose}>Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            );
+        }
+
+        function VendorDetail({ vendor, onClose }) {
+            const [findings, setFindings] = useState([]);
+            const [showAddFinding, setShowAddFinding] = useState(false);
+            const [newFinding, setNewFinding] = useState({ category: 'security', severity: 'medium', title: '', description: '', recommendation: '' });
+
+            useEffect(() => {
+                fetch(`${API_BASE}/vendors/${vendor.id}/findings`).then(r => r.json()).then(setFindings);
+            }, [vendor.id]);
+
+            const addFinding = async (e) => {
+                e.preventDefault();
+                const res = await fetch(`${API_BASE}/vendors/${vendor.id}/findings`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newFinding),
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    setFindings([...findings, data]);
+                    setShowAddFinding(false);
+                    setNewFinding({ category: 'security', severity: 'medium', title: '', description: '', recommendation: '' });
+                }
+            };
+
+            return (
+                <div className="modal-overlay" onClick={onClose}>
+                    <div className="modal" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-between items-start mb-4">
+                            <div>
+                                <h2 className="text-lg font-semibold text-slate-100">{vendor.name}</h2>
+                                <p className="text-sm text-slate-400">{vendor.domain} · {vendor.category}</p>
+                            </div>
+                            <button onClick={onClose} className="text-slate-500 hover:text-slate-300 text-xl">&times;</button>
+                        </div>
+
+                        <div className="flex items-center gap-4 mb-6">
+                            <div className="text-center">
+                                <p className="text-2xl font-bold" style={{ color: scoreColor(vendor.risk_score) }}>{vendor.risk_score}</p>
+                                <p className="text-xs text-slate-500">Risk Score</p>
+                            </div>
+                            <span className={`risk-badge ${riskBadgeClass(vendor.risk_level)}`}>{vendor.risk_level}</span>
+                            {vendor.is_critical && <span className="risk-badge risk-critical">CRITICAL</span>}
+                        </div>
+
+                        <div className="border-t border-dark-600 pt-4">
+                            <div className="flex justify-between items-center mb-3">
+                                <h3 className="text-sm font-medium text-slate-300">Risk Findings ({findings.length})</h3>
+                                <button className="btn-primary text-xs" onClick={() => setShowAddFinding(true)}>+ Add Finding</button>
+                            </div>
+
+                            {showAddFinding && (
+                                <form onSubmit={addFinding} className="card p-3 mb-3 space-y-2">
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <select className="input text-sm" value={newFinding.category} onChange={e => setNewFinding({...newFinding, category: e.target.value})}>
+                                            <option value="security">Security</option>
+                                            <option value="compliance">Compliance</option>
+                                            <option value="financial">Financial</option>
+                                            <option value="operational">Operational</option>
+                                            <option value="data_privacy">Data Privacy</option>
+                                            <option value="business_continuity">Business Continuity</option>
+                                        </select>
+                                        <select className="input text-sm" value={newFinding.severity} onChange={e => setNewFinding({...newFinding, severity: e.target.value})}>
+                                            <option value="low">Low</option>
+                                            <option value="medium">Medium</option>
+                                            <option value="high">High</option>
+                                            <option value="critical">Critical</option>
+                                        </select>
+                                    </div>
+                                    <input className="input text-sm" placeholder="Finding title" value={newFinding.title} onChange={e => setNewFinding({...newFinding, title: e.target.value})} required />
+                                    <textarea className="input text-sm" placeholder="Description" rows="2" value={newFinding.description} onChange={e => setNewFinding({...newFinding, description: e.target.value})} />
+                                    <input className="input text-sm" placeholder="Recommendation" value={newFinding.recommendation} onChange={e => setNewFinding({...newFinding, recommendation: e.target.value})} />
+                                    <button type="submit" className="btn-primary text-xs w-full">Save Finding</button>
+                                </form>
+                            )}
+
+                            <div className="space-y-2 max-h-60 overflow-y-auto">
+                                {findings.map(f => (
+                                    <div key={f.id} className="p-3 rounded-lg" style={{ background: '#1e1e28', borderLeft: `3px solid ${riskColor(f.severity)}` }}>
+                                        <div className="flex justify-between items-start">
+                                            <p className="text-sm font-medium text-slate-200">{f.title}</p>
+                                            <span className={`risk-badge ${riskBadgeClass(f.severity)}`}>{f.severity}</span>
+                                        </div>
+                                        {f.description && <p className="text-xs text-slate-400 mt-1">{f.description}</p>}
+                                        {f.recommendation && <p className="text-xs text-indigo-400 mt-1">💡 {f.recommendation}</p>}
+                                    </div>
+                                ))}
+                                {findings.length === 0 && <p className="text-sm text-slate-500 text-center py-4">No findings recorded yet.</p>}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function App() {
+            const [vendors, setVendors] = useState([]);
+            const [stats, setStats] = useState(null);
+            const [showAddVendor, setShowAddVendor] = useState(false);
+            const [selectedVendor, setSelectedVendor] = useState(null);
+            const [loading, setLoading] = useState(true);
+
+            const loadData = useCallback(async () => {
+                try {
+                    const [vRes, sRes] = await Promise.all([
+                        fetch(`${API_BASE}/vendors`),
+                        fetch(`${API_BASE}/dashboard/stats`),
+                    ]);
+                    setVendors(await vRes.json());
+                    setStats(await sRes.json());
+                } catch (err) {
+                    console.error('Failed to load data:', err);
+                } finally {
+                    setLoading(false);
+                }
+            }, []);
+
+            useEffect(() => { loadData(); }, [loadData]);
+
+            const addVendor = async (data) => {
+                try {
+                    await fetch(`${API_BASE}/vendors`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data),
+                    });
+                    loadData();
+                } catch (err) {
+                    console.error('Failed to add vendor:', err);
+                }
+            };
+
+            if (loading) {
+                return <div className="flex items-center justify-center h-screen"><p className="text-slate-400">Loading...</p></div>;
+            }
+
+            return (
+                <div className="min-h-screen p-6 max-w-7xl mx-auto">
+                    {/* Header */}
+                    <div className="flex justify-between items-center mb-8">
+                        <div>
+                            <h1 className="text-2xl font-bold text-slate-100">🛡️ Vendor Risk Assessment</h1>
+                            <p className="text-sm text-slate-400 mt-1">AI-powered third-party risk management</p>
+                        </div>
+                        <button className="btn-primary glow" onClick={() => setShowAddVendor(true)}>+ Add Vendor</button>
+                    </div>
+
+                    {/* Stats Grid */}
+                    {stats && (
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                            <StatCard label="Total Vendors" value={stats.total_vendors} color="#6366f1" />
+                            <StatCard label="Critical Vendors" value={stats.critical_vendors} color="#ef4444" />
+                            <StatCard label="High Risk" value={stats.high_risk_vendors} color="#f59e0b" />
+                            <StatCard label="Open Findings" value={stats.open_findings} color="#8b5cf6" />
+                        </div>
+                    )}
+
+                    {/* Main Content */}
+                    <div className="grid md:grid-cols-3 gap-6">
+                        <div className="md:col-span-2">
+                            <VendorTable vendors={vendors} onSelect={setSelectedVendor} />
+                        </div>
+                        <div>
+                            {stats && <RiskDistribution distribution={stats.risk_distribution} />}
+                            <div className="card p-5 mt-4">
+                                <h3 className="text-sm font-medium text-slate-300 mb-3">Quick Actions</h3>
+                                <div className="space-y-2">
+                                    <button className="btn-ghost w-full text-left text-sm" onClick={() => setShowAddVendor(true)}>➕ Add new vendor</button>
+                                    <button className="btn-ghost w-full text-left text-sm">📋 Start bulk assessment</button>
+                                    <button className="btn-ghost w-full text-left text-sm">📊 Export risk report</button>
+                                    <button className="btn-ghost w-full text-left text-sm">⚙️ Configure thresholds</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Modals */}
+                    {showAddVendor && <AddVendorModal onClose={() => setShowAddVendor(false)} onAdd={addVendor} />}
+                    {selectedVendor && <VendorDetail vendor={selectedVendor} onClose={() => setSelectedVendor(null)} />}
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>
