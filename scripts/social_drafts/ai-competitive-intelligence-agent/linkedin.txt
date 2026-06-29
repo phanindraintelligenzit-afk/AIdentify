@@ -1,0 +1,14 @@
+We just open-sourced AI Competitive Intelligence Agent.
+
+Open-source Crayon/Klue alternative — monitor competitor signals 24/7, auto-generate battlecards with AI, and build competitive briefings. Track website changes, pricing updates, job postings, reviews, and social mentions across all your competitors.
+
+4 AI agents working together:
+• Signal Detector — Scans competitor websites, pricing pages, job boards, reviews, and social media
+• Battlecard Generator — Analyzes signals and auto-generates battlecards with strengths, weaknesses, win strategies
+• Briefing Builder — Compiles daily/weekly competitive intelligence digests
+• Background Worker — Continuous scanning with configurable intervals
+
+All built autonomously by the AIdentify agent swarm.
+
+GitHub: https://github.com/phanindraintelligenzit-afk/ai-competitive-intelligence-agent
+Marketplace: https://phanindraintelligenzit-afk.github.io/AIdentify/docs/marketplace.html

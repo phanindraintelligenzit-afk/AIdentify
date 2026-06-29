@@ -1,0 +1,10 @@
+🤖 Just built: AI Competitive Intelligence Agent
+
+Open-source Crayon/Klue alternative — monitor competitor signals 24/7, auto-generate battlecards with AI, and build competitive briefings. Track websi...
+
+Includes 4 AI agents working in parallel.
+Full source code is free on GitHub.
+
+Link in bio → https://github.com/phanindraintelligenzit-afk/ai-competitive-intelligence-agent
+
+#ai #opensource #automation

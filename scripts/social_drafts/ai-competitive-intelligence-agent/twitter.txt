@@ -1,0 +1,7 @@
+Just built and open-sourced: AI Competitive Intelligence Agent
+
+Open-source Crayon/Klue alternative — monitor competitor signals 24/7, auto-gene...
+
+🔗 https://github.com/phanindraintelligenzit-afk/ai-competitive-intelligence-agent
+
+Built entirely by the AIdentify agent swarm.
