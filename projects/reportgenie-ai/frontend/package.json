@@ -1,0 +1,11 @@
+{
+  "name": "reportgenie-ai-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve -s . -l 5173",
+    "build": "echo 'Static HTML - no build needed'",
+    "preview": "npx serve -s . -l 3000"
+  }
+}
