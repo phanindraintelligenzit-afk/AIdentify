@@ -1,0 +1,178 @@
+[
+  {
+    "title": "diffusionstudio/lottie - Generate production-ready Lottie animations with Claude Code or Codex",
+    "source": "GitHub Trending",
+    "url": "https://github.com/diffusionstudio/lottie",
+    "description": "Generate production-ready Lottie animations with Claude Code or Codex",
+    "engagement": 4103,
+    "category": "ecommerce",
+    "score": 74,
+    "score_breakdown": {
+      "wtp": 21,
+      "pain": 25,
+      "competition_gap": 9,
+      "swarm_fit": 9,
+      "timing": 10
+    },
+    "estimated_wtp": 1620,
+    "competition_gap": 9,
+    "swarm_fit": 9,
+    "timing": 10,
+    "pain_intensity": 25,
+    "discovered_at": "2026-06-29T22:09:11.128676"
+  },
+  {
+    "title": "pewdiepie-archdaemon/odysseus - Self-hosted AI workspace. ",
+    "source": "GitHub Trending",
+    "url": "https://github.com/pewdiepie-archdaemon/odysseus",
+    "description": "Self-hosted AI workspace. ",
+    "engagement": 79254,
+    "category": "productivity",
+    "score": 72,
+    "score_breakdown": {
+      "wtp": 19,
+      "pain": 25,
+      "competition_gap": 9,
+      "swarm_fit": 9,
+      "timing": 10
+    },
+    "estimated_wtp": 1440,
+    "competition_gap": 9,
+    "swarm_fit": 9,
+    "timing": 10,
+    "pain_intensity": 25,
+    "discovered_at": "2026-06-29T22:09:11.128676"
+  },
+  {
+    "title": "baidu/Unlimited-OCR - Unlimited OCR Works: Welcome the Era of One-shot Long-horizon Parsing.",
+    "source": "GitHub Trending",
+    "url": "https://github.com/baidu/Unlimited-OCR",
+    "description": "Unlimited OCR Works: Welcome the Era of One-shot Long-horizon Parsing.",
+    "engagement": 11952,
+    "category": "productivity",
+    "score": 72,
+    "score_breakdown": {
+      "wtp": 19,
+      "pain": 25,
+      "competition_gap": 9,
+      "swarm_fit": 9,
+      "timing": 10
+    },
+    "estimated_wtp": 1440,
+    "competition_gap": 9,
+    "swarm_fit": 9,
+    "timing": 10,
+    "pain_intensity": 25,
+    "discovered_at": "2026-06-29T22:09:11.128676"
+  },
+  {
+    "title": "omnigent-ai/omnigent - Omnigent is an open-source AI agent framework and meta-harness: orchestrate Clau",
+    "source": "GitHub Trending",
+    "url": "https://github.com/omnigent-ai/omnigent",
+    "description": "Omnigent is an open-source AI agent framework and meta-harness: orchestrate Claude Code, Codex, Cursor, Pi, and custom agents \u2014 swap harnesses without rewriting, enforce policies and sandboxing, and collaborate in real time from any device.",
+    "engagement": 5428,
+    "category": "productivity",
+    "score": 72,
+    "score_breakdown": {
+      "wtp": 19,
+      "pain": 25,
+      "competition_gap": 9,
+      "swarm_fit": 9,
+      "timing": 10
+    },
+    "estimated_wtp": 1440,
+    "competition_gap": 9,
+    "swarm_fit": 9,
+    "timing": 10,
+    "pain_intensity": 25,
+    "discovered_at": "2026-06-29T22:09:11.128676"
+  },
+  {
+    "title": "deepseek-ai/DeepSpec - DeepSpec: a full-stack codebase for training and evaluating speculative decoding",
+    "source": "GitHub Trending",
+    "url": "https://github.com/deepseek-ai/DeepSpec",
+    "description": "DeepSpec: a full-stack codebase for training and evaluating speculative decoding algorithms",
+    "engagement": 3401,
+    "category": "productivity",
+    "score": 72,
+    "score_breakdown": {
+      "wtp": 19,
+      "pain": 25,
+      "competition_gap": 9,
+      "swarm_fit": 9,
+      "timing": 10
+    },
+    "estimated_wtp": 1440,
+    "competition_gap": 9,
+    "swarm_fit": 9,
+    "timing": 10,
+    "pain_intensity": 25,
+    "discovered_at": "2026-06-29T22:09:11.128676"
+  },
+  {
+    "title": "lenucksi/aur-malware-check - Detection tools for the June 2026 atomic-lockfile AUR supply-chain attack. Conso",
+    "source": "GitHub Trending",
+    "url": "https://github.com/lenucksi/aur-malware-check",
+    "description": "Detection tools for the June 2026 atomic-lockfile AUR supply-chain attack. Consolidated from community Gists.",
+    "engagement": 1880,
+    "category": "productivity",
+    "score": 72,
+    "score_breakdown": {
+      "wtp": 19,
+      "pain": 25,
+      "competition_gap": 9,
+      "swarm_fit": 9,
+      "timing": 10
+    },
+    "estimated_wtp": 1440,
+    "competition_gap": 9,
+    "swarm_fit": 9,
+    "timing": 10,
+    "pain_intensity": 25,
+    "discovered_at": "2026-06-29T22:09:11.128676"
+  },
+  {
+    "title": "jd-opensource/JoyAI-Echo - JoyAI-Echo: Pushing the Frontier of Long Audio-Visual Generation",
+    "source": "GitHub Trending",
+    "url": "https://github.com/jd-opensource/JoyAI-Echo",
+    "description": "JoyAI-Echo: Pushing the Frontier of Long Audio-Visual Generation",
+    "engagement": 1719,
+    "category": "productivity",
+    "score": 72,
+    "score_breakdown": {
+      "wtp": 19,
+      "pain": 25,
+      "competition_gap": 9,
+      "swarm_fit": 9,
+      "timing": 10
+    },
+    "estimated_wtp": 1440,
+    "competition_gap": 9,
+    "swarm_fit": 9,
+    "timing": 10,
+    "pain_intensity": 25,
+    "discovered_at": "2026-06-29T22:09:11.128676"
+  },
+  {
+    "title": "XiaomiMiMo/MiMo-Code - MiMo Code: Where Models and Agents Co-Evolve",
+    "source": "GitHub Trending",
+    "url": "https://github.com/XiaomiMiMo/MiMo-Code",
+    "description": "MiMo Code: Where Models and Agents Co-Evolve",
+    "engagement": 11044,
+    "category": "productivity",
+    "score": 72,
+    "score_breakdown": {
+      "wtp": 19,
+      "pain": 25,
+      "competition_gap": 9,
+      "swarm_fit": 9,
+      "timing": 10
+    },
+    "estimated_wtp": 1440,
+    "competition_gap": 9,
+    "swarm_fit": 9,
+    "timing": 10,
+    "pain_intensity": 25,
+    "discovered_at": "2026-06-29T22:09:11.128676"
+  }
+]
