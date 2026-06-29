@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  api:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./data/ci_agent.db
+      - DEBUG=false
+    volumes:
+      - ci_data:/app/data
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  worker:
+    build: ./backend
+    command: python -m app.workers.scanner
+    environment:
+      - DATABASE_URL=sqlite:///./data/ci_agent.db
+      - SCAN_INTERVAL_MINUTES=60
+    volumes:
+      - ci_data:/app/data
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  ci_data:

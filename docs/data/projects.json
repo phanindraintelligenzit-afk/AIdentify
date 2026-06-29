@@ -1,7 +1,34 @@
 {
-  "generated_at": "2026-06-29T03:46:09.829881",
-  "total_projects": 12,
+  "generated_at": "2026-06-29T17:03:01.054656",
+  "total_projects": 13,
   "projects": [
+    {
+      "id": "ai-competitive-intelligence-agent",
+      "name": "AI Competitive Intelligence Agent",
+      "description": "Open-source Crayon/Klue alternative \u2014 monitor competitor signals 24/7, auto-generate battlecards with AI, and build competitive briefings. Track website changes, pricing updates, job postings, reviews, and social mentions across all your competitors.",
+      "category": "marketing",
+      "icon": "\ud83c\udfaf",
+      "tags": [
+        "Competitive Intel",
+        "Battlecards",
+        "Signal Detection",
+        "AI-Powered"
+      ],
+      "agents": 4,
+      "agents_list": [
+        "Signal Detector \u2014 Scans competitor websites, pricing pages, job boards, reviews, and social media",
+        "Battlecard Generator \u2014 Analyzes signals and auto-generates battlecards with strengths, weaknesses, win strategies",
+        "Briefing Builder \u2014 Compiles daily/weekly competitive intelligence digests",
+        "Background Worker \u2014 Continuous scanning with configurable intervals"
+      ],
+      "github_url": "https://github.com/phanindraintelligenzit-afk/ai-competitive-intelligence-agent",
+      "stars": 0,
+      "forks": 0,
+      "language": "Python",
+      "monetization": "Free repo + $500-2K/mo setup",
+      "status": "built",
+      "updated_at": "2026-06-29T17:03:01+00:00"
+    },
     {
       "id": "healthcare-prior-auth",
       "name": "Healthcare Prior Auth",
