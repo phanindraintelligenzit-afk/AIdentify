@@ -11,5 +11,5 @@ def test_agent_1_basic():
 
 def test_agent_1_empty_input():
     """Test agent_1 handles empty input."""
-    result = {aname}(dict())
+    result = agent_1(dict())
     assert isinstance(result, dict)
