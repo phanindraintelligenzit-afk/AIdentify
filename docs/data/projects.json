@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-29T17:34:37.020255",
-  "total_projects": 14,
+  "generated_at": "2026-06-30T09:00:00",
+  "total_projects": 16,
   "projects": [
     {
       "id": "ai-soc2-compliance-agent",
@@ -411,6 +411,34 @@
         "Inference engine with token generation",
         "REST API for model serving"
       ]
+    },
+    {
+      "id": "code-shield-sast",
+      "name": "CodeShield SAST",
+      "description": "Open-source Snyk/Semgrep alternative \u2014 AI-powered static application security testing with 25+ detection rules covering OWASP Top 10. Scan code snippets or repos, get risk scores and remediation guidance.",
+      "category": "security",
+      "icon": "\ud83d\udee1\ufe0f",
+      "tags": [
+        "SAST",
+        "Security Scanning",
+        "OWASP",
+        "Code Analysis",
+        "DevSecOps"
+      ],
+      "agents": 4,
+      "agents_list": [
+        "Pattern Engine \u2014 25+ regex-based detection rules for SQLi, XSS, SSRF, and more",
+        "Risk Scorer \u2014 Calculates 0-100 risk score weighted by severity",
+        "Remediation Advisor \u2014 Provides fix guidance for every finding",
+        "Scan Orchestrator \u2014 Manages scan lifecycle and result persistence"
+      ],
+      "github_url": "https://github.com/phanindraintelligenzit-afk/code-shield-sast",
+      "stars": 0,
+      "forks": 0,
+      "language": "Python",
+      "monetization": "Free self-hosted + $200-500/mo managed",
+      "status": "built",
+      "updated_at": "2026-06-30T09:00:00+00:00"
     }
   ]
 }

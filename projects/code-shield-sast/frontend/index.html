@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeShield SAST — AI Security Scanner</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#0a0e17;--surface:#111827;--border:#1e293b;--text:#e2e8f0;--muted:#64748b;--accent:#3b82f6;--critical:#ef4444;--high:#f97316;--medium:#eab308;--low:#22c55e;--info:#6b7280}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+    .container{max-width:1200px;margin:0 auto;padding:24px}
+    header{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+    .logo{font-size:20px;font-weight:700;display:flex;align-items:center;gap:8px}
+    .logo span{color:var(--accent)}
+    nav{display:flex;gap:4px}
+    nav button{background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px;transition:all .2s}
+    nav button.active,nav button:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:24px 0}
+    .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+    .stat-value{font-size:32px;font-weight:700;margin:8px 0}
+    .stat-label{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+    .critical{color:var(--critical)}.high{color:var(--high)}.medium{color:var(--medium)}.low{color:var(--low)}
+    .scan-section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin:24px 0}
+    .scan-section h2{margin-bottom:16px;font-size:18px}
+    textarea{width:100%;height:200px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:16px;color:var(--text);font-family:'Fira Code',monospace;font-size:13px;resize:vertical}
+    textarea:focus{outline:none;border-color:var(--accent)}
+    .btn{background:var(--accent);color:#fff;border:none;padding:12px 24px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;transition:background .2s}
+    .btn:hover{background:#2563eb}
+    .btn:disabled{opacity:.5;cursor:not-allowed}
+    .results{margin-top:24px}
+    .finding{padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px;margin-bottom:12px;border-left:4px solid}
+    .finding.critical{border-left-color:var(--critical)}
+    .finding.high{border-left-color:var(--high)}
+    .finding.medium{border-left-color:var(--medium)}
+    .finding.low{border-left-color:var(--low)}
+    .finding-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+    .finding-title{font-weight:600;font-size:14px}
+    .badge{padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase}
+    .badge.critical{background:rgba(239,68,68,.2);color:var(--critical)}
+    .badge.high{background:rgba(249,115,22,.2);color:var(--high)}
+    .badge.medium{background:rgba(234,179,8,.2);color:var(--medium)}
+    .badge.low{background:rgba(34,197,94,.2);color:var(--low)}
+    .finding-meta{font-size:12px;color:var(--muted);margin-bottom:8px}
+    .finding-code{background:#0d1117;padding:8px 12px;border-radius:4px;font-family:monospace;font-size:12px;margin:8px 0;overflow-x:auto}
+    .finding-desc{font-size:13px;color:var(--muted);margin-bottom:8px}
+    .finding-fix{font-size:13px;color:var(--low);padding:8px;background:rgba(34,197,94,.05);border-radius:4px}
+    .risk-score{text-align:center;padding:32px}
+    .risk-score .score{font-size:64px;font-weight:800}
+    .risk-score .label{font-size:14px;color:var(--muted);margin-top:8px}
+    .empty{text-align:center;padding:48px;color:var(--muted)}
+    .empty-icon{font-size:48px;margin-bottom:16px}
+    .table{width:100%;border-collapse:collapse;margin-top:16px}
+    .table th,.table td{padding:12px;text-align:left;border-bottom:1px solid var(--border);font-size:13px}
+    .table th{color:var(--muted);font-weight:600;text-transform:uppercase;font-size:11px;letter-spacing:.5px}
+    .table tr:hover{background:rgba(59,130,246,.05)}
+    .tab-content{display:none}
+    .tab-content.active{display:block}
+    .severity-bar{display:flex;height:8px;border-radius:4px;overflow:hidden;margin:16px 0}
+    .severity-bar div{height:100%}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+    .scanning{animation:pulse 1.5s infinite}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">🛡️ Code<span>Shield</span> SAST</div>
+    <nav>
+      <button class="active" onclick="showTab('scanner')">Scanner</button>
+      <button onclick="showTab('dashboard')">Dashboard</button>
+      <button onclick="showTab('rules')">Rules</button>
+      <button onclick="showTab('scans')">History</button>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- Scanner Tab -->
+    <div id="scanner" class="tab-content active">
+      <div class="scan-section">
+        <h2>🔍 Scan Code for Vulnerabilities</h2>
+        <p style="color:var(--muted);margin-bottom:16px;font-size:14px">Paste your code below. CodeShield will analyze it against 25+ security rules covering OWASP Top 10.</p>
+        <textarea id="codeInput" placeholder="# Paste your Python, JavaScript, Java, Go, or Ruby code here...
+# Example:
+import sqlite3
+def get_user(user_id):
+    conn = sqlite3.connect('db.sqlite')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM users WHERE id = ' + user_id)
+    return cursor.fetchone()"></textarea>
+        <div style="display:flex;gap:12px;margin-top:16px;align-items:center">
+          <button class="btn" id="scanBtn" onclick="runScan()">🛡️ Scan Code</button>
+          <span style="color:var(--muted);font-size:13px" id="scanStatus"></span>
+        </div>
+        <div class="results" id="scanResults"></div>
+      </div>
+    </div>
+
+    <!-- Dashboard Tab -->
+    <div id="dashboard" class="tab-content">
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card"><div class="stat-label">Total Scans</div><div class="stat-value" id="statScans">0</div></div>
+        <div class="stat-card"><div class="stat-label">Total Findings</div><div class="stat-value" id="statFindings">0</div></div>
+        <div class="stat-card"><div class="stat-label">Critical</div><div class="stat-value critical" id="statCritical">0</div></div>
+        <div class="stat-card"><div class="stat-label">High</div><div class="stat-value high" id="statHigh">0</div></div>
+        <div class="stat-card"><div class="stat-label">Medium</div><div class="stat-value medium" id="statMedium">0</div></div>
+        <div class="stat-card"><div class="stat-label">Low</div><div class="stat-value low" id="statLow">0</div></div>
+      </div>
+      <div class="scan-section">
+        <h2>Severity Distribution</h2>
+        <div class="severity-bar" id="severityBar"></div>
+        <div id="severityLegend" style="display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted)"></div>
+      </div>
+      <div class="scan-section">
+        <h2>Top Detection Rules</h2>
+        <table class="table"><thead><tr><th>Rule</th><th>Count</th></tr></thead><tbody id="topRules"></tbody></table>
+      </div>
+    </div>
+
+    <!-- Rules Tab -->
+    <div id="rules" class="tab-content">
+      <div class="scan-section">
+        <h2>📋 Detection Rules (<span id="ruleCount">0</span>)</h2>
+        <p style="color:var(--muted);margin-bottom:16px;font-size:14px">All security patterns CodeShield checks for. Covers OWASP Top 10 categories.</p>
+        <table class="table"><thead><tr><th>ID</th><th>Name</th><th>Severity</th><th>OWASP</th><th>CWE</th></tr></thead><tbody id="rulesTable"></tbody></table>
+      </div>
+    </div>
+
+    <!-- History Tab -->
+    <div id="scans" class="tab-content">
+      <div class="scan-section">
+        <h2>📜 Scan History</h2>
+        <table class="table"><thead><tr><th>ID</th><th>Repository</th><th>Status</th><th>Findings</th><th>Risk</th><th>Date</th></tr></thead><tbody id="scansTable"></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API = '/api/v1';
+    
+    function showTab(name) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+      document.getElementById(name).classList.add('active');
+      event.target.classList.add('active');
+      if (name === 'dashboard') loadDashboard();
+      if (name === 'rules') loadRules();
+      if (name === 'scans') loadScans();
+    }
+    
+    async function runScan() {
+      const code = document.getElementById('codeInput').value;
+      if (!code.trim()) { alert('Please paste some code first'); return; }
+      
+      const btn = document.getElementById('scanBtn');
+      const status = document.getElementById('scanStatus');
+      btn.disabled = true;
+      status.textContent = '⏳ Scanning...';
+      status.className = 'scanning';
+      
+      try {
+        const resp = await fetch(`${API}/scan/code`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({code, filename: 'input.py'})
+        });
+        const data = await resp.json();
+        renderResults(data);
+      } catch(e) {
+        document.getElementById('scanResults').innerHTML = `<div class="empty"><div class="empty-icon">❌</div><p>Error: ${e.message}</p></div>`;
+      } finally {
+        btn.disabled = false;
+        status.textContent = '';
+      }
+    }
+    
+    function renderResults(data) {
+      const container = document.getElementById('scanResults');
+      const sevClass = data.risk_score >= 70 ? 'critical' : data.risk_score >= 40 ? 'high' : data.risk_score >= 20 ? 'medium' : 'low';
+      
+      let html = `<div class="risk-score"><div class="score ${sevClass}">${data.risk_score}</div><div class="label">Risk Score / 100</div></div>`;
+      html += `<div style="display:flex;gap:16px;margin:16px 0;font-size:14px"><span class="critical">⬤ Critical: ${data.critical_count}</span><span class="high">⬤ High: ${data.high_count}</span><span class="medium">⬤ Medium: ${data.medium_count}</span><span class="low">⬤ Low: ${data.low_count}</span></div>`;
+      
+      if (!data.findings || data.findings.length === 0) {
+        html += `<div class="empty"><div class="empty-icon">✅</div><p>No vulnerabilities found! Your code looks clean.</p></div>`;
+      } else {
+        html += `<h3 style="margin-bottom:16px">${data.total_findings} finding(s)</h3>`;
+        for (const f of data.findings) {
+          html += `<div class="finding ${f.severity}">
+            <div class="finding-header"><span class="finding-title">${f.title}</span><span class="badge ${f.severity}">${f.severity}</span></div>
+            <div class="finding-meta">📁 ${f.file_path}:${f.line_number} · ${f.rule_id} · ${f.owasp_category} · ${f.cwe_id}</div>
+            <div class="finding-desc">${f.description}</div>
+            ${f.code_snippet ? `<div class="finding-code">${escapeHtml(f.code_snippet)}</div>` : ''}
+            <div class="finding-fix">💡 ${f.remediation}</div>
+          </div>`;
+        }
+      }
+      container.innerHTML = html;
+    }
+    
+    function escapeHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    
+    async function loadDashboard() {
+      try {
+        const resp = await fetch(`${API}/dashboard`);
+        const d = await resp.json();
+        document.getElementById('statScans').textContent = d.total_scans;
+        document.getElementById('statFindings').textContent = d.total_findings;
+        document.getElementById('statCritical').textContent = d.critical_findings;
+        document.getElementById('statHigh').textContent = d.high_findings;
+        document.getElementById('statMedium').textContent = d.medium_findings;
+        document.getElementById('statLow').textContent = d.low_findings;
+        
+        const dist = d.severity_distribution || {};
+        const total = Object.values(dist).reduce((a,b) => a+b, 0) || 1;
+        const bar = document.getElementById('severityBar');
+        const legend = document.getElementById('severityLegend');
+        const colors = {critical:'#ef4444',high:'#f97316',medium:'#eab308',low:'#22c55e',info:'#6b7280'};
+        bar.innerHTML = Object.entries(dist).map(([k,v]) => `<div style="width:${(v/total)*100}%;background:${colors[k]||'#666'}"></div>`).join('');
+        legend.innerHTML = Object.entries(dist).map(([k,v]) => `<span style="color:${colors[k]||'#666'}">⬤ ${k}: ${v}</span>`).join('');
+        
+        document.getElementById('topRules').innerHTML = (d.top_rules||[]).map(r => `<tr><td>${r.title}</td><td>${r.count}</td></tr>`).join('') || '<tr><td colspan="2" style="text-align:center;color:var(--muted)">No scans yet</td></tr>';
+      } catch(e) { console.error(e); }
+    }
+    
+    async function loadRules() {
+      try {
+        const resp = await fetch(`${API}/rules`);
+        const d = await resp.json();
+        document.getElementById('ruleCount').textContent = d.total;
+        document.getElementById('rulesTable').innerHTML = d.rules.map(r => `<tr><td>${r.rule_id}</td><td>${r.name}</td><td><span class="badge ${r.severity}">${r.severity}</span></td><td>${r.owasp}</td><td>${r.cwe}</td></tr>`).join('');
+      } catch(e) { console.error(e); }
+    }
+    
+    async function loadScans() {
+      try {
+        const resp = await fetch(`${API}/scans`);
+        const scans = await resp.json();
+        document.getElementById('scansTable').innerHTML = scans.map(s => `<tr><td>#${s.id}</td><td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.repository}</td><td><span class="badge ${s.status === 'completed' ? 'low' : 'medium'}">${s.status}</span></td><td>${s.total_findings}</td><td><span class="${s.risk_score >= 70 ? 'critical' : s.risk_score >= 40 ? 'high' : 'low'}">${s.risk_score}</span></td><td>${new Date(s.created_at).toLocaleDateString()}</td></tr>`).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--muted)">No scans yet</td></tr>';
+      } catch(e) { console.error(e); }
+    }
+  </script>
+</body>
+</html>
