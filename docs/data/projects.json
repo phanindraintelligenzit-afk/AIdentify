@@ -276,35 +276,36 @@
       "updated_at": "2026-06-28T14:25:00+00:00"
     },
     {
-      "id": "-i-built-an-ai-team-that-finds-leads-decision-make",
-      "name": "AI Team That Finds Leads & Writes Outreach",
-      "description": "Multi-agent system that finds leads, identifies decision makers, and writes personalized outreach while you sleep. Autonomous lead gen team.",
-      "category": "marketing",
-      "tags": [
-        "ai-agent",
-        "lead-generation",
-        "outreach",
-        "automation"
-      ],
-      "source_url": "https://github.com/phanindraintelligenzit-afk/-i-built-an-ai-team-that-finds-leads-decision-make",
-      "github_url": "https://github.com/phanindraintelligenzit-afk/-i-built-an-ai-team-that-finds-leads-decision-make/tree/main",
-      "status": "published",
-      "date_added": "2026-06-28",
-      "agents": [
-        "Lead Scout \u2014 finds prospects matching ICP",
-        "Decision Maker Finder \u2014 identifies key contacts",
-        "Outreach Writer \u2014 crafts personalized messages",
-        "Follow-up Manager \u2014 schedules and tracks replies"
-      ],
-      "key_features": [
-        "Autonomous lead discovery from multiple sources",
-        "Decision maker identification with role mapping",
-        "Personalized outreach message generation",
-        "Multi-channel delivery (email, LinkedIn)",
-        "Response tracking and follow-up scheduling"
-      ],
-      "icon": "\ud83c\udfaf"
-    },
+          "id": "-i-built-an-ai-team-that-finds-leads-decision-make",
+          "name": "AI Team That Finds Leads & Writes Outreach",
+          "description": "Multi-agent system that finds leads, identifies decision makers, and writes personalized outreach while you sleep. Autonomous lead gen team.",
+          "category": "marketing",
+          "tags": [
+            "ai-agent",
+            "lead-generation",
+            "outreach",
+            "automation"
+          ],
+          "source_url": "https://github.com/phanindraintelligenzit-afk/-i-built-an-ai-team-that-finds-leads-decision-make",
+          "github_url": "https://github.com/phanindraintelligenzit-afk/-i-built-an-ai-team-that-finds-leads-decision-make/tree/main",
+          "status": "published",
+          "date_added": "2026-06-28",
+          "agents": 4,
+          "agents_list": [
+            "Lead Scout \u2014 finds prospects matching ICP",
+            "Decision Maker Finder \u2014 identifies key contacts",
+            "Outreach Writer \u2014 crafts personalized messages",
+            "Follow-up Manager \u2014 schedules and tracks replies"
+          ],
+          "key_features": [
+            "Autonomous lead discovery from multiple sources",
+            "Decision maker identification with role mapping",
+            "Personalized outreach message generation",
+            "Multi-channel delivery (email, LinkedIn)",
+            "Response tracking and follow-up scheduling"
+          ],
+          "icon": "\ud83c\udfaf"
+        },
     {
       "id": "ai-invoice-reconciliation-agent",
       "name": "AI Invoice Reconciliation Agent",
