@@ -242,16 +242,36 @@ class IdeaSelector:
         return ideas[:count]
 
 
+# Category mapping: scanner categories → project_pipeline allowlist
+CATEGORY_MAP = {
+    "devtools": "other",
+    "security": "other",
+    "productivity": "other",
+    "healthcare": "healthcare",
+    "ecommerce": "ecommerce",
+    "legal": "legal",
+    "hr": "hr",
+    "realestate": "realestate",
+    "finance": "finance",
+    "marketing": "marketing",
+}
+
+
 class ProjectBuilder:
     """Builds a project using the autonomous pipeline."""
 
     def build(self, idea: dict) -> Optional[str]:
         print(f"\n🏗️  Building: {idea['title']}")
 
+        raw_category = idea.get("category", "marketing")
+        mapped_category = CATEGORY_MAP.get(raw_category, "other")
+        if raw_category != mapped_category:
+            print(f"  📎 Category mapped: {raw_category} → {mapped_category}")
+
         try:
             result = run_full_cycle(
                 idea_override=idea["title"],
-                category_override=idea.get("category", "marketing"),
+                category_override=mapped_category,
                 dry_run=False,
             )
             if result != 0:
@@ -439,10 +459,24 @@ class IdeaLoopAgent:
 
         for idea in top_ideas:
             # Skip if project directory already exists (already built)
-            slug = re.sub(r"[^a-z0-9]+", "-", idea["title"].lower()).strip("-")
+            slug = re.sub(r"[^a-z0-9]+", "-", idea["title"].lower()).strip("-")[:40].rstrip("-")
             existing_dir = PROJECTS_DIR / slug
             if existing_dir.exists():
                 print(f"  ⏭️  Skipping '{idea['title']}' — already built at {existing_dir}")
+                continue
+
+            # Layer 2: Title similarity check against existing projects
+            title_words = set(w for w in slug.split("-") if len(w) > 3)
+            is_dup = False
+            for existing in [d.name for d in PROJECTS_DIR.iterdir() if d.is_dir()]:
+                existing_words = set(w for w in existing.split("-") if len(w) > 3)
+                if title_words and existing_words:
+                    jaccard = len(title_words & existing_words) / len(title_words | existing_words)
+                    if jaccard > 0.5:
+                        print(f"  ⏭️  Skipping '{idea['title']}' — too similar to {existing} (Jaccard={jaccard:.2f})")
+                        is_dup = True
+                        break
+            if is_dup:
                 continue
 
             # Build
