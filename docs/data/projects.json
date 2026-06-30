@@ -384,6 +384,33 @@
         "REST API with async FastAPI backend",
         "Docker + docker-compose deployment"
       ]
+    },
+    {
+      "id": "nanoeuler-gpt-2-scale-model-in-pure-ccuda-from-scr",
+      "name": "NanoEuler \u2014 GPT-2 Scale Model in Pure C/CUDA",
+      "description": "Open-source GPT-2 scale language model implemented from scratch in pure C and CUDA. Train and inference without heavy frameworks \u2014 minimal dependencies, maximum performance.",
+      "category": "other",
+      "tags": [
+        "ai",
+        "llm",
+        "cuda",
+        "c",
+        "from-scratch",
+        "gpt",
+        "training",
+        "inference"
+      ],
+      "github_url": "https://github.com/phanindraintelligenzit-afk/nanoeuler-gpt-2-scale-model-in-pure-ccuda-from-scr",
+      "status": "published",
+      "created_at": "2026-06-30T06:09:29.872342+05:30",
+      "features": [
+        "Pure C/CUDA implementation \u2014 no PyTorch/TensorFlow dependencies",
+        "GPT-2 architecture from scratch with multi-head attention",
+        "Custom CUDA kernels for matrix operations",
+        "Training pipeline with data loading and checkpointing",
+        "Inference engine with token generation",
+        "REST API for model serving"
+      ]
     }
   ]
 }
